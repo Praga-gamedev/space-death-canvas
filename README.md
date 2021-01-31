@@ -1,4 +1,4 @@
-# Spaceship
+# Space Death Canvas
 
 ### Макет: https://www.figma.com/file/ajQp4tRV6sZM05Q5vDNrLz/Spaceship?node-id=0%3A1
 
