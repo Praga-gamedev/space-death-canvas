@@ -22,12 +22,12 @@
     "paths": {
       "src/*": ["./src/*"]
     },
-    "typeRoots": ["typings/**/*.d.ts", "node_modules/@types"]
+    "typeRoots": ["src/types/**/*.d.ts", "node_modules/@types"]
   },
   "include": [
     "src/*.ts",
     "src/*.tsx",
-    "typings/**/*.d.ts",
+    "src/types/**/*.d.ts",
     "./node_modules/@types"
   ],
   "exclude": [

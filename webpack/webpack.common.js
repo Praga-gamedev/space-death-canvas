@@ -32,7 +32,7 @@ module.exports = {
         new MiniCssExtractPlugin(),
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
-            template: "./www/index.html"
+            template: "./public/index.html"
         })
     ]
 };
