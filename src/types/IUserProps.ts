@@ -1,4 +1,4 @@
-export interface UserProps{
+export interface IUserProps{
     id: number,
     'first_name': string,
     'second_name': string,

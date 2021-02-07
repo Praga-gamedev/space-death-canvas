@@ -1,5 +1,5 @@
 
-export interface SignupData {
+export interface ISignupData {
     "first_name": "string",
     "second_name": "string",
     "login": "string",

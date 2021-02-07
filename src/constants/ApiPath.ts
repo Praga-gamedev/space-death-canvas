@@ -9,13 +9,3 @@ export const ApiPath = Object.freeze({
     USER_PASSWORD:'/user/password',
     USER_SEARCH:'/user/search'
 })
-
-export default class Url {
-    static getHostUrl() {
-        return 'https://ya-praktikum.tech'
-    }
-
-    static buildFullApiUrl(path: string) {
-        return Url.getHostUrl() + '/api/v2' + path
-    }
-}
