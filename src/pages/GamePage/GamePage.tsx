@@ -5,10 +5,9 @@ export const GamePage: FC = () => {
     const canvas = useRef<HTMLCanvasElement>(null);
 
     useEffect(() => {
-        const ctx = canvas?.current?.getContext('2d');
-        if (!ctx) return;
+        if (!canvas.current) return;
 
-        const game = new Game(ctx);
+        const game = new Game(canvas.current);
         game.start();
     }, [canvas]);
 
