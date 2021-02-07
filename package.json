@@ -7,8 +7,8 @@
         "start": "webpack serve --config webpack/webpack.dev.js",
         "start:typegen": "kea-typegen watch",
         "build": "webpack --config webpack/webpack.prod.js",
-        "lint:eslint": "eslint src/ --ext .ts,.tsx --fix",
-        "lint:prettier": "prettier --write src/"
+        "lint:eslint": "eslint src/ --ext .ts,.tsx",
+        "lint:prettier": "prettier src/"
     },
     "author": "praga-team",
     "license": "ISC",
