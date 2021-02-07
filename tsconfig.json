@@ -20,7 +20,10 @@
     "baseUrl": ".",
     "outDir": "./dist",
     "paths": {
-      "src/*": ["./src/*"]
+      "src/*": ["./src/*"],
+      "@components/*": ["./src/components/*"],
+      "@types/*": ["./src/types/*"],
+      "@store/*": ["./src/store/*"]
     },
     "typeRoots": ["src/types/**/*.d.ts", "node_modules/@types"]
   },
