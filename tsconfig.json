@@ -21,6 +21,7 @@
     "outDir": "./dist",
     "paths": {
       "src/*": ["./src/*"],
+      "images": [".public/assets/images/*"],
       "@components/*": ["./src/components/*"],
       "@types/*": ["./src/types/*"],
       "@store/*": ["./src/store/*"]
