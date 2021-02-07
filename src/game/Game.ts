@@ -1,4 +1,5 @@
 import { InputManager, CONTROLS } from './core';
+import { Player } from './entities';
 
 export default class Game {
     private canvas: HTMLCanvasElement;
@@ -11,16 +12,23 @@ export default class Game {
 
     private lastTime: number;
 
+    private player: Player;
+
     constructor(canvas: HTMLCanvasElement) {
         this.canvas = canvas;
         this.ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
 
         this.lastTime = Date.now();
 
-        this.width = canvas.width;
-        this.height = canvas.height;
+        this.width = this.canvas.width;
+        this.height = this.canvas.height;
 
         this.inputManager = new InputManager();
+
+        this.player = new Player({
+            ctx: this.ctx,
+            pos: { x: this.width / 2, y: this.height / 2 },
+        });
     }
 
     public start() {
@@ -40,25 +48,31 @@ export default class Game {
 
     private update(dt: number) {
         this.checkControls(dt);
+        this.updateEntities(dt);
     }
 
-    private render() {}
+    private updateEntities(dt: number) {
+        console.log('game:update_entities', dt);
+    }
+
+    private render() {
+        this.player.render();
+    }
 
     private checkControls(dt: number) {
         if (this.inputManager.isDown(CONTROLS.DOWN)) {
-            console.log('Down', dt);
+            console.log('game:press_down', dt);
         }
 
         if (this.inputManager.isDown(CONTROLS.UP)) {
-            console.log('Up', dt);
+            console.log('game:press_up', dt);
         }
 
         if (this.inputManager.isDown(CONTROLS.LEFT)) {
-            console.log('Left', dt);
+            console.log('game:press_left', dt);
         }
-
         if (this.inputManager.isDown(CONTROLS.RIGHT)) {
-            console.log('Right', dt);
+            console.log('game:press_right', dt);
         }
     }
 
