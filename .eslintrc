@@ -17,7 +17,8 @@
         "spaced-comment": ["error", "always"],
         "no-unused-vars": "off",
         "no-use-before-define": "off",
-        "@typescript-eslint/no-use-before-define": ["error"]
+        "@typescript-eslint/no-use-before-define": ["error"],
+        "camelcase": "off"
     },
     "globals": {
         "localStorage": true
