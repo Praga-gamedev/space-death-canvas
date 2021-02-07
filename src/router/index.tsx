@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Switch, Redirect } from 'react-router';
 
 import Header from '../components/Header';
-import { NotFoundPage } from '../pages';
+import { NotFoundPage, GamePage } from '../pages';
 
 import { tabs } from './tabs';
 
@@ -40,7 +40,7 @@ const NavigationRouter = () => {
                 <Route
                     path="/game"
                     title="Space Death Canvas"
-                    render={() => <div>Space Death Canvas</div>}
+                    render={() => <GamePage />}
                 />
 
                 <Route
