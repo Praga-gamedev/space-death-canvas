@@ -10,6 +10,7 @@ export default class InputManager {
 
     private setKey(e: KeyboardEvent, isDown: boolean) {
         const key = KEY_MAP[e.code];
+        if (!key) return;
 
         this.pressedKeys.set(key, isDown);
     }
@@ -21,10 +22,12 @@ export default class InputManager {
     }
 
     private onKeyDown = (e: KeyboardEvent) => {
+        e.preventDefault();
         this.setKey(e, true);
     };
 
     private onKeyUp = (e: KeyboardEvent) => {
+        e.preventDefault();
         this.setKey(e, false);
     };
 

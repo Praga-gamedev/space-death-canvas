@@ -18,7 +18,7 @@ export default class Game {
         this.canvas = canvas;
         this.ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
 
-        this.lastTime = Date.now();
+        this.lastTime = performance.now();
 
         this.width = this.canvas.width;
         this.height = this.canvas.height;
@@ -36,7 +36,7 @@ export default class Game {
     }
 
     private main() {
-        const now = Date.now();
+        const now = performance.now();
         const dt = (now - this.lastTime) / 1000.0;
 
         this.update(dt);
@@ -48,11 +48,11 @@ export default class Game {
 
     private update(dt: number) {
         this.checkControls(dt);
-        this.updateEntities(dt);
+        this.updateEntities();
     }
 
-    private updateEntities(dt: number) {
-        console.log('game:update_entities', dt);
+    private updateEntities() {
+        // console.log('game:update_entities', dt);
     }
 
     private render() {
@@ -71,8 +71,13 @@ export default class Game {
         if (this.inputManager.isDown(CONTROLS.LEFT)) {
             console.log('game:press_left', dt);
         }
+
         if (this.inputManager.isDown(CONTROLS.RIGHT)) {
             console.log('game:press_right', dt);
+        }
+
+        if (this.inputManager.isDown(CONTROLS.SPACE)) {
+            console.log('game:press_space', dt);
         }
     }
 

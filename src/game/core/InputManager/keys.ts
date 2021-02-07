@@ -6,7 +6,7 @@ export const CONTROLS = {
     DOWN: 'DOWN',
 };
 
-export const KEY_MAP = {
+export const KEY_MAP: Record<string, string> = {
     Space: CONTROLS.SPACE,
 
     KeyA: CONTROLS.LEFT,
