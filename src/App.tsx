@@ -2,9 +2,9 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 
-import { RebootCss } from './components/globalStyles';
+import { RebootCss } from '@components/globalStyles';
 
-import store, { history } from './store/initStore';
+import store, { history } from '@store/initStore';
 
 import NavigationRouter from './router';
 import ErrorBoundary from './components/ErrorBoundary';

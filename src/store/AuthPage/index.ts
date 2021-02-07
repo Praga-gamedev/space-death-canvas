@@ -1,3 +1,4 @@
+// @ts-ignore
 import PropTypes from 'prop-types';
 import { kea } from 'kea';
 
@@ -7,11 +8,17 @@ export const logic = kea({
     path: () => ['scenes', 'authPage'],
     actions: () => ({
         startLoading: () => undefined,
+        // @ts-ignore
 
         setLoading: (loading) => loading,
+        // @ts-ignore
+
         setError: (error) => error,
+        // @ts-ignore
 
         setAuth: (bool) => bool,
+        // @ts-ignore
+
         setUser: (payload) => ({ ...payload }),
     }),
     reducers: ({ actions }) => ({
@@ -20,6 +27,8 @@ export const logic = kea({
             PropTypes.bool,
             {
                 [actions.setError]: () => false,
+                // @ts-ignore
+
                 [actions.setLoading]: (_, payload) => payload,
                 [actions.startLoading]: () => true,
             },
@@ -29,6 +38,8 @@ export const logic = kea({
             PropTypes.bool,
             { persist: true },
             {
+                // @ts-ignore
+
                 [actions.setAuth]: (_, payload) => payload,
             },
         ],
@@ -37,10 +48,14 @@ export const logic = kea({
             PropTypes.object,
             { persist: true },
             {
+                // @ts-ignore
+
                 [actions.setUser]: (_, payload) => payload,
             },
         ],
     }),
+    // @ts-ignore
+
     thunks: ({ actions }) => ({
         logOut: () => {
             actions.setAuth(false);

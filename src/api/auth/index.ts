@@ -1,12 +1,11 @@
-import Api from 'src/utils/Api';
+import Api from '@/utils/Api';
 
-import {ILoginData} from '../../types/ILoginData';
-
+import { ILoginData } from './types';
 
 export const login = async (data: ILoginData) => {
     return Api.post({
         url: '/auth/signin',
-        data: data
+        data: data,
     });
 };
 
@@ -17,7 +16,7 @@ export const logout = async () => {
         /*
              Есть вопрос - что будет, если куки не обнулять?
              Просто оно и без этого хидера работает
-        */
+            */
         headers: { 'Set-Cookie': 'expires=0' },
     });
 };
