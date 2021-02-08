@@ -4,7 +4,7 @@ import { ConnectedRouter } from 'connected-react-router';
 
 import { RebootCss } from './global-styles';
 
-import store, { history } from './store/initStore';
+import store, { history } from '@store/initStore';
 
 import NavigationRouter from './router';
 import ErrorBoundary from './components/ErrorBoundary';

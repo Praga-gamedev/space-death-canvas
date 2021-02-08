@@ -1,4 +1,4 @@
-export interface ISignupData {
+export interface IRegistrationData {
     first_name: 'string';
     second_name: 'string';
     login: 'string';
