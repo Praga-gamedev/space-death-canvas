@@ -3,6 +3,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
+const isDev = process.env.NODE_ENV === 'development';
+const isProd = !isDev;
+
 module.exports = {
     entry: './src/index.tsx',
     output: {
@@ -30,6 +33,14 @@ module.exports = {
                 test: /\.css$/,
                 use: [MiniCssExtractPlugin.loader, 'css-loader'],
             },
+            {
+                test: /\.(png|jpg|gif|svg)$/,
+                use: ['file-loader'],
+            },
+            {
+                test: /\.(woff|woff2|eot|ttf|otf)$/,
+                loader: 'file-loader',
+            },
         ],
     },
     plugins: [
@@ -37,6 +48,9 @@ module.exports = {
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
             template: './public/index.html',
+            minify: {
+                collapseWhitespace: isProd,
+            },
         }),
     ],
 };
