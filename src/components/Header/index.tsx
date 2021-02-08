@@ -1,32 +1,42 @@
-import React from 'react';
+import React, { FC } from 'react';
+import { kea, useValues } from 'kea';
 
-import { Link } from 'react-router-dom';
+import { history } from '@store/initStore';
 
-import { StyledHeader } from './units';
+import { StyledHeader, StyledTab } from './units';
 
-const Header = () => {
+import { IHeaderProps } from './types';
+
+const logicRouter = kea({
+    connect: () => ({
+        values: [(state: Record<string, any>) => state, ['router']],
+    }),
+});
+
+const Header: FC<IHeaderProps> = ({ tabs }) => {
+    const {
+        router: {
+            location: { pathname },
+        },
+    } = useValues(logicRouter);
+
+    const isActive = (path: string) => {
+        return path === pathname;
+    };
+
     return (
         <StyledHeader>
-            <ul>
-                <li>
-                    <Link to="/info">Информация</Link>
-                </li>
-                <li>
-                    <Link to="/auth">Авторизация</Link>
-                </li>
-                <li>
-                    <Link to="/registration">Регистрация</Link>
-                </li>
-                <li>
-                    <Link to="/leaderboard">Таблица лидеров</Link>
-                </li>
-                <li>
-                    <Link to="/game">Игра</Link>
-                </li>
-                <li>
-                    <Link to="/forum">Форум</Link>
-                </li>
-            </ul>
+            {tabs.map(({ path, title }) => {
+                return (
+                    <StyledTab
+                        key={path}
+                        isActive={isActive(path)}
+                        onClick={() => history.push(path)}
+                    >
+                        {title}
+                    </StyledTab>
+                );
+            })}
         </StyledHeader>
     );
 };
