@@ -2,7 +2,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 
-import { RebootCss } from './components/globalStyles';
+import { RebootCss } from './global-styles';
 
 import store, { history } from './store/initStore';
 
