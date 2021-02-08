@@ -27,7 +27,10 @@ export default class Game {
 
         this.player = new Player({
             ctx: this.ctx,
-            pos: { x: this.width / 2, y: this.height / 2 },
+            pos: {
+                x: (this.width - Player.width) / 2,
+                y: (this.height - Player.height) / 2,
+            },
         });
     }
 
@@ -56,24 +59,35 @@ export default class Game {
     }
 
     private render() {
+        this.ctx.translate(0, 0);
+        this.ctx.clearRect(0, 0, this.width, this.height);
+
+        this.renderBackground();
         this.player.render();
     }
 
+    private renderBackground() {
+        this.ctx.fillStyle = '#000';
+        this.ctx.fillRect(0, 0, this.width, this.height);
+    }
+
     private checkControls(dt: number) {
+        const { speed } = this.player;
+
         if (this.inputManager.isDown(CONTROLS.DOWN)) {
-            console.log('game:press_down', dt);
+            this.player.y += dt * speed;
         }
 
         if (this.inputManager.isDown(CONTROLS.UP)) {
-            console.log('game:press_up', dt);
+            this.player.y -= dt * speed;
         }
 
         if (this.inputManager.isDown(CONTROLS.LEFT)) {
-            console.log('game:press_left', dt);
+            this.player.x -= dt * speed;
         }
 
         if (this.inputManager.isDown(CONTROLS.RIGHT)) {
-            console.log('game:press_right', dt);
+            this.player.x += dt * speed;
         }
 
         if (this.inputManager.isDown(CONTROLS.SPACE)) {

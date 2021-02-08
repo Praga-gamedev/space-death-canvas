@@ -16,5 +16,21 @@ export default abstract class Entity {
         this.pos = pos;
     }
 
+    get x() {
+        return this.pos.x;
+    }
+
+    set x(x: number) {
+        this.pos.x = x;
+    }
+
+    get y() {
+        return this.pos.y;
+    }
+
+    set y(y: number) {
+        this.pos.y = y;
+    }
+
     abstract render(): void;
 }
