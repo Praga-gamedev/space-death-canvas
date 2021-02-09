@@ -26,8 +26,8 @@
         "typeRoots": ["src/types/**/*.d.ts", "node_modules/@types"]
     },
     "include": [
-        "src/*.ts",
-        "src/*.tsx",
+        "src/**/*.ts",
+        "src/**/*.tsx",
         "src/types/**/*.d.ts",
         "./node_modules/@types"
     ],

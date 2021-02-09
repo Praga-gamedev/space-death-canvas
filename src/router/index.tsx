@@ -1,14 +1,16 @@
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router';
 
-import Header from '../components/Header';
-import { NotFoundPage } from '../pages';
+import { Header } from '@components/Header';
+import { AuthPage, NotFoundPage } from '../pages';
+
+import { StyledPage } from './units';
 
 import { tabs } from './tabs';
 
 const NavigationRouter = () => {
     return (
-        <>
+        <StyledPage>
             <Header tabs={tabs} />
 
             <Switch>
@@ -21,8 +23,8 @@ const NavigationRouter = () => {
                 <Route
                     path="/auth"
                     title="Авторизация"
-                    // component={AuthPage}
-                    render={() => <div>Авторизация</div>}
+                    component={AuthPage}
+                    // render={() => <div>Авторизация</div>}
                 />
 
                 <Route
@@ -59,7 +61,7 @@ const NavigationRouter = () => {
 
                 <Route component={NotFoundPage} />
             </Switch>
-        </>
+        </StyledPage>
     );
 };
 
