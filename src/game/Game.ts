@@ -46,6 +46,7 @@ export default class Game {
             если делать player.x += 5 - это отработает по разному на разном железе
             тобишь если комп быстрый, циклов игры будет много, соответственно прибавится много раз по 5
             подробнее читайте в теории
+            https://praktikum.yandex.ru/learn/middle-frontend/courses/8bf82b38-54ba-4c62-bd31-6a4b373c26d6/sprints/4936/topics/ce075e91-7953-4bef-8d5f-303f8264f2f0/lessons/e5aaa32a-38fa-442d-a658-5f796c169f39/
         */
         const dt = (now - this.lastTime) / 1000.0;
 
@@ -53,7 +54,7 @@ export default class Game {
         this.render();
 
         this.lastTime = now;
-        // requestAnimationFrame более предпочтителен чем setInterval, опять же читайте теорию
+        // requestAnimationFrame более предпочтителен чем setInterval, в теории это также указано
         requestAnimationFrame(this.main.bind(this));
     }
 
