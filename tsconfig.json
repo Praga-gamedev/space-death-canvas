@@ -14,21 +14,23 @@
         "skipLibCheck": true,
         "declaration": false,
         "sourceMap": false,
-        "baseUrl": ".",
+        "baseUrl": "./",
         "outDir": "./dist",
         "paths": {
             "src/*": ["./src/*"],
-            "@images": ["./public/assets/images/*"],
+            "@images/*": ["./public/assets/images/*"],
             "@components/*": ["./src/components/*"],
+            "@components": ["./src/components/index.ts"],
+            "@pages/*": ["./src/pages/*"],
+            "@pages": ["./src/pages/index.ts"],
             "@types/*": ["./src/types/*"],
-            "@store/*": ["./src/store/*"]
+            "@store/*": ["./src/store/*"],
+            "@store/": ["./src/store/index.ts"]
         },
         "typeRoots": ["src/types/**/*.d.ts", "node_modules/@types"]
     },
     "include": [
-        "src/*.ts",
-        "src/*.tsx",
-        "src/types/**/*.d.ts",
+        "src",
         "./node_modules/@types"
     ],
     "exclude": ["**/*.js", "node_modules"]
