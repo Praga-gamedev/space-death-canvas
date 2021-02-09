@@ -3,14 +3,14 @@ import React, { FC } from 'react';
 import { StyledPasswordInput, StyledInput, StyledSpan } from './units';
 import { IInputProps } from './types';
 
-export const Input: FC<IInputProps> = (props) => {
+export const Input: FC<IInputProps> = ({ label, ...inputProps }) => {
     return (
         <>
-            {props.label ? <StyledSpan>{props.label}</StyledSpan> : null}
-            {props.type === 'password' ? (
-                <StyledPasswordInput {...props} />
+            {label ? <StyledSpan>{label}</StyledSpan> : null}
+            {inputProps.type === 'password' ? (
+                <StyledPasswordInput {...inputProps} />
             ) : (
-                <StyledInput {...props} />
+                <StyledInput {...inputProps} />
             )}
         </>
     );
