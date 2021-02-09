@@ -1,4 +1,4 @@
-import Api from '@/utils/Api';
+import Api from 'src/utils/Api';
 
 import { IRegistrationData } from './types';
 
