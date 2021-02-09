@@ -4,7 +4,7 @@ export const StyledInput = styled.input`
     width: 100%;
     height: 50px;
 
-    padding: 0 20px 0 20px;
+    padding: 0 20px;
 
     border: none;
     border-radius: 15px;
@@ -21,12 +21,10 @@ export const StyledInput = styled.input`
 
 export const StyledSpan = styled.span`
     display: block;
-
     margin-bottom: 10px;
-
     color: #5f5f6e;
 `;
 
 export const StyledPasswordInput = styled(StyledInput)`
-    font-size: 25px;
+    font-size: 24px;
 `;
