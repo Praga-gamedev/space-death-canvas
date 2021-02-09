@@ -4,10 +4,12 @@ import { Route, Switch, Redirect } from 'react-router';
 import Header from '../components/Header';
 import { NotFoundPage } from '../pages';
 
+import { tabs } from './tabs';
+
 const NavigationRouter = () => {
     return (
         <>
-            <Header />
+            <Header tabs={tabs} />
 
             <Switch>
                 <Route
@@ -45,6 +47,12 @@ const NavigationRouter = () => {
                     path="/forum"
                     title="Форум"
                     render={() => <div>Форум</div>}
+                />
+
+                <Route
+                    path="/profile"
+                    title="Профиль"
+                    render={() => <div>Профиль</div>}
                 />
 
                 <Redirect exact from="/" to="/game" />
