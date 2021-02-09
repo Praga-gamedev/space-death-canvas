@@ -39,27 +39,37 @@ export default class Game {
     }
 
     private main() {
+        // Главный цикл игры
         const now = performance.now();
+        /* 
+            delta time нужен для того чтобы правильно обновлять координаты юнитов
+            если делать player.x += 5 - это отработает по разному на разном железе
+            тобишь если комп быстрый, циклов игры будет много, соответственно прибавится много раз по 5
+            подробнее читайте в теории
+        */
         const dt = (now - this.lastTime) / 1000.0;
 
         this.update(dt);
         this.render();
 
         this.lastTime = now;
+        // requestAnimationFrame более предпочтителен чем setInterval, опять же читайте теорию
         requestAnimationFrame(this.main.bind(this));
     }
 
     private update(dt: number) {
+        // В этом методе обновляем все, что касается данных.
         this.checkControls(dt);
         this.updateEntities();
     }
 
     private updateEntities() {
-        // console.log('game:update_entities', dt);
+        // TODO: обновление координат всех сущностей и тд
     }
 
     private render() {
         this.ctx.translate(0, 0);
+        // Чистим канвас
         this.ctx.clearRect(0, 0, this.width, this.height);
 
         this.renderBackground();
@@ -72,6 +82,7 @@ export default class Game {
     }
 
     private checkControls(dt: number) {
+        // Проверяем нажатие клавиш
         const { speed } = this.player;
 
         if (this.inputManager.isDown(CONTROLS.DOWN)) {
@@ -96,6 +107,7 @@ export default class Game {
     }
 
     public destroy() {
+        // пока не используется, но в дальнейшем может пригодиться
         this.inputManager.destroy();
     }
 }

@@ -6,6 +6,8 @@ export interface IEntityOptions {
 }
 
 export default abstract class Entity {
+    // Класс будет использоваться для любых сущностей, будть то враги, персонаж и тд
+    // Сюда будем пихать логику рендера, обновления и тд
     ctx: CanvasRenderingContext2D;
     pos: IPosition;
 

@@ -1,5 +1,7 @@
 import { KEY_MAP } from './keys';
 
+// Класс отвечает за нажатие клавиш и хранит в себе их состояние
+
 export default class InputManager {
     private pressedKeys: Map<string, boolean>;
 
