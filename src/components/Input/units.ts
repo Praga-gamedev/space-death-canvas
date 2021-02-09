@@ -27,6 +27,6 @@ export const StyledSpan = styled.span`
     color: #5f5f6e;
 `;
 
-export const PasswordStyledInput = styled(StyledInput)`
+export const StyledPasswordInput = styled(StyledInput)`
     font-size: 25px;
 `;
