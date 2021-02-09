@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 export const StyledInput = styled.input`
-    width: 430px;
+    width: 100%;
     height: 50px;
 
     padding: 0 20px 0 20px;
