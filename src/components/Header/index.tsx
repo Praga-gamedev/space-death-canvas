@@ -20,23 +20,19 @@ const Header: FC<IHeaderProps> = ({ tabs }) => {
         },
     } = useValues(logicRouter);
 
-    const isActive = (path: string) => {
-        return path === pathname;
-    };
+    const isActive = (path: string) => path === pathname;
 
     return (
         <StyledHeader>
-            {tabs.map(({ path, title }) => {
-                return (
-                    <StyledTab
-                        key={path}
-                        isActive={isActive(path)}
-                        onClick={() => history.push(path)}
-                    >
-                        {title}
-                    </StyledTab>
-                );
-            })}
+            {tabs.map(({ path, title }) => (
+                <StyledTab
+                    key={path}
+                    isActive={isActive(path)}
+                    onClick={() => history.push(path)}
+                >
+                    {title}
+                </StyledTab>
+            ))}
         </StyledHeader>
     );
 };
