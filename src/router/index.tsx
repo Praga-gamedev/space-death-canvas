@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch, Redirect } from 'react-router';
+import { Route, Switch, Redirect } from 'react-router-dom';
 
 import { Header } from '@components/Header';
 import { AuthPage, NotFoundPage, GamePage } from '@pages';
@@ -7,6 +7,8 @@ import { AuthPage, NotFoundPage, GamePage } from '@pages';
 import { StyledPage } from './units';
 
 import { tabs } from './tabs';
+import { ForumPage } from 'src/pages/ForumPage';
+import { ForumThreadDialog } from '@pages/ForumPage/ForumThreadDialog';
 
 const NavigationRouter = () => {
     return (
@@ -46,9 +48,15 @@ const NavigationRouter = () => {
                 />
 
                 <Route
+                    exact
                     path="/forum"
                     title="Форум"
-                    render={() => <div>Форум</div>}
+                    component={ForumPage}
+                />
+                <Route
+                    path="/forum/:id"
+                    // title="Форум"
+                    component={ForumThreadDialog}
                 />
 
                 <Route
