@@ -7,27 +7,19 @@ import {
     Avatar,
     UploadPhotoButton,
     AlignCenterColumn,
-    ProfileField,
-    FormBlock,
 } from './units';
 
-import { Button, Input } from '@components';
+import { Button } from '@components';
 import { Stats } from './components/Stats';
+import { ProfileForm, getInitialProfileForm } from './components/ProfileForm';
 
-import { profileFormFields, getInitialProfileForm } from './fields';
 import { defaultStats } from './stats';
-import { IProfileForm } from './types';
 
 export const ProfilePage: FC = memo(() => {
-    const initialProfileForm = useMemo(getInitialProfileForm, []);
-    const [profileForm, setProfileForm] = useState(initialProfileForm);
+    const initialFields = useMemo(getInitialProfileForm, []);
 
-    const profileFormHandler = (name: keyof IProfileForm) => (
-        e: React.ChangeEvent<HTMLInputElement>
-    ) => {
-        const value = e.target.value;
-        setProfileForm({ ...profileForm, [name]: value });
-    };
+    const [fields, setFields] = useState(initialFields);
+    const [passwordMode, setPasswordMode] = useState(false);
 
     return (
         <ProfileContainer>
@@ -43,24 +35,20 @@ export const ProfilePage: FC = memo(() => {
                         </UploadPhotoButton>
                     </ProfilePaper>
 
-                    <Button style={{ marginTop: '30px' }}>
+                    <Button
+                        style={{ marginTop: '30px' }}
+                        onClick={() => setPasswordMode(true)}
+                    >
                         Сменить пароль
                     </Button>
                 </AlignCenterColumn>
 
-                <FormBlock>
-                    {profileFormFields.map(({ name, label }) => (
-                        <ProfileField key={name}>
-                            <Input
-                                value={profileForm[name]}
-                                label={label}
-                                onChange={profileFormHandler(name)}
-                            />
-                        </ProfileField>
-                    ))}
-
-                    <Button style={{ marginTop: '60px' }}>Сохранить</Button>
-                </FormBlock>
+                <ProfileForm
+                    fields={fields}
+                    onChange={setFields}
+                    passwordMode={passwordMode}
+                    setPasswordMode={setPasswordMode}
+                />
 
                 <Stats stats={defaultStats} />
             </ProfileContent>
