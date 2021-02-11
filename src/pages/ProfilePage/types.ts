@@ -5,3 +5,11 @@ export interface IProfileForm {
     email: string;
     phone: string;
 }
+
+export interface IStat {
+    name: string;
+    label: string;
+    value: number | string;
+    icon: string;
+    color: string;
+}

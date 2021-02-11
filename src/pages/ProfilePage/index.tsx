@@ -12,8 +12,10 @@ import {
 } from './units';
 
 import { Button, Input } from '@components';
-import { profileFormFields, getInitialProfileForm } from './fields';
+import { Stats } from './components/Stats';
 
+import { profileFormFields, getInitialProfileForm } from './fields';
+import { defaultStats } from './stats';
 import { IProfileForm } from './types';
 
 export const ProfilePage: FC = memo(() => {
@@ -59,6 +61,8 @@ export const ProfilePage: FC = memo(() => {
 
                     <Button style={{ marginTop: '60px' }}>Сохранить</Button>
                 </FormBlock>
+
+                <Stats stats={defaultStats} />
             </ProfileContent>
         </ProfileContainer>
     );
