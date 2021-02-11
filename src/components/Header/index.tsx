@@ -13,7 +13,7 @@ const logicRouter = kea({
     }),
 });
 
-const Header: FC<IHeaderProps> = ({ tabs }) => {
+export const Header: FC<IHeaderProps> = ({ tabs }) => {
     const {
         router: {
             location: { pathname },
@@ -36,5 +36,3 @@ const Header: FC<IHeaderProps> = ({ tabs }) => {
         </StyledHeader>
     );
 };
-
-export default Header;

@@ -2,22 +2,26 @@ import styled from '@emotion/styled';
 
 import { IButtonProps } from './types';
 
+import { colors } from 'src/colors';
+
 export const StyledButton = styled.button`
+    display: block;
     width: 250px;
     height: 50px;
-    background-color: ${(props: IButtonProps) =>
-        props.disabled ? '#e5e5e5' : '#000'};
 
-    border: 2px solid #4447e2;
+    background-color: ${(props: IButtonProps) =>
+        props.disabled ? colors.GrayScale_50 : 'transparent'};
+
+    border: 2px solid ${colors.secondary};
     border-radius: 15px;
-    color: #fff;
+    color: ${colors.GrayScale_0};
     transition: background-color 0.2s linear;
 
     &:hover:not(:disabled) {
-        background-color: #4447e2;
+        background-color: ${colors.secondary};
     }
 
     &:active:not(:disabled) {
-        background-color: #8f91ee;
+        background-color: ${colors.secondaryAccent};
     }
 `;
