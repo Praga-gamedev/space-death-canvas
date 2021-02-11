@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Switch, Redirect } from 'react-router';
 
 import { Header } from '@components/Header';
-import { AuthPage, NotFoundPage, GamePage } from '@pages';
+import { AuthPage, NotFoundPage, GamePage, ProfilePage } from '@pages';
 
 import { StyledPage } from './units';
 
@@ -54,7 +54,7 @@ const NavigationRouter = () => {
                 <Route
                     path="/profile"
                     title="Профиль"
-                    render={() => <div>Профиль</div>}
+                    component={ProfilePage}
                 />
 
                 <Redirect exact from="/" to="/game" />
