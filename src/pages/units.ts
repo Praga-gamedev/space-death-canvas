@@ -1,9 +1,6 @@
 import styled from '@emotion/styled';
 
-/* Не работает алиас */
-// import backgroundPicture from '@images/background.png';
-
-import backgroundPicture from '../assets/images/background.png';
+import backgroundPicture from '@images/background.png';
 
 export const StyledWrapperPage = styled.div`
     background-image: ${({ background }: { background: boolean }) =>

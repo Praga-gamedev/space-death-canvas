@@ -8,7 +8,7 @@ export const AuthPage = () => {
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
 
-    const onSubmitAuth = (e: MouseEvent, login: string, password: string) => {
+    const onSubmitAuth = (e: MouseEvent) => {
         e.preventDefault();
 
         console.log('Вход:', { login, password });
@@ -37,7 +37,7 @@ export const AuthPage = () => {
                     <Button
                         style={{ margin: '60px auto 0 auto' }}
                         children={'Войти'}
-                        onClick={(e) => onSubmitAuth(e, login, password)}
+                        onClick={(e) => onSubmitAuth(e)}
                     />
 
                     <Link
