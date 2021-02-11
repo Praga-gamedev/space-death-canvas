@@ -55,5 +55,5 @@ export const Avatar = styled.div`
 
 export const UploadPhotoButton = styled(Button)`
     margin-top: 20px;
-    border-color: #2d2d3a;
+    border-color: ${colors.GrayScale_40};
 `;

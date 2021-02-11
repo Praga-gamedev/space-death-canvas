@@ -9,7 +9,7 @@ import {
     StatTitle,
 } from './units';
 
-import { IStat } from '@pages/ProfilePage/types';
+import { IStat } from '../../types';
 
 export interface IStatsProps {
     stats?: IStat[];

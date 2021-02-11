@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
-// import { colors } from 'src/colors';
+import { colors } from 'src/colors';
 
-import { ProfilePaper } from '@pages/ProfilePage/units';
+import { ProfilePaper } from '../../units';
 
 interface IIconWrapperProps {
     color?: string;
@@ -10,7 +10,7 @@ interface IIconWrapperProps {
 export const StatTitle = styled.div`
     font-size: 14px;
     line-height: 20px;
-    color: #5f5f6e;
+    color: ${colors.GrayScale_30};
 `;
 
 export const StatPaper = styled(ProfilePaper)`
@@ -26,7 +26,8 @@ export const StatPaper = styled(ProfilePaper)`
 export const IconWrapper = styled(ProfilePaper)`
     width: 50px;
     height: 50px;
-    background: ${(props: IIconWrapperProps) => props.color || '#9091EE'};
+    background: ${(props: IIconWrapperProps) =>
+        props.color || colors.secondaryAccent};
     border-radius: 12px;
     display: flex;
     justify-content: center;
