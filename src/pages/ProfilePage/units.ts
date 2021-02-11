@@ -19,6 +19,12 @@ export const Title = styled.h1`
     margin: 0;
 `;
 
+export const AlignCenterColumn = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`;
+
 export const ProfileContent = styled.div`
     margin: 50px auto 0;
     width: 100%;
@@ -31,12 +37,6 @@ export const ProfilePaper = styled.div`
     padding: 20px;
     background-color: #1c1c24;
     border-radius: 15px;
-`;
-
-export const AvatarBlock = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 `;
 
 export const Avatar = styled.div`
@@ -58,7 +58,7 @@ export const UploadPhotoButton = styled(Button)`
     border-color: #2d2d3a;
 `;
 
-export const FormBlock = styled.div`
+export const FormBlock = styled(AlignCenterColumn)`
     width: 430px;
 `;
 

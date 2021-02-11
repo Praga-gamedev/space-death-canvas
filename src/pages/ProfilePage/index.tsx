@@ -6,7 +6,7 @@ import {
     ProfilePaper,
     Avatar,
     UploadPhotoButton,
-    AvatarBlock,
+    AlignCenterColumn,
     ProfileField,
     FormBlock,
 } from './units';
@@ -32,7 +32,7 @@ export const ProfilePage: FC = memo(() => {
             <Title>Профиль</Title>
 
             <ProfileContent>
-                <AvatarBlock>
+                <AlignCenterColumn>
                     <ProfilePaper>
                         <Avatar />
 
@@ -44,7 +44,7 @@ export const ProfilePage: FC = memo(() => {
                     <Button style={{ marginTop: '30px' }}>
                         Сменить пароль
                     </Button>
-                </AvatarBlock>
+                </AlignCenterColumn>
 
                 <FormBlock>
                     {profileFormFields.map(({ name, label }) => (
@@ -56,6 +56,8 @@ export const ProfilePage: FC = memo(() => {
                             />
                         </ProfileField>
                     ))}
+
+                    <Button style={{ marginTop: '60px' }}>Сохранить</Button>
                 </FormBlock>
             </ProfileContent>
         </ProfileContainer>
