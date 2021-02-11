@@ -48,6 +48,7 @@ export const ProfilePage: FC = memo(() => {
                     onChange={setFields}
                     passwordMode={passwordMode}
                     setPasswordMode={setPasswordMode}
+                    onSubmit={console.log}
                 />
 
                 <Stats stats={defaultStats} />
