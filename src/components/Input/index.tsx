@@ -11,7 +11,8 @@ import { IInputProps } from './types';
 export const Input: FC<IInputProps> = ({ label, ...inputProps }) => {
     return (
         <StyledWrapperInput>
-            {label ? <StyledSpan>{label}</StyledSpan> : null}
+            {label && <StyledSpan>{label}</StyledSpan>}
+            
             {inputProps.type === 'password' ? (
                 <StyledPasswordInput {...inputProps} />
             ) : (
