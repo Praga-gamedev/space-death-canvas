@@ -2,7 +2,7 @@ import { FC } from 'react';
 import styled from '@emotion/styled';
 
 import { colors } from 'src/colors';
-import right from '@images/right.svg';
+import right from '@icons/right.svg';
 import { IButtonProps } from '@components/Button/types';
 
 export const MainBlock = styled.div`

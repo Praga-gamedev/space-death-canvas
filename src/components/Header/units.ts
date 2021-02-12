@@ -9,6 +9,8 @@ export const StyledHeader = styled.header`
     justify-content: center;
     align-items: center;
     position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 80px;
     background-color: ${colors.GrayScale_50};

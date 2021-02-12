@@ -8,6 +8,7 @@ import {
     GamePage,
     ForumPage,
     ForumThreadDialog,
+    ProfilePage,
 } from '@pages';
 
 import { StyledPage } from './units';
@@ -65,7 +66,7 @@ const NavigationRouter = () => {
                 <Route
                     path="/profile"
                     title="Профиль"
-                    render={() => <div>Профиль</div>}
+                    component={ProfilePage}
                 />
 
                 <Redirect exact from="/" to="/game" />
