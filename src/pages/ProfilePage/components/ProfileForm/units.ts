@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { colors } from 'src/colors';
-import { AlignCenterColumn } from '../../units';
+import { AlignCenterColumn } from '@pages/ProfilePage/units';
 
 interface IProfileButtonsProps {
     withBackButton: boolean;
@@ -25,13 +25,14 @@ export const ProfileButtons = styled.div`
         withBackButton ? 'flex-start' : 'center'};
 `;
 
-export const ProfileBackButton = styled.div`
+export const ProfileBackButton = styled.button`
     width: 50px;
     height: 50px;
     background-color: ${colors.secondary};
     display: inline-flex;
     justify-content: center;
     align-items: center;
+    border: none;
     border-radius: 12px;
     margin-right: 40px;
     cursor: pointer;

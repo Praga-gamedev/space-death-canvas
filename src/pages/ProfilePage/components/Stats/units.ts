@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { colors } from 'src/colors';
 
-import { ProfilePaper } from '../../units';
+import { ProfilePaper } from '@pages/ProfilePage/units';
 
 interface IIconWrapperProps {
     color?: string;
@@ -24,10 +24,11 @@ export const StatPaper = styled(ProfilePaper)`
 `;
 
 export const IconWrapper = styled(ProfilePaper)`
-    width: 50px;
-    height: 50px;
     background: ${(props: IIconWrapperProps) =>
         props.color || colors.secondaryAccent};
+
+    width: 50px;
+    height: 50px;
     border-radius: 12px;
     display: flex;
     justify-content: center;

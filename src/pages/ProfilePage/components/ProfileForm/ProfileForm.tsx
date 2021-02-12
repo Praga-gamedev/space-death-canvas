@@ -9,7 +9,7 @@ import {
 import { Input, Button } from '@components';
 
 import { coreFormFields, passwordFormFields } from './fields';
-import { IProfileFields } from '../../types';
+import { IProfileFields } from '@pages/ProfilePage/types';
 
 import backIcon from '@icons/back-icon.png';
 
