@@ -13,6 +13,7 @@ import {
 
 import { StyledPage } from './units';
 import { tabs } from './tabs';
+import { LeaderBoard } from '@pages/LeaderBoard';
 
 const NavigationRouter = () => {
     return (
@@ -40,12 +41,6 @@ const NavigationRouter = () => {
                 />
 
                 <Route
-                    path="/leaderboard"
-                    title="Таблица лидеров"
-                    render={() => <div>Таблица лидеров</div>}
-                />
-
-                <Route
                     path="/game"
                     title="Space Death Canvas"
                     render={() => <GamePage />}
@@ -67,6 +62,12 @@ const NavigationRouter = () => {
                     path="/profile"
                     title="Профиль"
                     component={ProfilePage}
+                />
+
+                <Route
+                    path="/leaderboard"
+                    title="Таблица лидеров"
+                    component={LeaderBoard}
                 />
 
                 <Redirect exact from="/" to="/game" />
