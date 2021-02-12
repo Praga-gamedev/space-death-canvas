@@ -1,12 +1,12 @@
 import React, { FC, useCallback } from 'react';
-import { useHistory } from 'react-router-dom';
+import { history } from '@store/initStore';
 import {
     ThemeBlock,
     ThemeContent,
     UsernameBlock,
-} from '@pages/ForumPage/Theme/units';
+} from '@pages/ForumPage/components/Theme/units';
 
-import { IThemeProps } from '@pages/ForumPage/Theme/types';
+import { IThemeProps } from '@pages/ForumPage/components/Theme/types';
 
 export const Theme: FC<IThemeProps> = ({
     userName,
@@ -15,7 +15,6 @@ export const Theme: FC<IThemeProps> = ({
     id,
     ...rest
 }) => {
-    const history = useHistory();
     const redirectToMessages = useCallback(() => history.push(`/forum/${id}`), [
         id,
     ]);

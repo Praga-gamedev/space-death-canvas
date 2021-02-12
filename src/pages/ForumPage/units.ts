@@ -1,8 +1,9 @@
+import { FC } from 'react';
 import styled from '@emotion/styled';
+
 import { Paper } from '@components';
 import { colors } from 'src/colors';
 import { IPaperProps } from '@components/Paper/types';
-import { FC } from 'react';
 
 export const MainBlock: FC<IPaperProps> = styled(Paper)`
     display: flex;
@@ -16,9 +17,7 @@ export const ButtonBlock = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-
     padding-top: 48px;
-
     width: 30%;
     height: 100%;
 `;
@@ -32,12 +31,10 @@ export const ThreadsWindow = styled.div`
     width: 90%;
     height: auto;
     max-height: 70%;
-
     margin: 48px auto 0 auto;
     border-radius: 15px;
     overflow-y: auto;
-
-    font-family: 'Comfortaa';
+    font-family: 'Comfortaa', sans-serif;
 
     ::-webkit-scrollbar {
         width: 12px;

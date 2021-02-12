@@ -1,15 +1,14 @@
 import React, { useCallback } from 'react';
-import { useHistory } from 'react-router';
+import { history } from '@store/initStore';
 import {
     ButtonBlock,
     HeaderButton,
     MainBlock,
     ThemeBlock,
     UsernameBlock,
-} from '@pages/ForumPage/ForumThreadDialog/Header/units';
+} from '@pages/ForumPage/components/ForumThreadDialog/Header/units';
 
 export const Header = () => {
-    const history = useHistory();
     const redirectForum = useCallback(() => history.push('/forum/'), []);
     return (
         <MainBlock>

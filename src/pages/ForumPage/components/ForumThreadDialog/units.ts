@@ -1,17 +1,16 @@
+import { FC } from 'react';
 import styled from '@emotion/styled';
+
 import { colors } from 'src/colors';
 import { Input, Paper } from '@components';
 import { IInputProps } from '@components/Input/types';
-import { FC } from 'react';
 
 export const MainBlock = styled(Paper)`
     display: flex;
     flex-direction: column;
     width: 70%;
-
     margin-left: auto;
     margin-right: auto;
-
     box-shadow: none;
     background-color: transparent;
     font-family: 'Comfortaa', sans-serif;
@@ -50,10 +49,8 @@ export const Footer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-
     width: 100%;
     height: 100px;
-
     background-color: ${colors.GrayScale_50};
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;

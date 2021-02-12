@@ -6,6 +6,7 @@ export const MainBlock = styled.div`
     line-height: 30px;
     border-radius: 10px;
     font-size: 15px;
+
     margin: ${({ isIncoming }: { isIncoming: boolean }) =>
         isIncoming ? '1% 0 1% 1%' : '1% 1% 1% auto'};
     background-color: ${({ isIncoming }: { isIncoming: boolean }) =>
