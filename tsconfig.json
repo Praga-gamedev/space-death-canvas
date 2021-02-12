@@ -18,7 +18,7 @@
         "outDir": "./dist",
         "paths": {
             "src/*": ["./src/*"],
-            "@images/*": ["./public/assets/images/*"],
+            "@images/*": ["./src/assets/images/*"],
             "@components/*": ["./src/components/*"],
             "@components": ["./src/components/index.ts"],
             "@pages/*": ["./src/pages/*"],

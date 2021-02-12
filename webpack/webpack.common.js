@@ -9,6 +9,7 @@ const isProd = !isDev;
 module.exports = {
     entry: './src/index.tsx',
     output: {
+        publicPath: '/',
         path: path.join(__dirname, '../dist'),
         filename: 'bundle.js',
     },
@@ -16,7 +17,7 @@ module.exports = {
         extensions: ['.tsx', '.ts', '.js'],
         alias: {
             src: path.resolve(__dirname, '../src/'),
-            '@images': path.resolve(__dirname, '../public/assets/images'),
+            '@images': path.resolve(__dirname, '../src/assets/images'),
             '@components': path.resolve(__dirname, '../src/components'),
             '@pages': path.resolve(__dirname, '../src/pages'),
             '@types': path.resolve(__dirname, '../src/types'),
@@ -35,8 +36,8 @@ module.exports = {
                 use: [MiniCssExtractPlugin.loader, 'css-loader'],
             },
             {
-                test: /\.(png|jpg|gif|svg)$/,
-                use: ['file-loader'],
+                test: /\.(png|jpe?g|gif|svg)$/,
+                use: 'file-loader',
             },
             {
                 test: /\.(woff|woff2|eot|ttf|otf)$/,
