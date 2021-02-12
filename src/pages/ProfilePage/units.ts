@@ -4,9 +4,8 @@ import { colors } from 'src/colors';
 import { Button } from '@components';
 
 export const ProfileContainer = styled.div`
-    margin-top: 80px;
-    padding: 90px 0 80px;
-    height: calc(100vh - 80px);
+    padding: 170px 0 80px;
+    height: 100vh;
     overflow-y: auto;
     background-color: ${colors.GrayScale_50};
 `;
