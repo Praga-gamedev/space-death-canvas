@@ -9,6 +9,7 @@ const isProd = !isDev;
 module.exports = {
     entry: './src/index.tsx',
     output: {
+        publicPath: '/',
         path: path.join(__dirname, '../dist'),
         filename: 'bundle.js',
     },
