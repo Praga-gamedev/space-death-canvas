@@ -59,6 +59,7 @@ export default function GlobalReboot() {
                 h4,
                 h5,
                 h6 {
+                    font-weight: 400;
                     margin-top: 0;
                     margin-bottom: 0.5rem;
                 }

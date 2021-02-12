@@ -4,6 +4,7 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import { Header } from '@components/Header';
 import {
     AuthPage,
+    RegistrationPage,
     NotFoundPage,
     GamePage,
     ForumPage,
@@ -27,17 +28,12 @@ const NavigationRouter = () => {
                     render={() => <div>Информация</div>}
                 />
 
-                <Route
-                    path="/auth"
-                    title="Авторизация"
-                    component={AuthPage}
-                    // render={() => <div>Авторизация</div>}
-                />
+                <Route path="/auth" title="Авторизация" component={AuthPage} />
 
                 <Route
                     path="/registration"
                     title="Регистрация"
-                    render={() => <div>Регистрация</div>}
+                    component={RegistrationPage}
                 />
 
                 <Route

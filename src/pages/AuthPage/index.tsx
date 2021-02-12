@@ -1,6 +1,9 @@
-import React, { useState, MouseEvent } from 'react';
+import React, { useState, FormEvent } from 'react';
+
+import { history } from '@store/initStore';
 
 import { Paper, Input, Button, Link } from '@components';
+import { login as auth, user } from '@api/auth';
 
 import { StyledWrapperPage, StyledPaperColumn } from '../units';
 
@@ -8,15 +11,31 @@ export const AuthPage = () => {
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
 
-    const onSubmitAuth = (e: MouseEvent) => {
+    const onSubmitAuth = async (e: FormEvent<HTMLDivElement>) => {
         e.preventDefault();
 
-        console.log('Вход:', { login, password });
+        if (login && password) {
+            try {
+                await auth({ login, password });
+                const res = await user();
+
+                console.log('Данные:', res);
+
+                history.push('/game');
+            } catch (e) {
+                console.log('Ошибка:', e);
+            }
+        } else {
+            console.error('Неверный логин или пароль.');
+        }
     };
 
     return (
         <StyledWrapperPage background={true}>
-            <Paper style={{ padding: '80px' }}>
+            <Paper
+                style={{ padding: '80px' }}
+                onSubmit={(e) => onSubmitAuth(e)}
+            >
                 <StyledPaperColumn>
                     {/* Заменим на логотип нашей игры, когда сделаем*/}
                     <label style={{ fontSize: '72px', marginBottom: '60px' }}>
@@ -35,9 +54,8 @@ export const AuthPage = () => {
                     />
 
                     <Button
-                        style={{ margin: '60px auto 0 auto' }}
+                        style={{ margin: '30px auto 0 auto' }}
                         children={'Войти'}
-                        onClick={(e) => onSubmitAuth(e)}
                     />
 
                     <Link
