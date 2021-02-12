@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch, Redirect } from 'react-router';
+import { Route, Switch, Redirect } from 'react-router-dom';
 
 import { Header } from '@components/Header';
 import { AuthPage, NotFoundPage, GamePage } from '@pages';
@@ -7,6 +7,7 @@ import { AuthPage, NotFoundPage, GamePage } from '@pages';
 import { StyledPage } from './units';
 
 import { tabs } from './tabs';
+import { LeaderBoard } from '@pages/LeaderBoard';
 
 const NavigationRouter = () => {
     return (
@@ -34,12 +35,6 @@ const NavigationRouter = () => {
                 />
 
                 <Route
-                    path="/leaderboard"
-                    title="Таблица лидеров"
-                    render={() => <div>Таблица лидеров</div>}
-                />
-
-                <Route
                     path="/game"
                     title="Space Death Canvas"
                     render={() => <GamePage />}
@@ -55,6 +50,12 @@ const NavigationRouter = () => {
                     path="/profile"
                     title="Профиль"
                     render={() => <div>Профиль</div>}
+                />
+
+                <Route
+                    path="/leaderboard"
+                    title="Таблица лидеров"
+                    component={LeaderBoard}
                 />
 
                 <Redirect exact from="/" to="/game" />
