@@ -2,6 +2,10 @@ import styled from '@emotion/styled';
 
 import { colors } from 'src/colors';
 
+export const StyledWrapperInput = styled.div`
+    width: 100%;
+`;
+
 export const StyledInput = styled.input`
     width: 100%;
     height: 50px;
