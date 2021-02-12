@@ -1,9 +1,11 @@
 import axios, { AxiosRequestConfig } from 'axios';
 
+export const HOST = 'https://ya-praktikum.tech';
+
 type CustomAxiosRequestConfig = Omit<AxiosRequestConfig, 'method'>;
 
 const axiosInstance = axios.create({
-    baseURL: 'https://ya-praktikum.tech/api/v2',
+    baseURL: `${HOST}/api/v2`,
     withCredentials: true,
     headers: { 'Content-Type': 'application/json' },
 });
