@@ -1,5 +1,4 @@
-import { IProfileFields } from '../../types';
-
+import { IProfileFields } from '@pages/ProfilePage/types';
 interface IProfileFormField {
     label: string;
     name: keyof IProfileFields;
@@ -24,3 +23,9 @@ export const getInitialProfileForm = (): IProfileFields =>
         (acc: IProfileFields, { name }) => ({ ...acc, [name]: '' }),
         {} as IProfileFields
     );
+
+export const getFieldsFromUser = (user: any): Partial<IProfileFields> =>
+    coreFormFields.reduce((acc, { name }) => {
+        const value = user[name] || '';
+        return { ...acc, [name]: value };
+    }, {});
