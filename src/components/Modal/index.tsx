@@ -4,7 +4,7 @@ import { IModalProps } from './types';
 import { ModalBody, ModalOverlay } from './units';
 
 export const Modal: FC<IModalProps> = memo(({ show, onClose, children }) => {
-    const overlayRef = useRef(null);
+    const overlayRef = useRef();
 
     const close = (event: Event) => {
         if (event.target === overlayRef.current) {

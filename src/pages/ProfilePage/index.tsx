@@ -36,43 +36,49 @@ export const ProfilePage: FC = memo(() => {
     const avatar = user?.avatar ? `${HOST}${user.avatar}` : '';
 
     useEffect(() => {
-        getUser()
-            .then((user) => {
+        (async () => {
+            try {
+                const user = await getUser();
                 setUser(user);
                 setFields({ ...fields, ...getFieldsFromUser(user) });
-            })
-            .catch(console.error);
+            } catch (error) {
+                console.error(error);
+            }
+        })();
     }, []);
 
     const changePasswordMode = (value: boolean) => {
         setPasswordMode(value);
 
-        if (!value) {
-            setFields({ ...fields, ...getFieldsFromUser(user) });
+        !value && setFields({ ...fields, ...getFieldsFromUser(user) });
+    };
+
+    const onSubmit = async (data: any) => {
+        try {
+            if (!passwordMode) {
+                const newUser = await updateProfile({ ...user, ...data });
+                setUser(newUser);
+            } else {
+                await updatePassword(data);
+                changePasswordMode(false);
+            }
+        } catch (error) {
+            console.error(error);
         }
     };
 
-    const onSubmit = (data: any) => {
-        if (!passwordMode) {
-            const _data = { ...user, ...data };
-            console.log(_data);
-            updateProfile({ ...user, ...data })
-                .then(setUser)
-                .catch(console.error);
-        } else {
-            updatePassword(data)
-                .then(() => changePasswordMode(false))
-                .catch(console.error);
-        }
-    };
-
-    const onUpdateAvatar = (file: File) => {
+    const onUpdateAvatar = async (file: File) => {
         setShowAvatarModal(false);
 
         const formData = new FormData();
         formData.append('avatar', file);
 
-        updateAvatar(formData).then(setUser).catch(console.error);
+        try {
+            const newUser = await updateAvatar(formData);
+            setUser(newUser);
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     return (
