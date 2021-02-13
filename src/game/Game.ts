@@ -85,6 +85,7 @@ export default class Game {
         this.isGameOver = false;
         this.score = 0;
         this.enemies = [];
+        this.bullets = [];
         this.player.pos = this.getPlayerStartPosition();
 
         this.isPaused && this.play();

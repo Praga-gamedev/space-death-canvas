@@ -10,11 +10,11 @@ import { Button } from '@components';
 import { colors } from 'src/colors';
 
 export const GamePage: FC = () => {
-    let game;
-
     const canvas = useRef<HTMLCanvasElement>(null);
     const gameDisplayRef = useRef<HTMLDivElement>(null);
     const pixelRatio = window.devicePixelRatio;
+
+    const [game, setGame] = useState<Game | null>(null);
 
     const [width, setWidth] = useState(0);
     const [height, setHeight] = useState(0);
@@ -33,8 +33,14 @@ export const GamePage: FC = () => {
 
     const startGame = () => {
         if (!canvas.current) return;
-        game = new Game(canvas.current);
-        game.start();
+
+        if (!game) {
+            const _game = new Game(canvas.current);
+            setGame(_game);
+            _game.play();
+        } else {
+            game.reset();
+        }
     };
 
     return (
