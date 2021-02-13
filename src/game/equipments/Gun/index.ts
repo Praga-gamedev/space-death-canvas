@@ -1,5 +1,5 @@
-import Equipment from '../Equipment';
-import { Bullet } from '../../entities';
+import Equipment from '@game/equipments/Equipment';
+import { Bullet } from '@game/entities';
 
 export class Gun extends Equipment {
     static cooldown = 200;

@@ -1,4 +1,4 @@
-import { Entity } from '../entities';
+import { Entity } from '@game/entities';
 
 export interface IEquipmentOptions {
     ctx: CanvasRenderingContext2D;

@@ -1,5 +1,5 @@
 import Entity, { IEntityOptions } from '../Entity';
-import { Gun } from '../../equipments';
+import { Gun } from '@game/equipments';
 
 export default class Player extends Entity {
     static size = {
