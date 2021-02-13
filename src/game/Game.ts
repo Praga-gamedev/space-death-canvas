@@ -1,4 +1,4 @@
-import { InputManager, CONTROLS } from './core';
+import { InputManager, CONTROLS, hasCollides } from './core';
 import { Player, Enemy, Entity } from './entities';
 
 export default class Game {
@@ -40,8 +40,8 @@ export default class Game {
 
     private getPlayerStartPosition() {
         return {
-            x: (this.width - Player.width) / 2,
-            y: this.height - Player.height * 2,
+            x: (this.width - Player.size.width) / 2,
+            y: this.height - Player.size.height * 2,
         };
     }
 
@@ -113,6 +113,8 @@ export default class Game {
 
             this.enemies.push(enemy);
         }
+
+        this.checkCollisions();
     }
 
     private updateEntities(dt: number) {
@@ -122,8 +124,7 @@ export default class Game {
             enemy.y += enemy.speed * dt;
 
             // Удаляем врагов, ушедших за канвас
-            if (enemy.y + Enemy.size.height >= this.height) {
-                console.log('dead');
+            if (enemy.y - enemy.height >= this.height) {
                 this.enemies.splice(i, 1);
                 i--;
             }
@@ -176,6 +177,16 @@ export default class Game {
 
         if (this.inputManager.isDown(CONTROLS.SPACE)) {
             console.log('game:press_space', dt);
+        }
+    }
+
+    checkCollisions() {
+        for (let i = 0; i < this.enemies.length; i++) {
+            const enemy = this.enemies[i];
+
+            if (hasCollides(this.player, enemy)) {
+                this.gameOver();
+            }
         }
     }
 

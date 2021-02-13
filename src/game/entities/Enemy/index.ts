@@ -6,6 +6,8 @@ export class Enemy extends Entity {
         width: 40,
     };
 
+    public size = { ...Enemy.size };
+
     public speed = 100;
 
     public render() {
@@ -14,8 +16,8 @@ export class Enemy extends Entity {
         this.ctx.save();
         this.ctx.fillStyle = '#4447E2';
 
-        this.ctx.translate(x, y);
-        this.ctx.fillRect(x, y, Enemy.size.width, Enemy.size.height);
+        this.ctx.moveTo(x, y);
+        this.ctx.fillRect(x, y, this.width, this.height);
 
         this.ctx.restore();
     }
