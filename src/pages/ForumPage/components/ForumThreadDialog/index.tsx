@@ -9,6 +9,7 @@ import {
 import { Header } from '@pages/ForumPage/components/ForumThreadDialog/Header';
 import { IMessageProps } from '@pages/ForumPage/components/ForumThreadDialog/Message/types';
 import { Message } from '@pages/ForumPage/components/ForumThreadDialog/Message';
+import { StyledWrapperPage } from '@pages/units';
 
 // заглушки с данными пока нет нашего апи
 const messageData: IMessageProps[] = [
@@ -46,14 +47,16 @@ export const ForumThreadDialog = () => {
     }, [messageData]);
 
     return (
-        <MainBlock>
-            <Header />
-            <MessageBlock>
-                <MessageList>{messageList}</MessageList>
-            </MessageBlock>
-            <Footer>
-                <MessageInput placeholder={'Введите сообщение'} />
-            </Footer>
-        </MainBlock>
+        <StyledWrapperPage background={true}>
+            <MainBlock>
+                <Header />
+                <MessageBlock>
+                    <MessageList>{messageList}</MessageList>
+                </MessageBlock>
+                <Footer>
+                    <MessageInput placeholder={'Введите сообщение'} />
+                </Footer>
+            </MainBlock>
+        </StyledWrapperPage>
     );
 };

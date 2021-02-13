@@ -1,16 +1,28 @@
-import { FC } from 'react';
 import styled from '@emotion/styled';
-
-import { Paper } from '@components';
+import { scrollBarStyle } from '@pages/units';
 import { colors } from 'src/colors';
-import { IPaperProps } from '@components/Paper/types';
 
-export const MainBlock: FC<IPaperProps> = styled(Paper)`
+export const MainBlock = styled.div`
+    width: 70%;
+    height: 100%;
+    padding-top: 80px !important;
+    background-color: ${colors.GrayScale_50};
+    color: ${colors.GrayScale_0};
+`;
+
+export const Title = styled.h1`
+    color: ${colors.GrayScale_20};
+    margin-top: 2%;
+    text-align: center;
+`;
+
+export const ContentWrapper = styled.div`
     display: flex;
     flex-direction: row;
-    margin-left: auto;
-    margin-right: auto;
-    width: 70%;
+    height: auto;
+    max-width: 1000px;
+    max-height: 90%;
+    margin: 1% auto 0 auto;
 `;
 
 export const ButtonBlock = styled.div`
@@ -24,29 +36,17 @@ export const ButtonBlock = styled.div`
 
 export const ContentBlock = styled.div`
     width: 70%;
-    height: 100%;
+    height: inherit;
 `;
 
 export const ThreadsWindow = styled.div`
     width: 90%;
     height: auto;
-    max-height: 70%;
+    max-height: 80%;
     margin: 48px auto 0 auto;
     border-radius: 15px;
     overflow-y: auto;
     font-family: 'Comfortaa', sans-serif;
 
-    ::-webkit-scrollbar {
-        width: 12px;
-    }
-
-    ::-webkit-scrollbar-track {
-        -webkit-box-shadow: inset 0 0 6px transparent;
-        border-radius: 15px;
-    }
-
-    ::-webkit-scrollbar-thumb {
-        border-radius: 15px;
-        -webkit-box-shadow: inset 0 0 6px ${colors.secondary};
-    }
+    ${scrollBarStyle}
 `;

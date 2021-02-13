@@ -2,17 +2,21 @@ import { FC } from 'react';
 import styled from '@emotion/styled';
 
 import { colors } from 'src/colors';
-import { Input, Paper } from '@components';
 import { IInputProps } from '@components/Input/types';
+import { scrollBarStyle } from '@pages/units';
 
-export const MainBlock = styled(Paper)`
+export const MainBlock = styled.div`
     display: flex;
     flex-direction: column;
     width: 70%;
+    height: 100%;
+    max-width: 1000px;
+    min-width: 500px;
+    padding-top: 80px !important;
     margin-left: auto;
     margin-right: auto;
-    box-shadow: none;
     background-color: transparent;
+    color: ${colors.GrayScale_0};
     font-family: 'Comfortaa', sans-serif;
 `;
 
@@ -22,19 +26,7 @@ export const MessageBlock = styled.div`
     overflow-y: auto;
     background-color: ${colors.GrayScale_50};
 
-    ::-webkit-scrollbar {
-        width: 12px;
-    }
-
-    ::-webkit-scrollbar-track {
-        -webkit-box-shadow: inset 0 0 6px transparent;
-        border-radius: 15px;
-    }
-
-    ::-webkit-scrollbar-thumb {
-        border-radius: 15px;
-        -webkit-box-shadow: inset 0 0 6px ${colors.secondary};
-    }
+    ${scrollBarStyle}
 `;
 
 export const MessageList = styled.ul`
@@ -52,13 +44,21 @@ export const Footer = styled.div`
     width: 100%;
     height: 100px;
     background-color: ${colors.GrayScale_50};
-    border-bottom-left-radius: 15px;
-    border-bottom-right-radius: 15px;
 `;
 
-export const MessageInput: FC<IInputProps> = styled(Input)`
+export const MessageInput: FC<IInputProps> = styled.input`
     height: 48px;
     width: 90%;
     background-color: ${colors.GrayScale_0};
     color: ${colors.GrayScale_100};
+
+    padding: 0 20px;
+    border: none;
+    border-radius: 15px;
+    font-size: 16px;
+
+    &:focus {
+        outline-width: 0;
+        border: 2px solid ${colors.secondary};
+    }
 `;

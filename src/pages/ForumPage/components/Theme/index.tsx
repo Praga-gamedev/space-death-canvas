@@ -1,12 +1,8 @@
 import React, { FC, useCallback } from 'react';
 import { history } from '@store/initStore';
-import {
-    ThemeBlock,
-    ThemeContent,
-    UsernameBlock,
-} from '@pages/ForumPage/components/Theme/units';
+import { MainBlock, ThemeBlock, ThemeSpan, UsernameBlock } from './units';
 
-import { IThemeProps } from '@pages/ForumPage/components/Theme/types';
+import { IThemeProps } from './types';
 
 export const Theme: FC<IThemeProps> = ({
     userName,
@@ -19,13 +15,13 @@ export const Theme: FC<IThemeProps> = ({
         id,
     ]);
     return (
-        <ThemeBlock isEven={isEven} onClick={redirectToMessages}>
+        <MainBlock isEven={isEven} onClick={redirectToMessages}>
             <UsernameBlock>
                 <span>{userName}</span>
             </UsernameBlock>
-            <ThemeContent>
-                <span>{content}</span>
-            </ThemeContent>
-        </ThemeBlock>
+            <ThemeBlock>
+                <ThemeSpan>{content}</ThemeSpan>
+            </ThemeBlock>
+        </MainBlock>
     );
 };

@@ -1,7 +1,8 @@
 import React, { useMemo } from 'react';
-import { DataWindow, StyledPaper } from './units';
+import { DataWindow, MainBlock, Title } from './units';
 import { IRowProps } from '@pages/LeaderBoard/Row/types';
 import { Row } from '@pages/LeaderBoard/Row';
+import { StyledWrapperPage } from '@pages/units';
 
 const rowData: IRowProps[] = [
     {
@@ -34,11 +35,14 @@ const getRows = () => {
 export const LeaderBoard = () => {
     const rows = useMemo(getRows, [rowData]);
     return (
-        <StyledPaper>
-            <DataWindow>
-                <Row userName={'Пользователь'} score={'Очки'} />
-                {rows}
-            </DataWindow>
-        </StyledPaper>
+        <StyledWrapperPage background={true}>
+            <MainBlock>
+                <Title>Таблица лидеров</Title>
+                <DataWindow>
+                    <Row userName={'Пользователь'} score={'Очки'} />
+                    {rows}
+                </DataWindow>
+            </MainBlock>
+        </StyledWrapperPage>
     );
 };

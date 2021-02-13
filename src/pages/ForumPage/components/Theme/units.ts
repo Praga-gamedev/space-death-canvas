@@ -1,17 +1,16 @@
 import styled from '@emotion/styled';
-
-import { IThemeProps } from '@pages/ForumPage/components/Theme/types';
 import { colors } from 'src/colors';
 
-export const ThemeBlock = styled.div`
+export const MainBlock = styled.div`
+    background-color: ${({ isEven }: { isEven: boolean }) =>
+        isEven ? colors.GrayScale_20 : colors.secondaryAccent};
+
+    color: ${({ isEven }: { isEven: boolean }) =>
+        isEven ? colors.GrayScale_0 : colors.secondary};
+
     height: 54px;
     display: flex;
     cursor: pointer;
-
-    background-color: ${(props: { isEven: boolean }) =>
-        props.isEven ? colors.GrayScale_20 : colors.secondaryAccent};
-    color: ${(props: IThemeProps) =>
-        props.isEven ? colors.GrayScale_0 : colors.secondary};
 `;
 
 export const UsernameBlock = styled.div`
@@ -22,9 +21,18 @@ export const UsernameBlock = styled.div`
     padding-left: 24px;
 `;
 
-export const ThemeContent = styled.div`
+export const ThemeBlock = styled.div`
     display: flex;
+    align-items: center;
+    width: 70%;
     height: 100%;
     padding-top: 4px;
     padding-left: 16px;
+`;
+
+export const ThemeSpan = styled.span`
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding: 5px;
 `;
