@@ -2,12 +2,6 @@ import styled from '@emotion/styled';
 import { colors } from 'src/colors';
 
 export const StyledRow = styled.div`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    height: 32px;
-    width: 100%;
-
     background-color: ${({ isEven }: { isEven: boolean }) => {
         if (isEven === undefined) {
             return colors.secondary;
@@ -24,19 +18,30 @@ export const StyledRow = styled.div`
             return colors.secondary;
         }
         return colors.GrayScale_0;
-    }}; ;
+    }};
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 54px;
+    width: 100%;
+
+    &:first-of-type {
+        position: sticky;
+        top: 0;
+    }
 `;
 
 export const TextBlock = styled.div`
     width: 30%;
-    padding-left: 20px;
+    padding-left: 30px;
 `;
 
 export const ScoreBlock = styled.div`
-    width: 30%;
+    width: 20%;
     text-align: center;
 `;
 
 export const EmptyBlock = styled.div`
-    width: 40%;
+    width: 50%;
 `;

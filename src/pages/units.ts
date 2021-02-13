@@ -3,8 +3,9 @@ import { css } from '@emotion/react';
 import { colors } from 'src/colors';
 
 import backgroundPicture from '@images/background.png';
+import { FC } from 'react';
 
-export const StyledWrapperPage = styled.div`
+export const StyledWrapperPage: FC<{ background?: boolean }> = styled.div`
     background-image: ${({ background }: { background: boolean }) =>
         background ? `url(${backgroundPicture})` : 'none'};
 

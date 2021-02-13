@@ -2,17 +2,19 @@ import styled from '@emotion/styled';
 import { colors } from 'src/colors';
 
 export const MainBlock = styled.div`
+    margin: ${({ isIncoming }: { isIncoming: boolean }) =>
+        isIncoming ? '1% 0 1% 5%' : '1% 5% 1% auto'};
+
+    background-color: ${({ isIncoming }: { isIncoming: boolean }) =>
+        isIncoming ? colors.GrayScale_20 : colors.secondaryAccent};
+
+    color: ${({ isIncoming }: { isIncoming: boolean }) =>
+        isIncoming ? colors.GrayScale_0 : colors.secondary};
+
     padding: 2px;
     line-height: 30px;
     border-radius: 10px;
     font-size: 15px;
-
-    margin: ${({ isIncoming }: { isIncoming: boolean }) =>
-        isIncoming ? '1% 0 1% 1%' : '1% 1% 1% auto'};
-    background-color: ${({ isIncoming }: { isIncoming: boolean }) =>
-        isIncoming ? colors.GrayScale_20 : colors.secondaryAccent};
-    color: ${({ isIncoming }: { isIncoming: boolean }) =>
-        isIncoming ? colors.GrayScale_0 : colors.secondary};
 `;
 
 export const UserNameSpan = styled.span`

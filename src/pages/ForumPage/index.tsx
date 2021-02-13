@@ -4,11 +4,14 @@ import { Theme, ForumButton } from '@pages/ForumPage/components';
 import {
     ButtonBlock,
     ContentBlock,
-    MainBlock,
+    ContentWrapper,
     ThreadsWindow,
+    Title,
+    MainBlock,
 } from '@pages/ForumPage/units';
 
 import { ButtonData, ThemeType } from '@pages/ForumPage/types';
+import { StyledWrapperPage } from '@pages/units';
 
 // заглушки с данными пока нет нашего апи
 const buttonsData: ButtonData[] = [
@@ -49,7 +52,7 @@ export const ForumPage = () => {
     const themes = useMemo(() => {
         let result: any = [];
         let globalIndex = 0;
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < 15; i++) {
             const themes = themesData.map((data, index) => (
                 <Theme
                     id={data.id}
@@ -65,21 +68,26 @@ export const ForumPage = () => {
     }, [themesData]);
 
     return (
-        <MainBlock isRounding={false}>
-            <ButtonBlock>
-                {buttonsData.map((buttonData, index) => (
-                    <ForumButton
-                        key={index}
-                        isClicked={buttonData.id === currentForumId}
-                        onClick={() => setForumId(buttonData.id)}
-                    >
-                        {buttonData.title}
-                    </ForumButton>
-                ))}
-            </ButtonBlock>
-            <ContentBlock>
-                <ThreadsWindow>{themes}</ThreadsWindow>
-            </ContentBlock>
-        </MainBlock>
+        <StyledWrapperPage background={true}>
+            <MainBlock>
+                <Title>Форум</Title>
+                <ContentWrapper>
+                    <ButtonBlock>
+                        {buttonsData.map((buttonData, index) => (
+                            <ForumButton
+                                key={index}
+                                isClicked={buttonData.id === currentForumId}
+                                onClick={() => setForumId(buttonData.id)}
+                            >
+                                {buttonData.title}
+                            </ForumButton>
+                        ))}
+                    </ButtonBlock>
+                    <ContentBlock>
+                        <ThreadsWindow>{themes}</ThreadsWindow>
+                    </ContentBlock>
+                </ContentWrapper>
+            </MainBlock>
+        </StyledWrapperPage>
     );
 };

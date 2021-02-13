@@ -5,6 +5,7 @@ import {
     HeaderButton,
     MainBlock,
     ThemeBlock,
+    ThemeSpan,
     UsernameBlock,
 } from '@pages/ForumPage/components/ForumThreadDialog/Header/units';
 
@@ -15,11 +16,13 @@ export const Header = () => {
             <ButtonBlock>
                 <HeaderButton onClick={redirectForum} />
             </ButtonBlock>
-            <UsernameBlock>
-                <span>spark888</span>
-            </UsernameBlock>
+            <UsernameBlock>spark888</UsernameBlock>
             <ThemeBlock>
-                <span>Как убить летающего короля-бобра?</span>
+                <ThemeSpan>
+                    Как убить летающего короля-бобра? Как убить летающего
+                    короля-бобра? Как убить летающего короля-бобра? Как убить
+                    летающего короля-бобра? Как убить летающего короля-бобра?
+                </ThemeSpan>
             </ThemeBlock>
         </MainBlock>
     );

@@ -9,8 +9,6 @@ export const MainBlock = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
     width: 100%;
     height: 64px;
     background-color: ${colors.secondary};
@@ -20,22 +18,29 @@ export const MainBlock = styled.div`
 export const ButtonBlock = styled.div`
     display: flex;
     align-items: center;
-    width: 15%;
+    width: 5%;
     height: 100%;
 `;
 
 export const UsernameBlock = styled.div`
     display: flex;
     align-items: center;
-    width: 50%;
+    width: 45%;
     height: 100%;
 `;
 
 export const ThemeBlock = styled.div`
     display: flex;
     align-items: center;
-    width: inherit;
+    width: 50%;
     height: 100%;
+`;
+
+export const ThemeSpan = styled.span`
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding: 5px;
 `;
 
 export const HeaderButton: FC<IButtonProps> = styled.button`
