@@ -3,7 +3,7 @@ import React, { useState, FormEvent } from 'react';
 import { history } from '@store/initStore';
 
 import { Paper, Input, Button, Link } from '@components';
-import { login as auth, user } from '@api/auth';
+import { login as auth, getUser as user } from '@api/auth';
 
 import { StyledWrapperPage, StyledPaperColumn } from '../units';
 
