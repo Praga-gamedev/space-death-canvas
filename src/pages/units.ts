@@ -18,6 +18,19 @@ export const StyledWrapperPage: FC<{ background?: boolean }> = styled.div`
     height: 100vh;
 `;
 
+export const StyledWrapperErrorPage = styled(StyledWrapperPage)`
+    background: ${colors.GrayScale_100};
+    flex-direction: column;
+    align-items: center;
+`;
+
+export const StyledErrorMessage = styled.h1`
+    color: ${colors.GrayScale_0};
+    font-family: 'Comfortaa', sans-serif;
+    text-align: center;
+    margin: 50px;
+`;
+
 export const scrollBarStyle = css`
     ::-webkit-scrollbar {
         width: 12px;

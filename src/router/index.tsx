@@ -4,11 +4,12 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import { Header } from '@components/Header';
 import {
     AuthPage,
-    NotFoundPage,
     GamePage,
     ForumPage,
     ForumThreadDialog,
     ProfilePage,
+    NotFoundPage,
+    ServerErrorPage,
 } from '@pages';
 
 import { StyledPage } from './units';
@@ -68,6 +69,12 @@ const NavigationRouter = () => {
                     path="/leaderboard"
                     title="Таблица лидеров"
                     component={LeaderBoard}
+                />
+
+                <Route
+                    path="/500"
+                    title="Ошибка сервера!"
+                    component={ServerErrorPage}
                 />
 
                 <Redirect exact from="/" to="/game" />
