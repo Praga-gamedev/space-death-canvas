@@ -1,9 +1,16 @@
-import React, { FC } from 'react';
+import React, { FC, useState, useRef } from 'react';
 import { kea, useValues } from 'kea';
 
 import { history } from '@store/initStore';
 
-import { StyledHeader, StyledTab } from './units';
+import { Popup } from './Popup';
+
+import {
+    StyledHeader,
+    StyledTab,
+    StyledDropdownWrapper,
+    StyledDropdownArrow,
+} from './units';
 
 import { IHeaderProps } from './types';
 
@@ -20,6 +27,10 @@ export const Header: FC<IHeaderProps> = ({ tabs }) => {
         },
     } = useValues(logicRouter);
 
+    const [isOpen, setOpen] = useState<boolean>(false);
+
+    const buttonRef = useRef();
+
     const isActive = (path: string) => path === pathname;
 
     return (
@@ -33,6 +44,22 @@ export const Header: FC<IHeaderProps> = ({ tabs }) => {
                     {title}
                 </StyledTab>
             ))}
+
+            <StyledDropdownWrapper>
+                <StyledDropdownArrow
+                    ref={buttonRef}
+                    onClick={() => {
+                        setOpen(!isOpen);
+                    }}
+                    isOpen={isOpen}
+                />
+
+                <Popup
+                    buttonRef={buttonRef}
+                    isOpen={isOpen}
+                    setOpen={setOpen}
+                />
+            </StyledDropdownWrapper>
         </StyledHeader>
     );
 };
