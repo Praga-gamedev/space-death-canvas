@@ -16,7 +16,7 @@ export const NotFoundPage = () => {
                 style={{ width: '600px', marginBottom: '90px' }}
             />
             <StyledErrorMessage>
-                Вы вышли из коробля! Срочно вернитесь!
+                Вы вышли из корабля! Срочно вернитесь!
             </StyledErrorMessage>
 
             <Button children={'Вернуться'} onClick={() => history.push('/')} />
