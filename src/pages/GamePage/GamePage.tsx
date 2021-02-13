@@ -8,7 +8,7 @@ export const GamePage: FC = () => {
         if (!canvas.current) return;
 
         const game = new Game(canvas.current);
-        game.start();
+        game.play();
 
         return () => game.destroy();
     }, [canvas]);

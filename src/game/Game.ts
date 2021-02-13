@@ -1,7 +1,10 @@
 import { InputManager, CONTROLS } from './core';
-import { Player } from './entities';
+import { Player, Enemy, Entity } from './entities';
 
 export default class Game {
+    public isGameOver = false;
+    public isPaused = false;
+
     private canvas: HTMLCanvasElement;
     private ctx: CanvasRenderingContext2D;
 
@@ -11,10 +14,14 @@ export default class Game {
     private height: number;
 
     private lastTime: number;
+    // private gameTime: number = 0;
 
     private player: Player;
+    private enemies: Enemy[] = [];
 
     constructor(canvas: HTMLCanvasElement) {
+        // @ts-ignore
+        window.game = this;
         this.canvas = canvas;
         this.ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
 
@@ -27,18 +34,48 @@ export default class Game {
 
         this.player = new Player({
             ctx: this.ctx,
-            pos: {
-                x: (this.width - Player.width) / 2,
-                y: (this.height - Player.height) / 2,
-            },
+            pos: this.getPlayerStartPosition(),
         });
     }
 
-    public start() {
+    private getPlayerStartPosition() {
+        return {
+            x: (this.width - Player.width) / 2,
+            y: this.height - Player.height * 2,
+        };
+    }
+
+    public play() {
+        this.isPaused = false;
+        this.lastTime = performance.now();
         this.main();
+
+        return this;
+    }
+
+    public gameOver() {
+        this.isGameOver = true;
+        return this;
+    }
+
+    // Reset game to original state
+    public reset() {
+        this.isGameOver = false;
+        this.enemies = [];
+        this.player.pos = this.getPlayerStartPosition();
+
+        this.isPaused && this.play();
+
+        return this;
+    }
+
+    public pause() {
+        this.isPaused = true;
+        return this;
     }
 
     private main() {
+        if (this.isPaused) return;
         // Главный цикл игры
         const now = performance.now();
         /* 
@@ -59,13 +96,38 @@ export default class Game {
     }
 
     private update(dt: number) {
+        // this.gameTime += dt;
+
         // В этом методе обновляем все, что касается данных.
         this.checkControls(dt);
-        this.updateEntities();
+        this.updateEntities(dt);
+
+        if (Math.random() < 0.05) {
+            const enemyX = Math.random() * (this.width - Enemy.size.width);
+            const enemyY = -Enemy.size.height;
+
+            const enemy = new Enemy({
+                ctx: this.ctx,
+                pos: { x: enemyX, y: enemyY },
+            });
+
+            this.enemies.push(enemy);
+        }
     }
 
-    private updateEntities() {
-        // TODO: обновление координат всех сущностей и тд
+    private updateEntities(dt: number) {
+        for (let i = 0; i < this.enemies.length; i++) {
+            const enemy = this.enemies[i];
+
+            enemy.y += enemy.speed * dt;
+
+            // Удаляем врагов, ушедших за канвас
+            if (enemy.y + Enemy.size.height >= this.height) {
+                console.log('dead');
+                this.enemies.splice(i, 1);
+                i--;
+            }
+        }
     }
 
     private render() {
@@ -74,7 +136,17 @@ export default class Game {
         this.ctx.clearRect(0, 0, this.width, this.height);
 
         this.renderBackground();
-        this.player.render();
+        if (!this.isGameOver) {
+            this.player.render();
+        }
+
+        this.renderEntities(this.enemies);
+    }
+
+    private renderEntities(list: Entity[]) {
+        for (let i = 0; i < list.length; i++) {
+            list[i].render();
+        }
     }
 
     private renderBackground() {
