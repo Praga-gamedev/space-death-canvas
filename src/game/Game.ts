@@ -1,9 +1,10 @@
 import { InputManager, CONTROLS, hasCollides } from './core';
-import { Player, Enemy, Entity } from './entities';
+import { Player, Enemy, Entity, Bullet } from './entities';
 
 export default class Game {
     public isGameOver = false;
     public isPaused = false;
+    public score = 0;
 
     private canvas: HTMLCanvasElement;
     private ctx: CanvasRenderingContext2D;
@@ -18,6 +19,7 @@ export default class Game {
 
     private player: Player;
     private enemies: Enemy[] = [];
+    private bullets: Bullet[] = [];
 
     constructor(canvas: HTMLCanvasElement) {
         // @ts-ignore
@@ -61,6 +63,7 @@ export default class Game {
     // Reset game to original state
     public reset() {
         this.isGameOver = false;
+        this.score = 0;
         this.enemies = [];
         this.player.pos = this.getPlayerStartPosition();
 
@@ -129,6 +132,18 @@ export default class Game {
                 i--;
             }
         }
+
+        for (let i = 0; i < this.bullets.length; i++) {
+            const bullet = this.bullets[i];
+
+            bullet.y -= bullet.speed * dt;
+
+            // Удаляем врагов, ушедших за канвас
+            if (bullet.y + bullet.height < 0) {
+                this.bullets.splice(i, 1);
+                i--;
+            }
+        }
     }
 
     private render() {
@@ -142,6 +157,7 @@ export default class Game {
         }
 
         this.renderEntities(this.enemies);
+        this.renderEntities(this.bullets);
     }
 
     private renderEntities(list: Entity[]) {
@@ -157,6 +173,8 @@ export default class Game {
 
     private checkControls(dt: number) {
         // Проверяем нажатие клавиш
+        if (this.isGameOver) return;
+
         const { speed } = this.player;
 
         if (this.inputManager.isDown(CONTROLS.DOWN)) {
@@ -176,13 +194,30 @@ export default class Game {
         }
 
         if (this.inputManager.isDown(CONTROLS.SPACE)) {
-            console.log('game:press_space', dt);
+            const bullet = this.player.shoot();
+            if (!bullet) return;
+
+            this.bullets.push(bullet);
         }
     }
 
     checkCollisions() {
         for (let i = 0; i < this.enemies.length; i++) {
             const enemy = this.enemies[i];
+
+            for (let j = 0; j < this.bullets.length; j++) {
+                const bullet = this.bullets[j];
+
+                if (hasCollides(bullet, enemy)) {
+                    this.enemies.splice(i, 1);
+                    i--;
+
+                    this.bullets.splice(j, 1);
+                    j--;
+
+                    this.score += 200;
+                }
+            }
 
             if (hasCollides(this.player, enemy)) {
                 this.gameOver();
