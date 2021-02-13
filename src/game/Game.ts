@@ -1,10 +1,17 @@
 import { InputManager, CONTROLS, hasCollides } from './core';
 import { Player, Enemy, Entity, Bullet } from './entities';
 
+export interface IGameState {
+    isGameOver: boolean;
+    isPaused: boolean;
+    score: number;
+}
+
 export default class Game {
     public isGameOver = false;
     public isPaused = false;
     public score = 0;
+    public onUpdateGameState: (state: IGameState) => void;
 
     private canvas: HTMLCanvasElement;
     private ctx: CanvasRenderingContext2D;
@@ -21,7 +28,10 @@ export default class Game {
     private enemies: Enemy[] = [];
     private bullets: Bullet[] = [];
 
-    constructor(canvas: HTMLCanvasElement) {
+    constructor(
+        canvas: HTMLCanvasElement,
+        onUpdateGameState?: (state: IGameState) => void
+    ) {
         // @ts-ignore
         window.game = this;
         this.canvas = canvas;
@@ -38,6 +48,16 @@ export default class Game {
             ctx: this.ctx,
             pos: this.getPlayerStartPosition(),
         });
+
+        this.onUpdateGameState = onUpdateGameState || (() => {});
+    }
+
+    get gameState() {
+        return {
+            isGameOver: this.isGameOver,
+            isPaused: this.isPaused,
+            score: this.score,
+        };
     }
 
     private getPlayerStartPosition() {
@@ -118,6 +138,7 @@ export default class Game {
         }
 
         this.checkCollisions();
+        this.onUpdateGameState(this.gameState);
     }
 
     private updateEntities(dt: number) {
