@@ -43,7 +43,7 @@ const NavigationRouter = () => {
                 <Route
                     path="/game"
                     title="Space Death Canvas"
-                    render={() => <GamePage />}
+                    component={GamePage}
                 />
 
                 <Route
