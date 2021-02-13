@@ -1,2 +1,2 @@
 export { ProfileForm } from './ProfileForm';
-export { getInitialProfileForm } from './fields';
+export { getInitialProfileForm, getFieldsFromUser } from './fields';
