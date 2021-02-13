@@ -4,7 +4,7 @@ import { IPaperProps } from './types';
 
 import {colors} from 'src/colors'
 
-export const StyledPaper = styled.div`
+export const StyledPaper = styled.form`
     display: block;
     background-color: ${colors.GrayScale_50};
     box-shadow: 8px 4px 30px rgba(0, 0, 0, 0.5);

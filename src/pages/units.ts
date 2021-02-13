@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
+
 import { colors } from 'src/colors';
 
 import backgroundPicture from '@images/background.png';
@@ -31,6 +32,18 @@ export const StyledErrorMessage = styled.h1`
     margin: 50px;
 `;
 
+export const StyledPaperColumn = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 150px;
+`;
+
+export const StyledTitlePage = styled.h1`
+    color: ${colors.GrayScale_20};
+`;
+
 export const scrollBarStyle = css`
     ::-webkit-scrollbar {
         width: 12px;
@@ -42,15 +55,7 @@ export const scrollBarStyle = css`
     }
 
     ::-webkit-scrollbar-thumb {
-        border-radius: 15px;
         -webkit-box-shadow: inset 0 0 6px ${colors.secondary};
+        border-radius: 15px;
     }
-`;
-
-export const StyledPaperColumn = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding-top: 150px;
 `;

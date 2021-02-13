@@ -12,9 +12,10 @@ export const StyledInput = styled.input`
     padding: 0 20px;
     border: none;
     border-radius: 15px;
+    font-size: 16px;
+    margin-bottom: 20px;
     color: ${colors.GrayScale_0};
     background-color: ${colors.GrayScale_40};
-    font-size: 16px;
 
     &:focus {
         outline-width: 0;
@@ -24,6 +25,7 @@ export const StyledInput = styled.input`
 
 export const StyledSpan = styled.span`
     display: block;
+    font-size: 18px;
     margin-bottom: 10px;
     color: ${colors.GrayScale_30};
 `;
