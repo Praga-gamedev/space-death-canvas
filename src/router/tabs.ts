@@ -23,8 +23,4 @@ export const tabs = [
         path: '/forum',
         title: 'Форум',
     },
-    {
-        path: '/profile',
-        title: 'Профиль',
-    },
 ];

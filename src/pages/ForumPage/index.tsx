@@ -6,12 +6,11 @@ import {
     ContentBlock,
     ContentWrapper,
     ThreadsWindow,
-    Title,
-    MainBlock,
 } from '@pages/ForumPage/units';
 
 import { ButtonData, ThemeType } from '@pages/ForumPage/types';
-import { StyledWrapperPage } from '@pages/units';
+import { StyledTitlePage, StyledWrapperPage } from '@pages/units';
+import { Paper } from '@components';
 
 // заглушки с данными пока нет нашего апи
 const buttonsData: ButtonData[] = [
@@ -69,8 +68,15 @@ export const ForumPage = () => {
 
     return (
         <StyledWrapperPage background={true}>
-            <MainBlock>
-                <Title>Форум</Title>
+            <Paper w={'70%'} maxw={'1000px'}>
+                <StyledTitlePage
+                    style={{
+                        marginTop: '10%',
+                        textAlign: 'center',
+                    }}
+                >
+                    Форум
+                </StyledTitlePage>
                 <ContentWrapper>
                     <ButtonBlock>
                         {buttonsData.map((buttonData, index) => (
@@ -87,7 +93,7 @@ export const ForumPage = () => {
                         <ThreadsWindow>{themes}</ThreadsWindow>
                     </ContentBlock>
                 </ContentWrapper>
-            </MainBlock>
+            </Paper>
         </StyledWrapperPage>
     );
 };

@@ -1,11 +1,6 @@
 import React, { FC, memo, ChangeEvent } from 'react';
 
-import {
-    FormBlock,
-    ProfileField,
-    ProfileBackButton,
-    ProfileButtons,
-} from './units';
+import { S } from './units';
 import { Input, Button } from '@components';
 
 import { coreFormFields, passwordFormFields } from './fields';
@@ -42,30 +37,30 @@ export const ProfileForm: FC<IProfileFormProps> = memo(
         };
 
         return (
-            <FormBlock>
+            <S.FormBlock>
                 {fieldList.map(({ name, label, type }) => (
-                    <ProfileField key={name}>
+                    <S.ProfileField key={name}>
                         <Input
                             value={[fields[name]]}
                             label={label}
                             type={type}
                             onChange={profileFormHandler(name)}
                         />
-                    </ProfileField>
+                    </S.ProfileField>
                 ))}
 
-                <ProfileButtons withBackButton={passwordMode}>
+                <S.ProfileButtons withBackButton={passwordMode}>
                     {passwordMode && (
-                        <ProfileBackButton
+                        <S.ProfileBackButton
                             onClick={() => setPasswordMode(false)}
                         >
                             <img src={backIcon} />
-                        </ProfileBackButton>
+                        </S.ProfileBackButton>
                     )}
 
                     <Button onClick={handleSubmit}>Сохранить</Button>
-                </ProfileButtons>
-            </FormBlock>
+                </S.ProfileButtons>
+            </S.FormBlock>
         );
     }
 );

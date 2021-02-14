@@ -1,8 +1,9 @@
 import React, { useMemo } from 'react';
-import { DataWindow, MainBlock, Title } from './units';
+import { DataWindow } from './units';
 import { IRowProps } from './Row/types';
 import { Row } from './Row';
-import { StyledWrapperPage } from '@pages/units';
+import { StyledTitlePage, StyledWrapperPage } from '@pages/units';
+import { Paper } from '@components';
 
 const rowData: IRowProps[] = [
     {
@@ -36,13 +37,24 @@ export const LeaderBoard = () => {
     const rows = useMemo(getRows, [rowData]);
     return (
         <StyledWrapperPage background={true}>
-            <MainBlock>
-                <Title>Таблица лидеров</Title>
+            <Paper
+                w={'70%'}
+                maxw={'1000px'}
+                minw={'500px'}
+                style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                }}
+            >
+                <StyledTitlePage style={{ marginTop: '10%' }}>
+                    Таблица лидеров
+                </StyledTitlePage>
                 <DataWindow>
                     <Row userName={'Пользователь'} score={'Очки'} />
                     {rows}
                 </DataWindow>
-            </MainBlock>
+            </Paper>
         </StyledWrapperPage>
     );
 };

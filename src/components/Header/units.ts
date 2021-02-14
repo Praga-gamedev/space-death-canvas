@@ -4,6 +4,8 @@ import { ITabProps } from './types';
 
 import { colors } from 'src/colors';
 
+import arrow from '@icons/dropdown.svg';
+
 export const StyledHeader = styled.header`
     display: flex;
     justify-content: center;
@@ -30,4 +32,22 @@ export const StyledTab = styled.div`
     &:hover {
         color: ${colors.secondary};
     }
+`;
+
+export const StyledDropdownWrapper = styled.div`
+    position: relative;
+`;
+
+export const StyledDropdownArrow = styled.div`
+    transform: ${({ isOpen }: { isOpen: boolean }) =>
+        isOpen ? 'rotate(-180deg)' : ''};
+
+    width: 30px;
+    height: 30px;
+    margin-left: 50px;
+    background-image: url(${arrow});
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: transform ease 0.2s;
+    cursor: pointer;
 `;
