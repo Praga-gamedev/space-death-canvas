@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes } from 'react';
+import { ElementType, ButtonHTMLAttributes } from 'react';
 
 export interface IPaperProps extends ButtonHTMLAttributes<HTMLDivElement> {
     w?: string;
@@ -6,4 +6,6 @@ export interface IPaperProps extends ButtonHTMLAttributes<HTMLDivElement> {
     minw?: string;
     maxw?: string;
     isRounding?: boolean;
+    as?: ElementType;
 }
+

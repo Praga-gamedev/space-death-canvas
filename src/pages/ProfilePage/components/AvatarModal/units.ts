@@ -1,7 +1,8 @@
 import styled from '@emotion/styled';
-import { colors } from 'src/colors';
 
 import { Button } from '@components';
+
+import { colors } from 'src/colors';
 
 export const S: Record<string, any> = {};
 

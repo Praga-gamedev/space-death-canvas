@@ -1,8 +1,8 @@
 import React, { FC, memo } from 'react';
 
-import { S } from './units';
-
 import { IStat } from '@pages/ProfilePage/types';
+
+import { S } from './units';
 
 export interface IStatsProps {
     stats?: IStat[];

@@ -5,13 +5,7 @@ import { history } from '@store/initStore';
 
 import { Popup } from './Popup';
 
-import {
-    StyledHeader,
-    StyledTab,
-    StyledDropdownWrapper,
-    StyledDropdownArrow,
-} from './units';
-
+import { S } from './units';
 import { IHeaderProps } from './types';
 
 const logicRouter = kea({
@@ -34,19 +28,19 @@ export const Header: FC<IHeaderProps> = ({ tabs }) => {
     const isActive = (path: string) => path === pathname;
 
     return (
-        <StyledHeader>
+        <S.Header>
             {tabs.map(({ path, title }) => (
-                <StyledTab
+                <S.Tab
                     key={path}
                     isActive={isActive(path)}
                     onClick={() => history.push(path)}
                 >
                     {title}
-                </StyledTab>
+                </S.Tab>
             ))}
 
-            <StyledDropdownWrapper>
-                <StyledDropdownArrow
+            <S.DropdownWrapper>
+                <S.DropdownArrow
                     ref={buttonRef}
                     onClick={() => {
                         setOpen(!isOpen);
@@ -59,7 +53,7 @@ export const Header: FC<IHeaderProps> = ({ tabs }) => {
                     isOpen={isOpen}
                     setOpen={setOpen}
                 />
-            </StyledDropdownWrapper>
-        </StyledHeader>
+            </S.DropdownWrapper>
+        </S.Header>
     );
 };

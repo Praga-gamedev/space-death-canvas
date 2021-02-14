@@ -1,7 +1,7 @@
 import React, { FC, memo, useRef } from 'react';
-import { IModalProps } from './types';
 
 import { S } from './units';
+import { IModalProps } from './types';
 
 export const Modal: FC<IModalProps> = memo(({ show, onClose, children }) => {
     const overlayRef = useRef();

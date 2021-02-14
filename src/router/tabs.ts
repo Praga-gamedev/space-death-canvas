@@ -1,9 +1,5 @@
 export const tabs = [
     {
-        path: '/info',
-        title: 'Информация',
-    },
-    {
         path: '/auth',
         title: 'Авторизация',
     },
@@ -16,11 +12,11 @@ export const tabs = [
         title: 'Таблица лидеров',
     },
     {
-        path: '/game',
-        title: 'Игра',
-    },
-    {
         path: '/forum',
         title: 'Форум',
+    },
+    {
+        path: '/game',
+        title: 'Игра',
     },
 ];

@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+
 import { scrollBarStyle } from '@pages/units';
 
 export const DataWindow = styled.div`

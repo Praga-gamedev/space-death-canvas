@@ -12,14 +12,14 @@ import {
     NotFoundPage,
     ServerErrorPage,
 } from '@pages';
-
-import { StyledPage } from './units';
-import { tabs } from './tabs';
 import { LeaderBoard } from '@pages/LeaderBoard';
+
+import { S } from './units';
+import { tabs } from './tabs';
 
 const NavigationRouter = () => {
     return (
-        <StyledPage>
+        <S.Page>
             <Header tabs={tabs} />
 
             <Switch>
@@ -49,6 +49,7 @@ const NavigationRouter = () => {
                     title="Форум"
                     component={ForumPage}
                 />
+                
                 <Route
                     path="/forum/:id"
                     title="Форум"
@@ -77,7 +78,7 @@ const NavigationRouter = () => {
 
                 <Route component={NotFoundPage} />
             </Switch>
-        </StyledPage>
+        </S.Page>
     );
 };
 

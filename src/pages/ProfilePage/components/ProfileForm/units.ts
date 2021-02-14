@@ -1,10 +1,8 @@
 import styled from '@emotion/styled';
-import { colors } from 'src/colors';
-import { S as ProfileUnits } from '@pages/ProfilePage/units';
 
-interface IProfileButtonsProps {
-    withBackButton: boolean;
-}
+import { colors } from 'src/colors';
+
+import { S as ProfileUnits } from '@pages/ProfilePage/units';
 
 export const S: Record<string, any> = {};
 
@@ -21,10 +19,11 @@ S.ProfileField = styled.div`
 `;
 
 S.ProfileButtons = styled.div`
+    align-self: ${({ withBackButton }: { withBackButton: boolean }) =>
+        withBackButton ? 'flex-start' : 'center'};
+
     margin-top: 60px;
     display: flex;
-    align-self: ${({ withBackButton }: IProfileButtonsProps) =>
-        withBackButton ? 'flex-start' : 'center'};
 `;
 
 S.ProfileBackButton = styled.button`

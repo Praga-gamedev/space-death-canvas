@@ -2,7 +2,9 @@ import styled from '@emotion/styled';
 
 import { colors } from 'src/colors';
 
-export const StyledPopup = styled.div`
+export const S: Record<string, any> = {};
+
+S.Popup = styled.div`
     display: ${({ isOpen }: { isOpen: boolean }) => (isOpen ? 'flex' : 'none')};
 
     flex-direction: column;
@@ -17,7 +19,7 @@ export const StyledPopup = styled.div`
     z-index: 10;
 `;
 
-export const StyledPopupItem = styled.div`
+S.PopupItem = styled.div`
     padding: 20px;
     color: ${colors.GrayScale_0};
     text-align: center;

@@ -3,13 +3,10 @@ import React, { useState, FormEvent } from 'react';
 import { history } from '@store/initStore';
 
 import { Paper, Input, Button, Link } from '@components';
+
 import { registration } from '@api/registration';
 
-import {
-    StyledWrapperPage,
-    StyledPaperColumn,
-    StyledTitlePage,
-} from '../units';
+import { S } from '../units';
 
 export const RegistrationPage = () => {
     const [login, setLogin] = useState('');
@@ -46,15 +43,16 @@ export const RegistrationPage = () => {
     };
 
     return (
-        <StyledWrapperPage background={true}>
+        <S.WrapperPage background={true}>
             <Paper
                 style={{ padding: '80px' }}
                 onSubmit={(e) => onSubmitRegistr(e)}
+                as={'form'}
             >
-                <StyledPaperColumn>
-                    <StyledTitlePage style={{ marginBottom: '50px' }}>
+                <S.PaperColumn>
+                    <S.TitlePage style={{ marginBottom: '50px' }}>
                         Регистрация
-                    </StyledTitlePage>
+                    </S.TitlePage>
 
                     <Input
                         label={'Логин'}
@@ -103,8 +101,8 @@ export const RegistrationPage = () => {
                         path={'/auth'}
                         children={'Вход'}
                     />
-                </StyledPaperColumn>
+                </S.PaperColumn>
             </Paper>
-        </StyledWrapperPage>
+        </S.WrapperPage>
     );
 };

@@ -1,7 +1,9 @@
 import React, { FC, memo, useState, useMemo, useEffect } from 'react';
-import { S } from './units';
 
 import { Button } from '@components';
+
+import { getUser } from '@api/auth';
+
 import { Stats } from './components/Stats';
 import {
     ProfileForm,
@@ -10,11 +12,12 @@ import {
 } from './components/ProfileForm';
 import { AvatarModal } from './components/AvatarModal';
 
-import { defaultStats } from './stats';
-
-import { getUser } from 'src/api/auth';
-import { updateProfile, updatePassword, updateAvatar } from 'src/api/profile';
 import { HOST } from 'src/utils/Api';
+
+import { updateProfile, updatePassword, updateAvatar } from 'src/api/profile';
+
+import { S } from './units';
+import { defaultStats } from './stats';
 
 export const ProfilePage: FC = memo(() => {
     const initialFields = useMemo(getInitialProfileForm, []);
@@ -22,7 +25,6 @@ export const ProfilePage: FC = memo(() => {
     const [user, setUser] = useState<any>(null);
     const [fields, setFields] = useState(initialFields);
     const [passwordMode, setPasswordMode] = useState(false);
-
     const [showAvatarModal, setShowAvatarModal] = useState(false);
 
     const avatar = user?.avatar ? `${HOST}${user.avatar}` : '';
@@ -31,7 +33,9 @@ export const ProfilePage: FC = memo(() => {
         (async () => {
             try {
                 const user = await getUser();
+
                 setUser(user);
+
                 setFields({ ...fields, ...getFieldsFromUser(user) });
             } catch (error) {
                 console.error(error);
@@ -49,9 +53,11 @@ export const ProfilePage: FC = memo(() => {
         try {
             if (!passwordMode) {
                 const newUser = await updateProfile({ ...user, ...data });
+
                 setUser(newUser);
             } else {
                 await updatePassword(data);
+
                 changePasswordMode(false);
             }
         } catch (error) {
@@ -63,10 +69,12 @@ export const ProfilePage: FC = memo(() => {
         setShowAvatarModal(false);
 
         const formData = new FormData();
+
         formData.append('avatar', file);
 
         try {
             const newUser = await updateAvatar(formData);
+
             setUser(newUser);
         } catch (error) {
             console.error(error);

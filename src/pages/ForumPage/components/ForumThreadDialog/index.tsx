@@ -1,4 +1,10 @@
 import React, { useMemo } from 'react';
+
+import { S } from '@pages/units';
+
+import { Header } from './Header';
+import { Message } from './Message';
+
 import {
     Footer,
     MainBlock,
@@ -6,10 +12,6 @@ import {
     MessageInput,
     MessageList,
 } from './units';
-import { Header } from './Header';
-import { Message } from './Message';
-import { StyledWrapperPage } from '@pages/units';
-
 import { IMessageProps } from './Message/types';
 
 // заглушки с данными пока нет нашего апи
@@ -36,28 +38,32 @@ export const ForumThreadDialog = () => {
     const messageList = useMemo(() => {
         let messageList: any = [];
         let globalKey = 0;
+
         for (let i = 0; i < 10; i++) {
             const result = messageData.map((messageData) => (
                 <li style={{ display: 'flex' }} key={globalKey++}>
                     <Message {...messageData} />
                 </li>
             ));
-            messageList = messageList.concat(result);
+
+            messageList = [...messageList, ...result];
         }
         return messageList;
     }, [messageData]);
 
     return (
-        <StyledWrapperPage background={true}>
+        <S.WrapperPage background={true}>
             <MainBlock>
                 <Header />
+
                 <MessageBlock>
                     <MessageList>{messageList}</MessageList>
                 </MessageBlock>
+
                 <Footer>
                     <MessageInput placeholder={'Введите сообщение'} />
                 </Footer>
             </MainBlock>
-        </StyledWrapperPage>
+        </S.WrapperPage>
     );
 };

@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+
 import {
     ContentSpan,
     InfoBlock,
@@ -6,7 +7,6 @@ import {
     TimeSpan,
     UserNameSpan,
 } from './units';
-
 import { IMessageProps } from './types';
 
 export const Message: FC<IMessageProps> = ({
@@ -18,6 +18,7 @@ export const Message: FC<IMessageProps> = ({
     return (
         <MainBlock isIncoming={isIncoming}>
             <UserNameSpan>{userName}</UserNameSpan>
+
             <InfoBlock>
                 <ContentSpan>{content}</ContentSpan>
                 <TimeSpan>{time}</TimeSpan>

@@ -2,8 +2,8 @@ import React, { FC, useEffect, useRef } from 'react';
 
 import { history } from '@store/initStore';
 
+import { S } from './units';
 import { IPopupProps } from './types';
-import { StyledPopup, StyledPopupItem } from './units';
 
 export const Popup: FC<IPopupProps> = ({ buttonRef, isOpen, setOpen }) => {
     const popupRef = useRef();
@@ -18,8 +18,8 @@ export const Popup: FC<IPopupProps> = ({ buttonRef, isOpen, setOpen }) => {
     }, []);
 
     return (
-        <StyledPopup ref={popupRef} isOpen={isOpen}>
-            <StyledPopupItem
+        <S.Popup ref={popupRef} isOpen={isOpen}>
+            <S.PopupItem
                 onClick={() => {
                     history.push('/profile');
 
@@ -27,9 +27,9 @@ export const Popup: FC<IPopupProps> = ({ buttonRef, isOpen, setOpen }) => {
                 }}
             >
                 Профиль
-            </StyledPopupItem>
+            </S.PopupItem>
 
-            <StyledPopupItem>Выйти</StyledPopupItem>
-        </StyledPopup>
+            <S.PopupItem>Выйти</S.PopupItem>
+        </S.Popup>
     );
 };

@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
+
 import { colors } from 'src/colors';
 
 export const MainBlock = styled.div`
     background-color: ${({ isEven }: { isEven: boolean }) =>
         isEven ? colors.GrayScale_20 : colors.secondaryAccent};
-
     color: ${({ isEven }: { isEven: boolean }) =>
         isEven ? colors.GrayScale_0 : colors.secondary};
 

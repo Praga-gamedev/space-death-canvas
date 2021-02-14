@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+
 import { colors } from 'src/colors';
 
 export const S: Record<string, any> = {};
