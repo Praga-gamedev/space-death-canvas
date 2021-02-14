@@ -1,7 +1,7 @@
 import React, { FC, memo, useRef } from 'react';
 import { IModalProps } from './types';
 
-import { ModalBody, ModalOverlay } from './units';
+import { S } from './units';
 
 export const Modal: FC<IModalProps> = memo(({ show, onClose, children }) => {
     const overlayRef = useRef();
@@ -13,8 +13,8 @@ export const Modal: FC<IModalProps> = memo(({ show, onClose, children }) => {
     };
 
     return (
-        <ModalOverlay show={show} ref={overlayRef} onClick={close}>
-            <ModalBody>{children}</ModalBody>
-        </ModalOverlay>
+        <S.ModalOverlay show={show} ref={overlayRef} onClick={close}>
+            <S.ModalBody>{children}</S.ModalBody>
+        </S.ModalOverlay>
     );
 });

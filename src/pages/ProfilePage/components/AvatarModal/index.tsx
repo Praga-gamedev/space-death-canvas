@@ -1,13 +1,6 @@
 import React, { FC, memo, useState, ChangeEvent } from 'react';
 
-import {
-    AvatarModalContent,
-    AvatarModalTitle,
-    InputFile,
-    InputFileLabel,
-    InputFileName,
-    SaveButton,
-} from './units';
+import { S } from './units';
 import { Modal, IModalProps } from '@components';
 
 export interface IAvatarModalProps extends IModalProps {
@@ -39,11 +32,13 @@ export const AvatarModal: FC<IAvatarModalProps> = memo(
 
         return (
             <Modal show={show} onClose={_onClose}>
-                <AvatarModalContent>
-                    <AvatarModalTitle>Загрузите изображение</AvatarModalTitle>
+                <S.AvatarModalContent>
+                    <S.AvatarModalTitle>
+                        Загрузите изображение
+                    </S.AvatarModalTitle>
 
                     <div style={{ marginTop: '50px' }}>
-                        <InputFile
+                        <S.InputFile
                             type="file"
                             id="upload_avatar"
                             accept="image/*"
@@ -51,22 +46,22 @@ export const AvatarModal: FC<IAvatarModalProps> = memo(
                         />
 
                         {file ? (
-                            <InputFileName>{file.name}</InputFileName>
+                            <S.InputFileName>{file.name}</S.InputFileName>
                         ) : (
-                            <InputFileLabel htmlFor="upload_avatar">
+                            <S.InputFileLabel htmlFor="upload_avatar">
                                 Загрузите изображение
-                            </InputFileLabel>
+                            </S.InputFileLabel>
                         )}
                     </div>
 
-                    <SaveButton
+                    <S.SaveButton
                         style={{ marginTop: '30px' }}
                         disabled={!file}
                         onClick={_onSave}
                     >
                         Поменять
-                    </SaveButton>
-                </AvatarModalContent>
+                    </S.SaveButton>
+                </S.AvatarModalContent>
             </Modal>
         );
     }
