@@ -1,10 +1,12 @@
 import { FC } from 'react';
+
 import styled from '@emotion/styled';
 
 import { colors } from 'src/colors';
+
+import { Paper } from '@components';
 import { IInputProps } from '@components/Input/types';
 import { scrollBarStyle } from '@pages/units';
-import { Paper } from '@components';
 
 export const MainBlock = styled(Paper)`
     display: flex;

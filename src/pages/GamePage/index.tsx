@@ -2,10 +2,8 @@ import React, { FC, useEffect, useRef, useState } from 'react';
 
 import Game, { IGameState } from 'src/game';
 
-import { StyledWrapperPage } from '@pages/units';
+import { S as SGlobal } from '@pages/units';
 import { S } from '@pages/GamePage/units';
-
-import { Button } from '@components';
 
 export const GamePage: FC = () => {
     const canvas = useRef<HTMLCanvasElement>(null);
@@ -25,26 +23,35 @@ export const GamePage: FC = () => {
     }, []);
 
     const startGame = () => {
-        if (!game) return;
+        if (!game) {
+            return;
+        }
 
         setGameActive(true);
         game.play();
     };
 
     const restartGame = () => {
-        if (!game) return;
+        if (!game) {
+            return;
+        }
+
         game.reset();
     };
 
     const togglePause = () => {
-        if (!game) return;
+        if (!game) {
+            return;
+        }
+
         game.isPaused ? game.play() : game.pause();
     };
 
     return (
-        <StyledWrapperPage background={true}>
+        <SGlobal.WrapperPage background={true}>
             <S.MainBlock>
                 <S.Score>Очки: {gameState.score}</S.Score>
+
                 <S.GameDisplay>
                     <canvas
                         ref={canvas}
@@ -54,23 +61,27 @@ export const GamePage: FC = () => {
                             display: isGameActive ? undefined : 'none',
                         }}
                     />
+
                     <S.InformationBlock isActive={!isGameActive}>
                         <span>Перемещение: WASD или стрелками</span>
                         <span>Стрельба: пробел</span>
                     </S.InformationBlock>
                 </S.GameDisplay>
+
                 <S.ButtonsBlock>
                     {!isGameActive ? (
-                        <Button onClick={startGame}>Старт</Button>
+                        <S.ButtonGame onClick={startGame}>Старт</S.ButtonGame>
                     ) : gameState.isGameOver ? (
-                        <Button onClick={restartGame}>Рестарт</Button>
+                        <S.ButtonGame onClick={restartGame}>
+                            Рестарт
+                        </S.ButtonGame>
                     ) : (
-                        <Button onClick={togglePause}>
+                        <S.ButtonGame onClick={togglePause}>
                             {gameState.isPaused ? 'Плей' : 'Пауза'}
-                        </Button>
+                        </S.ButtonGame>
                     )}
                 </S.ButtonsBlock>
             </S.MainBlock>
-        </StyledWrapperPage>
+        </SGlobal.WrapperPage>
     );
 };

@@ -1,9 +1,13 @@
 import React, { useMemo } from 'react';
+
+import { Paper } from '@components';
+
+import { S } from '@pages/units';
+
+import { Row } from './Row';
+
 import { DataWindow } from './units';
 import { IRowProps } from './Row/types';
-import { Row } from './Row';
-import { StyledTitlePage, StyledWrapperPage } from '@pages/units';
-import { Paper } from '@components';
 
 const rowData: IRowProps[] = [
     {
@@ -19,6 +23,7 @@ const rowData: IRowProps[] = [
 const getRows = () => {
     let result: any = [];
     let globalIndex = 1;
+
     for (let i = 0; i < 10; i++) {
         const rows = rowData.map(({ score, userName }) => (
             <Row
@@ -28,15 +33,17 @@ const getRows = () => {
                 isEven={globalIndex % 2 === 0}
             />
         ));
-        result = result.concat(rows);
+
+        result = [...result, rows];
     }
     return result;
 };
 
 export const LeaderBoard = () => {
     const rows = useMemo(getRows, [rowData]);
+
     return (
-        <StyledWrapperPage background={true}>
+        <S.WrapperPage background={true}>
             <Paper
                 w={'70%'}
                 maxw={'1000px'}
@@ -47,14 +54,15 @@ export const LeaderBoard = () => {
                     alignItems: 'center',
                 }}
             >
-                <StyledTitlePage style={{ marginTop: '10%' }}>
+                <S.TitlePage style={{ marginTop: '90px' }}>
                     Таблица лидеров
-                </StyledTitlePage>
+                </S.TitlePage>
+
                 <DataWindow>
                     <Row userName={'Пользователь'} score={'Очки'} />
                     {rows}
                 </DataWindow>
             </Paper>
-        </StyledWrapperPage>
+        </S.WrapperPage>
     );
 };

@@ -1,9 +1,12 @@
 import styled from '@emotion/styled';
 
 import { Button } from '@components';
+
 import { colors } from 'src/colors';
 
-export const ForumStyledButton = styled(Button)`
+export const S: Record<string, any> = {};
+
+S.ForumButton = styled(Button)`
     background-color: ${(props: { isClicked: boolean }) => {
         return props.isClicked ? colors.secondary : colors.GrayScale_20;
     }};

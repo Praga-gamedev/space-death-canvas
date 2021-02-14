@@ -1,12 +1,14 @@
 import styled from '@emotion/styled';
 
-import { ITabProps } from './types';
-
 import { colors } from 'src/colors';
 
 import arrow from '@icons/dropdown.svg';
 
-export const StyledHeader = styled.header`
+import { ITabProps } from './types';
+
+export const S: Record<string, any> = {};
+
+S.Header = styled.header`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -19,7 +21,7 @@ export const StyledHeader = styled.header`
     border-bottom: 2px solid ${colors.GrayScale_40};
 `;
 
-export const StyledTab = styled.div`
+S.Tab = styled.div`
     color: ${({ isActive }: ITabProps) =>
         isActive ? colors.secondary : colors.GrayScale_20};
 
@@ -34,11 +36,11 @@ export const StyledTab = styled.div`
     }
 `;
 
-export const StyledDropdownWrapper = styled.div`
+S.DropdownWrapper = styled.div`
     position: relative;
 `;
 
-export const StyledDropdownArrow = styled.div`
+S.DropdownArrow = styled.div`
     transform: ${({ isOpen }: { isOpen: boolean }) =>
         isOpen ? 'rotate(-180deg)' : ''};
 

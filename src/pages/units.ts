@@ -1,13 +1,13 @@
-import { FC } from 'react';
-
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 
-import { colors } from 'src/colors';
-
 import backgroundPicture from '@images/background.png';
 
-export const StyledWrapperPage: FC<{ background?: boolean }> = styled.div`
+import { colors } from 'src/colors';
+
+export const S: Record<string, any> = {};
+
+S.WrapperPage = styled.div`
     background-image: ${({ background }: { background: boolean }) =>
         background ? `url(${backgroundPicture})` : 'none'};
 
@@ -20,20 +20,20 @@ export const StyledWrapperPage: FC<{ background?: boolean }> = styled.div`
     height: 100vh;
 `;
 
-export const StyledWrapperErrorPage = styled(StyledWrapperPage)`
+S.WrapperErrorPage = styled(S.WrapperPage)`
     background: ${colors.GrayScale_100};
     flex-direction: column;
     align-items: center;
 `;
 
-export const StyledErrorMessage = styled.h1`
+S.ErrorMessage = styled.h1`
     color: ${colors.GrayScale_0};
     font-family: 'Comfortaa', sans-serif;
     text-align: center;
     margin: 50px;
 `;
 
-export const StyledPaperColumn = styled.div`
+S.PaperColumn = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -41,7 +41,7 @@ export const StyledPaperColumn = styled.div`
     padding-top: 150px;
 `;
 
-export const StyledTitlePage = styled.h1`
+S.TitlePage = styled.h1`
     color: ${colors.GrayScale_20};
 `;
 

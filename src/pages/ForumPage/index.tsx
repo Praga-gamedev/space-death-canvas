@@ -1,16 +1,18 @@
 import React, { useState, useMemo } from 'react';
 
+import { Paper } from '@components';
+
 import { Theme, ForumButton } from '@pages/ForumPage/components';
+
+import { S } from '@pages/units';
+
 import {
     ButtonBlock,
     ContentBlock,
     ContentWrapper,
     ThreadsWindow,
 } from '@pages/ForumPage/units';
-
 import { ButtonData, ThemeType } from '@pages/ForumPage/types';
-import { StyledTitlePage, StyledWrapperPage } from '@pages/units';
-import { Paper } from '@components';
 
 // заглушки с данными пока нет нашего апи
 const buttonsData: ButtonData[] = [
@@ -51,6 +53,7 @@ export const ForumPage = () => {
     const themes = useMemo(() => {
         let result: any = [];
         let globalIndex = 0;
+
         for (let i = 0; i < 15; i++) {
             const themes = themesData.map((data, index) => (
                 <Theme
@@ -61,22 +64,24 @@ export const ForumPage = () => {
                     isEven={index % 2 === 0}
                 />
             ));
-            result = result.concat(themes);
+
+            result = [...result, themes];
         }
         return result;
     }, [themesData]);
 
     return (
-        <StyledWrapperPage background={true}>
-            <Paper w={'70%'} maxw={'1000px'}>
-                <StyledTitlePage
+        <S.WrapperPage background={true}>
+            <Paper w={'70%'} maxw={'1000px'} minw={'700px'}>
+                <S.TitlePage
                     style={{
-                        marginTop: '10%',
+                        marginTop: '90px',
                         textAlign: 'center',
                     }}
                 >
                     Форум
-                </StyledTitlePage>
+                </S.TitlePage>
+
                 <ContentWrapper>
                     <ButtonBlock>
                         {buttonsData.map((buttonData, index) => (
@@ -89,11 +94,12 @@ export const ForumPage = () => {
                             </ForumButton>
                         ))}
                     </ButtonBlock>
+
                     <ContentBlock>
                         <ThreadsWindow>{themes}</ThreadsWindow>
                     </ContentBlock>
                 </ContentWrapper>
             </Paper>
-        </StyledWrapperPage>
+        </S.WrapperPage>
     );
 };

@@ -1,20 +1,14 @@
 import React, { FC, memo, ChangeEvent } from 'react';
 
-import { S } from './units';
 import { Input, Button } from '@components';
 
-import { coreFormFields, passwordFormFields } from './fields';
 import { IProfileFields } from '@pages/ProfilePage/types';
 
 import backIcon from '@icons/back-icon.png';
 
-interface IProfileFormProps {
-    fields: IProfileFields;
-    passwordMode: boolean;
-    onChange: (fields: IProfileFields) => void;
-    setPasswordMode: (mode: boolean) => void;
-    onSubmit: (data: Partial<IProfileFields>) => void;
-}
+import { S } from './units';
+import {IProfileFormProps} from './types'
+import { coreFormFields, passwordFormFields } from './fields';
 
 export const ProfileForm: FC<IProfileFormProps> = memo(
     ({ fields, passwordMode, onChange, setPasswordMode, onSubmit }) => {

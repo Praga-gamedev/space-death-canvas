@@ -1,10 +1,12 @@
 import styled from '@emotion/styled';
 
+import { colors } from 'src/colors';
+
 import { IPaperProps } from './types';
 
-import {colors} from 'src/colors'
+export const S: Record<string, any> = {};
 
-export const StyledPaper = styled.form`
+S.Paper = styled.div`
     display: block;
     background-color: ${colors.GrayScale_50};
     box-shadow: 8px 4px 30px rgba(0, 0, 0, 0.5);

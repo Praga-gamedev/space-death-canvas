@@ -2,11 +2,13 @@ import styled from '@emotion/styled';
 
 import { colors } from 'src/colors';
 
-export const StyledWrapperInput = styled.div`
+export const S: Record<string, any> = {};
+
+S.WrapperInput = styled.div`
     width: 100%;
 `;
 
-export const StyledInput = styled.input`
+S.Input = styled.input`
     width: 100%;
     height: 50px;
     padding: 0 20px;
@@ -23,13 +25,13 @@ export const StyledInput = styled.input`
     }
 `;
 
-export const StyledSpan = styled.span`
+S.Span = styled.span`
     display: block;
     font-size: 18px;
     margin-bottom: 10px;
     color: ${colors.GrayScale_30};
 `;
 
-export const StyledPasswordInput = styled(StyledInput)`
+S.PasswordInput = styled(S.Input)`
     font-size: 24px;
 `;

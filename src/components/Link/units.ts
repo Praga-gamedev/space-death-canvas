@@ -2,7 +2,9 @@ import styled from '@emotion/styled';
 
 import { colors } from 'src/colors';
 
-export const StyledLink = styled.label`
+export const S: Record<string, any> = {};
+
+S.Link = styled.label`
     color: ${colors.secondaryAccent};
     background: linear-gradient(${colors.secondary}, ${colors.secondary}) center
         bottom;

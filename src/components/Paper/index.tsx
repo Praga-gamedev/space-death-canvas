@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 
-import { StyledPaper } from './units';
-
+import { S } from './units';
 import { IPaperProps } from './types';
 
 export const Paper: FC<IPaperProps> = ({
@@ -13,7 +12,5 @@ export const Paper: FC<IPaperProps> = ({
     children,
     ...rest
 }) => (
-    <StyledPaper {...{ w, h, maxw, minw, isRounding, ...rest }}>
-        {children}
-    </StyledPaper>
+    <S.Paper {...{ w, h, maxw, minw, isRounding, ...rest }}>{children}</S.Paper>
 );

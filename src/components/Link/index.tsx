@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 
 import { history } from '@store/initStore';
 
-import { StyledLink } from './units';
+import { S } from './units';
 import { ILinkProps } from './types';
 
 export const Link: FC<ILinkProps> = ({ path, children, ...props }) => {
@@ -13,8 +13,8 @@ export const Link: FC<ILinkProps> = ({ path, children, ...props }) => {
     };
 
     return (
-        <StyledLink onClick={(e: Event) => onClick(e)} {...props}>
+        <S.Link onClick={(e: Event) => onClick(e)} {...props}>
             {children}
-        </StyledLink>
+        </S.Link>
     );
 };

@@ -1,10 +1,12 @@
 import styled from '@emotion/styled';
 
-import { IButtonProps } from './types';
-
 import { colors } from 'src/colors';
 
-export const StyledButton = styled.button`
+import { IButtonProps } from './types';
+
+export const S: Record<string, any> = {};
+
+S.Button = styled.button`
     display: block;
     width: 250px;
     height: 50px;

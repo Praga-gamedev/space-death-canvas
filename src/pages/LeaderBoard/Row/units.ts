@@ -1,7 +1,10 @@
 import styled from '@emotion/styled';
+
 import { colors } from 'src/colors';
 
-export const StyledRow = styled.div`
+export const S: Record<string, any> = {};
+
+S.Row = styled.div`
     background-color: ${({ isEven }: { isEven: boolean }) => {
         if (isEven === undefined) {
             return colors.secondary;
@@ -10,7 +13,6 @@ export const StyledRow = styled.div`
         }
         return colors.GrayScale_20;
     }};
-
     color: ${({ isEven }: { isEven: boolean }) => {
         if (isEven === undefined) {
             return colors.secondaryAccent;
@@ -32,16 +34,16 @@ export const StyledRow = styled.div`
     }
 `;
 
-export const TextBlock = styled.div`
+S.TextBlock = styled.div`
     width: 30%;
     padding-left: 30px;
 `;
 
-export const ScoreBlock = styled.div`
+S.ScoreBlock = styled.div`
     width: 20%;
     text-align: center;
 `;
 
-export const EmptyBlock = styled.div`
+S.EmptyBlock = styled.div`
     width: 50%;
 `;

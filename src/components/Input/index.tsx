@@ -1,23 +1,18 @@
 import React, { FC } from 'react';
 
-import {
-    StyledPasswordInput,
-    StyledInput,
-    StyledSpan,
-    StyledWrapperInput,
-} from './units';
+import { S } from './units';
 import { IInputProps } from './types';
 
 export const Input: FC<IInputProps> = ({ label, ...inputProps }) => {
     return (
-        <StyledWrapperInput>
-            {label && <StyledSpan>{label}</StyledSpan>}
-            
+        <S.WrapperInput>
+            {label && <S.Span>{label}</S.Span>}
+
             {inputProps.type === 'password' ? (
-                <StyledPasswordInput {...inputProps} />
+                <S.PasswordInput {...inputProps} />
             ) : (
-                <StyledInput {...inputProps} />
+                <S.Input {...inputProps} />
             )}
-        </StyledWrapperInput>
+        </S.WrapperInput>
     );
 };

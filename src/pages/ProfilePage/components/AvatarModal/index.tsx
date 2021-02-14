@@ -1,7 +1,8 @@
 import React, { FC, memo, useState, ChangeEvent } from 'react';
 
-import { S } from './units';
 import { Modal, IModalProps } from '@components';
+
+import { S } from './units';
 
 export interface IAvatarModalProps extends IModalProps {
     onSave: (file: File) => void;

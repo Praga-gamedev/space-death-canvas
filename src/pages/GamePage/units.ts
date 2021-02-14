@@ -1,5 +1,8 @@
 import styled from '@emotion/styled';
+
 import { colors } from 'src/colors';
+
+import { Button } from 'src/components';
 
 export const S: Record<string, any> = {};
 
@@ -46,3 +49,7 @@ S.Score = styled.div`
     font-size: 24px;
     color: ${colors.GrayScale_0};
 `;
+
+S.ButtonGame = styled(Button)`
+    background-color: ${colors.secondaryAccent}
+`

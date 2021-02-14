@@ -3,9 +3,10 @@ import React, { useState, FormEvent } from 'react';
 import { history } from '@store/initStore';
 
 import { Paper, Input, Button, Link } from '@components';
+
 import { login as auth, getUser as user } from '@api/auth';
 
-import { StyledWrapperPage, StyledPaperColumn } from '../units';
+import { S } from '../units';
 
 export const AuthPage = () => {
     const [login, setLogin] = useState('');
@@ -31,12 +32,13 @@ export const AuthPage = () => {
     };
 
     return (
-        <StyledWrapperPage background={true}>
+        <S.WrapperPage background={true}>
             <Paper
                 style={{ padding: '80px' }}
                 onSubmit={(e) => onSubmitAuth(e)}
+                as={'form'}
             >
-                <StyledPaperColumn>
+                <S.PaperColumn>
                     {/* Заменим на логотип нашей игры, когда сделаем*/}
                     <label style={{ fontSize: '72px', marginBottom: '60px' }}>
                         LOGO
@@ -63,8 +65,8 @@ export const AuthPage = () => {
                         path={'/registration'}
                         children={'Регистрация'}
                     />
-                </StyledPaperColumn>
+                </S.PaperColumn>
             </Paper>
-        </StyledWrapperPage>
+        </S.WrapperPage>
     );
 };

@@ -5,9 +5,9 @@ import { ConnectedRouter } from 'connected-react-router';
 import ReactNotification from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
 
-import { RebootCss } from './global-styles';
-
 import store, { history } from '@store/initStore';
+
+import { RebootCss } from './global-styles';
 
 import NavigationRouter from './router';
 import ErrorBoundary from './components/ErrorBoundary';
