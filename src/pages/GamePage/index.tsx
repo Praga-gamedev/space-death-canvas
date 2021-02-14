@@ -3,13 +3,7 @@ import React, { FC, useEffect, useRef, useState } from 'react';
 import Game, { IGameState } from 'src/game';
 
 import { StyledWrapperPage } from '@pages/units';
-import {
-    StyledGameDisplay,
-    StyledInformationBlock,
-    StyledMainBlock,
-    StyledButtonsBlock,
-    StyledScore,
-} from '@pages/GamePage/units';
+import { S } from '@pages/GamePage/units';
 
 import { Button } from '@components';
 
@@ -49,9 +43,9 @@ export const GamePage: FC = () => {
 
     return (
         <StyledWrapperPage background={true}>
-            <StyledMainBlock>
-                <StyledScore>Очки: {gameState.score}</StyledScore>
-                <StyledGameDisplay>
+            <S.MainBlock>
+                <S.Score>Очки: {gameState.score}</S.Score>
+                <S.GameDisplay>
                     <canvas
                         ref={canvas}
                         width={800}
@@ -60,12 +54,12 @@ export const GamePage: FC = () => {
                             display: isGameActive ? undefined : 'none',
                         }}
                     />
-                    <StyledInformationBlock isActive={!isGameActive}>
+                    <S.InformationBlock isActive={!isGameActive}>
                         <span>Перемещение: WASD или стрелками</span>
                         <span>Стрельба: пробел</span>
-                    </StyledInformationBlock>
-                </StyledGameDisplay>
-                <StyledButtonsBlock>
+                    </S.InformationBlock>
+                </S.GameDisplay>
+                <S.ButtonsBlock>
                     {!isGameActive ? (
                         <Button onClick={startGame}>Старт</Button>
                     ) : gameState.isGameOver ? (
@@ -75,8 +69,8 @@ export const GamePage: FC = () => {
                             {gameState.isPaused ? 'Плей' : 'Пауза'}
                         </Button>
                     )}
-                </StyledButtonsBlock>
-            </StyledMainBlock>
+                </S.ButtonsBlock>
+            </S.MainBlock>
         </StyledWrapperPage>
     );
 };

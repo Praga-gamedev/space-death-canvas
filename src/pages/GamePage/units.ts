@@ -1,7 +1,9 @@
 import styled from '@emotion/styled';
 import { colors } from 'src/colors';
 
-export const StyledMainBlock = styled.div`
+export const S: Record<string, any> = {};
+
+S.MainBlock = styled.div`
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -11,7 +13,7 @@ export const StyledMainBlock = styled.div`
     padding-top: 80px !important;
 `;
 
-export const StyledGameDisplay = styled.div`
+S.GameDisplay = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -21,7 +23,7 @@ export const StyledGameDisplay = styled.div`
     height: 500px;
 `;
 
-export const StyledInformationBlock = styled.div`
+S.InformationBlock = styled.div`
     display: ${({ isActive }: { isActive: boolean }) =>
         isActive ? 'flex' : 'none'};
 
@@ -35,11 +37,11 @@ export const StyledInformationBlock = styled.div`
     color: ${colors.GrayScale_0};
 `;
 
-export const StyledButtonsBlock = styled.div`
+S.ButtonsBlock = styled.div`
     margin-top: 20px;
 `;
 
-export const StyledScore = styled.div`
+S.Score = styled.div`
     margin-bottom: 20px;
     font-size: 24px;
     color: ${colors.GrayScale_0};
