@@ -29,7 +29,7 @@ export const Header: FC<IHeaderProps> = ({ tabs }) => {
 
     const [isOpen, setOpen] = useState<boolean>(false);
 
-    const buttonRef = useRef();
+    const buttonRef = useRef<HTMLDivElement | undefined>();
 
     const isActive = (path: string) => path === pathname;
 

@@ -1,6 +1,8 @@
+interface RefObject<T> {
+    readonly current: T | null | undefined;
+}
 export interface IPopupProps {
     isOpen: boolean;
-    // хз как нормально здесь типы назначить
-    buttonRef: any;
-    setOpen: any;
+    buttonRef: RefObject<HTMLElement>;
+    setOpen: (isOpen: boolean) => void;
 }

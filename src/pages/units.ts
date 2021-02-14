@@ -1,10 +1,11 @@
+import { FC } from 'react';
+
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 
 import { colors } from 'src/colors';
 
 import backgroundPicture from '@images/background.png';
-import { FC } from 'react';
 
 export const StyledWrapperPage: FC<{ background?: boolean }> = styled.div`
     background-image: ${({ background }: { background: boolean }) =>
