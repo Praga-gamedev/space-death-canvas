@@ -27,7 +27,9 @@
             "@pages": ["./src/pages/index.ts"],
             "@types/*": ["./src/types/*"],
             "@store/*": ["./src/store/*"],
-            "@store/": ["./src/store/index.ts"]
+            "@store/": ["./src/store/index.ts"],
+            "@game/*": ["./src/game/*"],
+            "@game/": ["./src/game/index.ts"]
         },
         "typeRoots": ["src/types/**/*.d.ts", "node_modules/@types"]
     },

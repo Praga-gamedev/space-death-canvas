@@ -17,13 +17,14 @@ module.exports = {
         extensions: ['.tsx', '.ts', '.js'],
         alias: {
             src: path.resolve(__dirname, '../src/'),
-            '@api': path.resolve(__dirname,'../src/api'),
+            '@api': path.resolve(__dirname, '../src/api'),
             '@icons': path.resolve(__dirname, '../src/assets/icons'),
             '@images': path.resolve(__dirname, '../src/assets/images'),
             '@components': path.resolve(__dirname, '../src/components'),
             '@pages': path.resolve(__dirname, '../src/pages'),
             '@types': path.resolve(__dirname, '../src/types'),
             '@store': path.resolve(__dirname, '../src/store'),
+            '@game': path.resolve(__dirname, '../src/game'),
         },
     },
     module: {

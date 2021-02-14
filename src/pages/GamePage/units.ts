@@ -1,7 +1,9 @@
 import styled from '@emotion/styled';
 import { colors } from 'src/colors';
 
-export const MainBlock = styled.div`
+export const S: Record<string, any> = {};
+
+S.MainBlock = styled.div`
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -11,16 +13,17 @@ export const MainBlock = styled.div`
     padding-top: 80px !important;
 `;
 
-export const GameDisplay = styled.div`
+S.GameDisplay = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 90%;
-    height: 90%;
+    /* временный хардкод */
+    width: 800px;
+    height: 500px;
 `;
 
-export const InformationBlock = styled.div`
+S.InformationBlock = styled.div`
     display: ${({ isActive }: { isActive: boolean }) =>
         isActive ? 'flex' : 'none'};
 
@@ -31,5 +34,15 @@ export const InformationBlock = styled.div`
     height: inherit;
     background-color: ${colors.GrayScale_100};
     font-family: 'Comfortaa', sans-serif;
+    color: ${colors.GrayScale_0};
+`;
+
+S.ButtonsBlock = styled.div`
+    margin-top: 20px;
+`;
+
+S.Score = styled.div`
+    margin-bottom: 20px;
+    font-size: 24px;
     color: ${colors.GrayScale_0};
 `;
