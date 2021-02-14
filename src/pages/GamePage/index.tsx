@@ -1,11 +1,8 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
+import { store as notificationStore } from 'react-notifications-component';
 import Game from 'src/game';
 import { StyledWrapperPage } from '@pages/units';
-import {
-    GameDisplay,
-    InformationBlock,
-    MainBlock,
-} from '@pages/GamePage/units';
+import { GameDisplay, InformationBlock, MainBlock } from './units';
 import { Button } from '@components';
 import { colors } from 'src/colors';
 
@@ -63,6 +60,16 @@ export const GamePage: FC = () => {
                     onClick={() => {
                         setGameActive(true);
                         startGame();
+                        notificationStore.addNotification({
+                            title: 'Игра началась!',
+                            message:
+                                'Уничтожайте прямоугольники своим треугольником!',
+                            type: 'info',
+                            container: 'top-right',
+                            dismiss: {
+                                duration: 2000,
+                            },
+                        });
                     }}
                 >
                     {isGameActive ? 'Restart' : 'Start'}

@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { DataWindow, MainBlock, Title } from './units';
-import { IRowProps } from '@pages/LeaderBoard/Row/types';
-import { Row } from '@pages/LeaderBoard/Row';
+import { IRowProps } from './Row/types';
+import { Row } from './Row';
 import { StyledWrapperPage } from '@pages/units';
 
 const rowData: IRowProps[] = [

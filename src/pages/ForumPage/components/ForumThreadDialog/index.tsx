@@ -5,11 +5,12 @@ import {
     MessageBlock,
     MessageInput,
     MessageList,
-} from '@pages/ForumPage/components/ForumThreadDialog/units';
-import { Header } from '@pages/ForumPage/components/ForumThreadDialog/Header';
-import { IMessageProps } from '@pages/ForumPage/components/ForumThreadDialog/Message/types';
-import { Message } from '@pages/ForumPage/components/ForumThreadDialog/Message';
+} from './units';
+import { Header } from './Header';
+import { Message } from './Message';
 import { StyledWrapperPage } from '@pages/units';
+
+import { IMessageProps } from './Message/types';
 
 // заглушки с данными пока нет нашего апи
 const messageData: IMessageProps[] = [

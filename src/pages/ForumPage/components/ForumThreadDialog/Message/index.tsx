@@ -1,4 +1,3 @@
-import { IMessageProps } from '@pages/ForumPage/components/ForumThreadDialog/Message/types';
 import React, { FC } from 'react';
 import {
     ContentSpan,
@@ -6,7 +5,9 @@ import {
     MainBlock,
     TimeSpan,
     UserNameSpan,
-} from '@pages/ForumPage/components/ForumThreadDialog/Message/units';
+} from './units';
+
+import { IMessageProps } from './types';
 
 export const Message: FC<IMessageProps> = ({
     content,
