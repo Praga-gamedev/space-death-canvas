@@ -1,16 +1,18 @@
 import styled from '@emotion/styled';
 import { colors } from 'src/colors';
-import { AlignCenterColumn } from '@pages/ProfilePage/units';
+import { S as ProfileUnits } from '@pages/ProfilePage/units';
 
 interface IProfileButtonsProps {
     withBackButton: boolean;
 }
 
-export const FormBlock = styled(AlignCenterColumn)`
+export const S: Record<string, any> = {};
+
+S.FormBlock = styled(ProfileUnits.AlignCenterColumn)`
     width: 430px;
 `;
 
-export const ProfileField = styled.div`
+S.ProfileField = styled.div`
     width: 100%;
 
     &:not(:first-of-type) {
@@ -18,14 +20,14 @@ export const ProfileField = styled.div`
     }
 `;
 
-export const ProfileButtons = styled.div`
+S.ProfileButtons = styled.div`
     margin-top: 60px;
     display: flex;
     align-self: ${({ withBackButton }: IProfileButtonsProps) =>
         withBackButton ? 'flex-start' : 'center'};
 `;
 
-export const ProfileBackButton = styled.button`
+S.ProfileBackButton = styled.button`
     width: 50px;
     height: 50px;
     background-color: ${colors.secondary};

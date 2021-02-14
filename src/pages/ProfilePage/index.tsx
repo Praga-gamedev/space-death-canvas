@@ -1,13 +1,5 @@
 import React, { FC, memo, useState, useMemo, useEffect } from 'react';
-import {
-    ProfileContainer,
-    Title,
-    ProfileContent,
-    ProfilePaper,
-    Avatar,
-    UploadPhotoButton,
-    AlignCenterColumn,
-} from './units';
+import { S } from './units';
 
 import { Button } from '@components';
 import { Stats } from './components/Stats';
@@ -82,20 +74,20 @@ export const ProfilePage: FC = memo(() => {
     };
 
     return (
-        <ProfileContainer>
-            <Title>Профиль</Title>
+        <S.ProfileContainer>
+            <S.Title>Профиль</S.Title>
 
-            <ProfileContent>
-                <AlignCenterColumn>
-                    <ProfilePaper>
-                        <Avatar>{avatar && <img src={avatar} />}</Avatar>
+            <S.ProfileContent>
+                <S.AlignCenterColumn>
+                    <S.ProfilePaper>
+                        <S.Avatar>{avatar && <img src={avatar} />}</S.Avatar>
 
-                        <UploadPhotoButton
+                        <S.UploadPhotoButton
                             onClick={() => setShowAvatarModal(true)}
                         >
                             + Загрузить новое фото
-                        </UploadPhotoButton>
-                    </ProfilePaper>
+                        </S.UploadPhotoButton>
+                    </S.ProfilePaper>
 
                     <Button
                         style={{ marginTop: '30px' }}
@@ -103,7 +95,7 @@ export const ProfilePage: FC = memo(() => {
                     >
                         Сменить пароль
                     </Button>
-                </AlignCenterColumn>
+                </S.AlignCenterColumn>
 
                 <ProfileForm
                     fields={fields}
@@ -114,13 +106,13 @@ export const ProfilePage: FC = memo(() => {
                 />
 
                 <Stats stats={defaultStats} />
-            </ProfileContent>
+            </S.ProfileContent>
 
             <AvatarModal
                 show={showAvatarModal}
                 onClose={() => setShowAvatarModal(false)}
                 onSave={onUpdateAvatar}
             />
-        </ProfileContainer>
+        </S.ProfileContainer>
     );
 });

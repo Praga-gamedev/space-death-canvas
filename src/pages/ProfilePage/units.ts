@@ -3,14 +3,16 @@ import { colors } from 'src/colors';
 
 import { Button } from '@components';
 
-export const ProfileContainer = styled.div`
+export const S: Record<string, any> = {};
+
+S.ProfileContainer = styled.div`
     padding: 170px 0 80px;
     height: 100vh;
     overflow-y: auto;
     background-color: ${colors.GrayScale_50};
 `;
 
-export const Title = styled.h1`
+S.Title = styled.h1`
     font-size: 48px;
     line-height: 120%;
     color: ${colors.GrayScale_20};
@@ -18,13 +20,13 @@ export const Title = styled.h1`
     margin: 0;
 `;
 
-export const AlignCenterColumn = styled.div`
+S.AlignCenterColumn = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
 `;
 
-export const ProfileContent = styled.div`
+S.ProfileContent = styled.div`
     margin: 50px auto 0;
     width: 100%;
     max-width: 1220px;
@@ -32,13 +34,13 @@ export const ProfileContent = styled.div`
     justify-content: space-between;
 `;
 
-export const ProfilePaper = styled.div`
+S.ProfilePaper = styled.div`
     padding: 20px;
     background-color: #1c1c24;
     border-radius: 15px;
 `;
 
-export const Avatar = styled.div`
+S.Avatar = styled.div`
     width: 250px;
     height: 250px;
     background-color: #fff;
@@ -53,7 +55,7 @@ export const Avatar = styled.div`
     }
 `;
 
-export const UploadPhotoButton = styled(Button)`
+S.UploadPhotoButton = styled(Button)`
     margin-top: 20px;
     border-color: ${colors.GrayScale_40};
 `;

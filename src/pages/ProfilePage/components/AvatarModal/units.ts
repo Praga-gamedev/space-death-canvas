@@ -3,19 +3,21 @@ import { colors } from 'src/colors';
 
 import { Button } from '@components';
 
-export const AvatarModalContent = styled.div`
+export const S: Record<string, any> = {};
+
+S.AvatarModalContent = styled.div`
     width: 350px;
     display: flex;
     flex-direction: column;
     align-items: center;
 `;
 
-export const AvatarModalTitle = styled.h3`
+S.AvatarModalTitle = styled.h3`
     margin: 0;
     font-size: 24px;
 `;
 
-export const InputFile = styled.input`
+S.InputFile = styled.input`
     width: 0.1px;
     height: 0.1px;
     opacity: 0;
@@ -24,7 +26,7 @@ export const InputFile = styled.input`
     z-index: -1;
 `;
 
-export const InputFileLabel = styled.label`
+S.InputFileLabel = styled.label`
     display: block;
     font-size: 18px;
     text-align: center;
@@ -33,7 +35,7 @@ export const InputFileLabel = styled.label`
     cursor: pointer;
 `;
 
-export const InputFileName = styled.div`
+S.InputFileName = styled.div`
     font-size: 18px;
     line-height: 16px;
     text-align: center;
@@ -42,7 +44,7 @@ export const InputFileName = styled.div`
     word-break: break-all;
 `;
 
-export const SaveButton = styled(Button)`
+S.SaveButton = styled(Button)`
     background-color: ${({ disabled }: { disabled: boolean }) =>
         disabled ? colors.GrayScale_50 : colors.secondary};
 `;

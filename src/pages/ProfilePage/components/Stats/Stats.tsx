@@ -1,13 +1,6 @@
 import React, { FC, memo } from 'react';
 
-import {
-    IconWrapper,
-    StatInfo,
-    StatName,
-    StatPaper,
-    StatResult,
-    StatTitle,
-} from './units';
+import { S } from './units';
 
 import { IStat } from '@pages/ProfilePage/types';
 
@@ -18,19 +11,19 @@ export interface IStatsProps {
 export const Stats: FC<IStatsProps> = memo(({ stats = [] }) => {
     return (
         <div>
-            <StatTitle>Статистика</StatTitle>
+            <S.StatTitle>Статистика</S.StatTitle>
 
             {stats.map((stat) => (
-                <StatPaper key={stat.name}>
-                    <IconWrapper color={stat.color}>
+                <S.StatPaper key={stat.name}>
+                    <S.IconWrapper color={stat.color}>
                         <img src={stat.icon} />
-                    </IconWrapper>
+                    </S.IconWrapper>
 
-                    <StatInfo>
-                        <StatResult>{stat.value}</StatResult>
-                        <StatName>{stat.label}</StatName>
-                    </StatInfo>
-                </StatPaper>
+                    <S.StatInfo>
+                        <S.StatResult>{stat.value}</S.StatResult>
+                        <S.StatName>{stat.label}</S.StatName>
+                    </S.StatInfo>
+                </S.StatPaper>
             ))}
         </div>
     );
