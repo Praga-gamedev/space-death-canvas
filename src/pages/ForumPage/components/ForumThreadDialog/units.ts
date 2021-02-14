@@ -4,19 +4,17 @@ import styled from '@emotion/styled';
 import { colors } from 'src/colors';
 import { IInputProps } from '@components/Input/types';
 import { scrollBarStyle } from '@pages/units';
+import { Paper } from '@components';
 
-export const MainBlock = styled.div`
+export const MainBlock = styled(Paper)`
     display: flex;
     flex-direction: column;
     width: 70%;
-    height: 100%;
     max-width: 1000px;
     min-width: 500px;
-    padding-top: 80px !important;
     margin-left: auto;
     margin-right: auto;
     background-color: transparent;
-    color: ${colors.GrayScale_0};
     font-family: 'Comfortaa', sans-serif;
 `;
 
