@@ -1,79 +1,82 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
-import Game from 'src/game';
+
+import Game, { IGameState } from 'src/game';
+
 import { StyledWrapperPage } from '@pages/units';
 import {
-    GameDisplay,
-    InformationBlock,
-    MainBlock,
+    StyledGameDisplay,
+    StyledInformationBlock,
+    StyledMainBlock,
+    StyledButtonsBlock,
+    StyledScore,
 } from '@pages/GamePage/units';
+
 import { Button } from '@components';
-import { colors } from 'src/colors';
 
 export const GamePage: FC = () => {
     const canvas = useRef<HTMLCanvasElement>(null);
-    const gameDisplayRef = useRef<HTMLDivElement>(null);
-    const pixelRatio = window.devicePixelRatio;
 
     const [game, setGame] = useState<Game | null>(null);
-
-    const [width, setWidth] = useState(0);
-    const [height, setHeight] = useState(0);
+    const [gameState, setGameState] = useState<IGameState>({
+        score: 0,
+        isGameOver: false,
+        isPaused: false,
+    });
     const [isGameActive, setGameActive] = useState(false);
 
-    // вычисляем ширину и высоту канваса динамически в зависимости от размера экрана
-    const displayWidth = Math.floor(pixelRatio * width);
-    const displayHeight = Math.floor(pixelRatio * height);
-
     useEffect(() => {
-        if (gameDisplayRef.current) {
-            setWidth(gameDisplayRef.current.clientWidth);
-            setHeight(gameDisplayRef.current.clientHeight);
+        if (canvas.current) {
+            setGame(new Game(canvas.current, setGameState));
         }
     }, []);
 
     const startGame = () => {
-        if (!canvas.current) return;
+        if (!game) return;
 
-        if (!game) {
-            const _game = new Game(canvas.current);
-            setGame(_game);
-            _game.play();
-        } else {
-            game.reset();
-        }
+        setGameActive(true);
+        game.play();
+    };
+
+    const restartGame = () => {
+        if (!game) return;
+        game.reset();
+    };
+
+    const togglePause = () => {
+        if (!game) return;
+        game.isPaused ? game.play() : game.pause();
     };
 
     return (
         <StyledWrapperPage background={true}>
-            <MainBlock>
-                <GameDisplay ref={gameDisplayRef}>
+            <StyledMainBlock>
+                <StyledScore>Очки: {gameState.score}</StyledScore>
+                <StyledGameDisplay>
                     <canvas
                         ref={canvas}
-                        width={displayWidth}
-                        height={displayHeight}
+                        width={800}
+                        height={500}
                         style={{
-                            width: 'inherit',
-                            height: 'inherit',
                             display: isGameActive ? undefined : 'none',
                         }}
                     />
-                    <InformationBlock isActive={!isGameActive}>
+                    <StyledInformationBlock isActive={!isGameActive}>
                         <span>Перемещение: WASD или стрелками</span>
                         <span>Стрельба: пробел</span>
-                    </InformationBlock>
-                </GameDisplay>
-                <Button
-                    style={{
-                        backgroundColor: colors.secondary,
-                    }}
-                    onClick={() => {
-                        setGameActive(true);
-                        startGame();
-                    }}
-                >
-                    {isGameActive ? 'Restart' : 'Start'}
-                </Button>
-            </MainBlock>
+                    </StyledInformationBlock>
+                </StyledGameDisplay>
+                <StyledButtonsBlock>
+                    {!isGameActive ? (
+                        <Button onClick={startGame}>Старт</Button>
+                    ) : gameState.isGameOver ? (
+                        <Button onClick={restartGame}>Рестарт</Button>
+                    ) : (
+                        <Button onClick={togglePause}>
+                            {gameState.isPaused ? 'Плей' : 'Пауза'}
+                        </Button>
+                    )}
+                </StyledButtonsBlock>
+            </StyledMainBlock>
         </StyledWrapperPage>
     );
 };

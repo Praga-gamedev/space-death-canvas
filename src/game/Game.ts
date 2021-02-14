@@ -95,6 +95,7 @@ export default class Game {
 
     public pause() {
         this.isPaused = true;
+        this.onUpdateGameState(this.gameState);
         return this;
     }
 
