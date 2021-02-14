@@ -7,7 +7,7 @@ import {
     ThemeBlock,
     ThemeSpan,
     UsernameBlock,
-} from '@pages/ForumPage/components/ForumThreadDialog/Header/units';
+} from './units';
 
 export const Header = () => {
     const redirectForum = useCallback(() => history.push('/forum/'), []);
