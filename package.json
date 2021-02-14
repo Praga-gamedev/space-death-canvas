@@ -53,6 +53,7 @@
         "@types/react-router": "5.1.11",
         "axios": "0.21.1",
         "connected-react-router": "6.8.0",
+        "express": "4.17.1",
         "history": "4.10.1",
         "kea": "2.2.2",
         "kea-localstorage": "1.0.2",

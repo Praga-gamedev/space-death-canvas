@@ -1,6 +1,6 @@
 # Space Death Canvas
 
-### Макет: https://www.figma.com/file/ajQp4tRV6sZM05Q5vDNrLz/Spaceship?node-id=0%3A1
+### Макеты в [figma](https://www.figma.com/file/ajQp4tRV6sZM05Q5vDNrLz/Spaceship?node-id=0%3A1), хостинг на [heroku](https://space-death-canvas.herokuapp.com/).
 
 ## Описание игры
 
