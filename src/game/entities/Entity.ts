@@ -35,6 +35,14 @@ export default abstract class Entity {
         this.pos.y = y;
     }
 
+    set angle(angle: number) {
+        this.pos.angle = angle;
+    }
+
+    get angle() {
+        return this.pos.angle ? this.pos.angle : 0;
+    }
+
     get height() {
         return this.size.height;
     }

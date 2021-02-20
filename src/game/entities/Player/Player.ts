@@ -1,5 +1,6 @@
 import Entity, { IEntityOptions } from '../Entity';
 import { Gun } from '@game/equipments';
+import { drawRotatedTriangle } from '@game/CanvasUtils';
 
 export default class Player extends Entity {
     static size = {
@@ -18,22 +19,16 @@ export default class Player extends Entity {
     }
 
     public render() {
-        const { x, y } = this.pos;
-
+        let { x, y, angle } = this.pos;
+        if (!angle) {
+            angle = 0;
+        }
         this.ctx.save();
-        this.ctx.fillStyle = '#fff';
-
-        this.ctx.beginPath();
-        this.ctx.moveTo(x, y + this.height);
-        this.ctx.lineTo(x + this.width / 2, y);
-        this.ctx.lineTo(x + this.width, y + this.height);
-        this.ctx.fill();
-        this.ctx.closePath();
-
-        this.ctx.restore();
+        this.ctx.fillStyle = 'gold';
+        drawRotatedTriangle(this.ctx, x, y, this.width, this.height, angle);
     }
 
     public shoot() {
-        return this.gun.shoot();
+        return this.gun.shoot(this.angle);
     }
 }

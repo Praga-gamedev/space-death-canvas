@@ -14,17 +14,20 @@ const collides = (
 };
 
 export const hasCollides = (entity1: Entity, entity2: Entity) => {
-    const { x: x1, y: y1, height: height1, width: width1 } = entity1;
-    const { x: x2, y: y2, height: height2, width: width2 } = entity2;
+    if (entity1 && entity2) {
+        const { x: x1, y: y1, height: height1, width: width1 } = entity1;
+        const { x: x2, y: y2, height: height2, width: width2 } = entity2;
 
-    return collides(
-        x1,
-        y1,
-        x1 + width1,
-        y1 + height1,
-        x2,
-        y2,
-        x2 + width2,
-        y2 + height2
-    );
+        return collides(
+            x1,
+            y1,
+            x1 + width1,
+            y1 + height1,
+            x2,
+            y2,
+            x2 + width2,
+            y2 + height2
+        );
+    }
+    return false;
 };
