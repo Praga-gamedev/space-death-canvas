@@ -30,7 +30,7 @@ export const ProfilePage: FC = memo(() => {
     const avatar = user?.avatar ? `${HOST}${user.avatar}` : '';
 
     useEffect(() => {
-        (async () => {
+        const fetchUser = async () => {
             try {
                 const user = await getUser();
 
@@ -40,7 +40,8 @@ export const ProfilePage: FC = memo(() => {
             } catch (error) {
                 console.error(error);
             }
-        })();
+        };
+        fetchUser();
     }, []);
 
     const changePasswordMode = (value: boolean) => {
