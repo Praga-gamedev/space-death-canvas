@@ -10,7 +10,7 @@ export interface IStatsProps {
 
 export const Stats: FC<IStatsProps> = memo(({ stats = [] }) => {
     return (
-        <div>
+        <S.StatBlock>
             <S.StatTitle>Статистика</S.StatTitle>
 
             {stats.map((stat) => (
@@ -25,6 +25,6 @@ export const Stats: FC<IStatsProps> = memo(({ stats = [] }) => {
                     </S.StatInfo>
                 </S.StatPaper>
             ))}
-        </div>
+        </S.StatBlock>
     );
 });

@@ -41,6 +41,10 @@ S.ProfilePaper = styled.div`
     border-radius: 15px;
 `;
 
+S.AvatarBlock = styled(S.AlignCenterColumn)`
+    width: 340px;
+`;
+
 S.Avatar = styled.div`
     width: 250px;
     height: 250px;

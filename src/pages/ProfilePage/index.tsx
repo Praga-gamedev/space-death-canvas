@@ -87,7 +87,7 @@ export const ProfilePage: FC = memo(() => {
             <S.Title>Профиль</S.Title>
 
             <S.ProfileContent>
-                <S.AlignCenterColumn>
+                <S.AvatarBlock>
                     <S.ProfilePaper>
                         <S.Avatar>{avatar && <img src={avatar} />}</S.Avatar>
 
@@ -104,7 +104,7 @@ export const ProfilePage: FC = memo(() => {
                     >
                         Сменить пароль
                     </Button>
-                </S.AlignCenterColumn>
+                </S.AvatarBlock>
 
                 <ProfileForm
                     fields={fields}
