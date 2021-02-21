@@ -37,5 +37,5 @@
         "src",
         "./node_modules/@types"
     ],
-    "exclude": ["**/*.js", "node_modules"]
+    "exclude": ["**/*.js", "node_modules", "**/*.spec.ts"]
 }
