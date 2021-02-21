@@ -17,7 +17,8 @@ S.WrapperPage = styled.div`
     display: flex;
     justify-content: center;
     width: 100%;
-    height: 100vh;
+    height: 100%;
+    overflow-y: auto;
 `;
 
 S.WrapperErrorPage = styled(S.WrapperPage)`
