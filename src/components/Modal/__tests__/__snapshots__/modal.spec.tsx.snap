@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Modal component modal rendered correctly 1`] = `
+<div
+  className="css-17k3zxr"
+  data-test-id="modalOverlay"
+  onClick={[Function]}
+>
+  <div
+    className="css-n40hnu"
+  />
+</div>
+`;

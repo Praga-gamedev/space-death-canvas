@@ -13,7 +13,12 @@ export const Modal: FC<IModalProps> = memo(({ show, onClose, children }) => {
     };
 
     return (
-        <S.ModalOverlay show={show} ref={overlayRef} onClick={close}>
+        <S.ModalOverlay
+            show={show}
+            ref={overlayRef}
+            onClick={close}
+            data-test-id={'modalOverlay'}
+        >
             <S.ModalBody>{children}</S.ModalBody>
         </S.ModalOverlay>
     );
