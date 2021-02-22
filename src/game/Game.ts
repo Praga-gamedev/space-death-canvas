@@ -1,7 +1,7 @@
 import { InputManager, CONTROLS, hasCollides } from './core';
 import { Player, Enemy, Entity, Bullet } from './entities';
 import { IPosition } from '@game/entities/types';
-import { radians } from '@game/core/utils/calculation';
+import { cos, sin } from '@game/core/utils/calculation';
 
 export interface IGameState {
     isGameOver: boolean;
@@ -160,8 +160,8 @@ export default class Game {
         for (let i = 0; i < this.bullets.length; i++) {
             const bullet = this.bullets[i];
 
-            bullet.y -= bullet.speed * dt * Math.cos(radians(bullet.angle));
-            bullet.x += bullet.speed * dt * Math.sin(radians(bullet.angle));
+            bullet.y -= bullet.speed * dt * cos(bullet.angle);
+            bullet.x += bullet.speed * dt * sin(bullet.angle);
 
             // Удаляем врагов, ушедших за канвас
             if (bullet.y + bullet.height < 0) {
@@ -203,8 +203,8 @@ export default class Game {
         const { speed } = this.player;
 
         if (this.inputManager.isDown(CONTROLS.UP)) {
-            this.player.y -= dt * speed * Math.cos(radians(this.player.angle));
-            this.player.x += dt * speed * Math.sin(radians(this.player.angle));
+            this.player.y -= dt * speed * cos(this.player.angle);
+            this.player.x += dt * speed * sin(this.player.angle);
         }
 
         if (this.inputManager.isDown(CONTROLS.LEFT)) {
