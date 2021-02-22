@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button component button rendered correctly 1`] = `
+<button
+  className="css-1a7nukv"
+>
+  Snapshot!
+</button>
+`;
