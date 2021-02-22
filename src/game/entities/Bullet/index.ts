@@ -1,5 +1,5 @@
 import Entity from '../Entity';
-import { drawRotatedRectangle } from '@game/CanvasUtils';
+import { drawRotatedRectangle } from '@game/core/utils/canvas';
 
 export class Bullet extends Entity {
     static size = {
