@@ -16,4 +16,5 @@ module.exports = {
         '^@store/(.*)': '<rootDir>/src/store/$1',
         '^@game/(.*)': '<rootDir>/src/game/$1',
     },
+    setupFilesAfterEnv: ['<rootDir>/src/setupTests.ts'],
 };
