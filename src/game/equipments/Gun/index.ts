@@ -17,7 +17,7 @@ export class Gun extends Equipment {
         this.lastFire = Date.now();
 
         const calculateX = () => {
-            if (bulletAngle > -90 && bulletAngle < 90) {
+            if (bulletAngle < 90 || bulletAngle > 270) {
                 return bulletX + (this.owner.width * cos(bulletAngle)) / 2;
             } else {
                 return bulletX - (this.owner.width * cos(bulletAngle)) / 2;
@@ -25,7 +25,7 @@ export class Gun extends Equipment {
         };
 
         const calculateY = () => {
-            if (bulletAngle < 0) {
+            if (bulletAngle > 180) {
                 return bulletY - (this.owner.height * sin(bulletAngle)) / 2;
             } else {
                 return bulletY + (this.owner.height * sin(bulletAngle)) / 2;

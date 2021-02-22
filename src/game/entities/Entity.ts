@@ -36,7 +36,14 @@ export default abstract class Entity {
     }
 
     set angle(angle: number) {
-        this.pos.angle = angle;
+        if (angle < 0) {
+            angle = 360 + angle;
+        }
+        if (angle > 360) {
+            this.pos.angle = 0;
+        } else {
+            this.pos.angle = angle;
+        }
     }
 
     get angle() {
