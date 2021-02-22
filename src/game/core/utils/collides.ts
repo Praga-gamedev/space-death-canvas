@@ -14,9 +14,21 @@ const collides = (
 };
 
 export const hasCollides = (entity1: Entity, entity2: Entity) => {
-    const { x: x1, y: y1, height: height1, width: width1 } = entity1;
-    const { x: x2, y: y2, height: height2, width: width2 } = entity2;
-
+    if (!entity1 || !entity2) return false;
+    const {
+        x: x1,
+        y: y1,
+        height: height1,
+        width: width1,
+        // angle: angle1,
+    } = entity1;
+    const {
+        x: x2,
+        y: y2,
+        height: height2,
+        width: width2,
+        // angle: angle2,
+    } = entity2;
     return collides(
         x1,
         y1,

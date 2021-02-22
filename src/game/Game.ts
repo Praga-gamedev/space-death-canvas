@@ -1,5 +1,7 @@
 import { InputManager, CONTROLS, hasCollides } from './core';
 import { Player, Enemy, Entity, Bullet } from './entities';
+import { IPosition } from '@game/entities/types';
+import { cos, sin } from '@game/core/utils/calculation';
 
 export interface IGameState {
     isGameOver: boolean;
@@ -60,10 +62,11 @@ export default class Game {
         };
     }
 
-    private getPlayerStartPosition() {
+    private getPlayerStartPosition(): IPosition {
         return {
             x: (this.width - Player.size.width) / 2,
             y: this.height - Player.size.height * 2,
+            angle: 0,
         };
     }
 
@@ -103,7 +106,7 @@ export default class Game {
         if (this.isPaused) return;
         // Главный цикл игры
         const now = performance.now();
-        /* 
+        /*
             delta time нужен для того чтобы правильно обновлять координаты юнитов
             если делать player.x += 5 - это отработает по разному на разном железе
             тобишь если комп быстрый, циклов игры будет много, соответственно прибавится много раз по 5
@@ -130,12 +133,10 @@ export default class Game {
         if (Math.random() < 0.05) {
             const enemyX = Math.random() * (this.width - Enemy.size.width);
             const enemyY = -Enemy.size.height;
-
             const enemy = new Enemy({
                 ctx: this.ctx,
                 pos: { x: enemyX, y: enemyY },
             });
-
             this.enemies.push(enemy);
         }
 
@@ -159,7 +160,8 @@ export default class Game {
         for (let i = 0; i < this.bullets.length; i++) {
             const bullet = this.bullets[i];
 
-            bullet.y -= bullet.speed * dt;
+            bullet.y -= bullet.speed * dt * cos(bullet.angle);
+            bullet.x += bullet.speed * dt * sin(bullet.angle);
 
             // Удаляем врагов, ушедших за канвас
             if (bullet.y + bullet.height < 0) {
@@ -200,20 +202,17 @@ export default class Game {
 
         const { speed } = this.player;
 
-        if (this.inputManager.isDown(CONTROLS.DOWN)) {
-            this.player.y += dt * speed;
-        }
-
         if (this.inputManager.isDown(CONTROLS.UP)) {
-            this.player.y -= dt * speed;
+            this.player.y -= dt * speed * cos(this.player.angle);
+            this.player.x += dt * speed * sin(this.player.angle);
         }
 
         if (this.inputManager.isDown(CONTROLS.LEFT)) {
-            this.player.x -= dt * speed;
+            this.player.angle -= dt * speed;
         }
 
         if (this.inputManager.isDown(CONTROLS.RIGHT)) {
-            this.player.x += dt * speed;
+            this.player.angle += dt * speed;
         }
 
         if (this.inputManager.isDown(CONTROLS.SPACE)) {
@@ -230,7 +229,6 @@ export default class Game {
 
             for (let j = 0; j < this.bullets.length; j++) {
                 const bullet = this.bullets[j];
-
                 if (hasCollides(bullet, enemy)) {
                     this.enemies.splice(i, 1);
                     i--;
