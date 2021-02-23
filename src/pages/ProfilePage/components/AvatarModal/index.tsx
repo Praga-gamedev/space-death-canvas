@@ -12,16 +12,16 @@ export const AvatarModal: FC<IAvatarModalProps> = memo(
     ({ show, onClose, onSave }) => {
         const [file, setFile] = useState<File | null>(null);
 
-        const _onClose = () => {
+        const handleClose = () => {
             setFile(null);
             onClose();
         };
 
-        const _onSave = () => {
+        const handleSave = () => {
             if (!file) return;
 
             onSave(file);
-            _onClose();
+            handleClose();
         };
 
         const onFileUpload = (event: ChangeEvent<HTMLInputElement>) => {
@@ -32,7 +32,7 @@ export const AvatarModal: FC<IAvatarModalProps> = memo(
         };
 
         return (
-            <Modal show={show} onClose={_onClose}>
+            <Modal show={show} onClose={handleClose}>
                 <S.AvatarModalContent>
                     <S.AvatarModalTitle>
                         Загрузите изображение
@@ -58,7 +58,7 @@ export const AvatarModal: FC<IAvatarModalProps> = memo(
                     <S.SaveButton
                         style={{ marginTop: '30px' }}
                         disabled={!file}
-                        onClick={_onSave}
+                        onClick={handleSave}
                     >
                         Поменять
                     </S.SaveButton>

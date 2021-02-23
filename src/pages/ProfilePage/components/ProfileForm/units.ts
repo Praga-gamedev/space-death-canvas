@@ -7,6 +7,7 @@ import { S as ProfileUnits } from '@pages/ProfilePage/units';
 export const S: Record<string, any> = {};
 
 S.FormBlock = styled(ProfileUnits.AlignCenterColumn)`
+    margin-top: -8px;
     width: 430px;
 `;
 
@@ -14,7 +15,7 @@ S.ProfileField = styled.div`
     width: 100%;
 
     &:not(:first-of-type) {
-        margin-top: 30px;
+        margin-top: 10px;
     }
 `;
 
@@ -22,7 +23,7 @@ S.ProfileButtons = styled.div`
     align-self: ${({ withBackButton }: { withBackButton: boolean }) =>
         withBackButton ? 'flex-start' : 'center'};
 
-    margin-top: 60px;
+    margin-top: 40px;
     display: flex;
 `;
 

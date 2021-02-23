@@ -30,7 +30,7 @@ export const ProfilePage: FC = memo(() => {
     const avatar = user?.avatar ? `${HOST}${user.avatar}` : '';
 
     useEffect(() => {
-        (async () => {
+        const fetchUser = async () => {
             try {
                 const user = await getUser();
 
@@ -40,7 +40,8 @@ export const ProfilePage: FC = memo(() => {
             } catch (error) {
                 console.error(error);
             }
-        })();
+        };
+        fetchUser();
     }, []);
 
     const changePasswordMode = (value: boolean) => {
@@ -86,7 +87,7 @@ export const ProfilePage: FC = memo(() => {
             <S.Title>Профиль</S.Title>
 
             <S.ProfileContent>
-                <S.AlignCenterColumn>
+                <S.AvatarBlock>
                     <S.ProfilePaper>
                         <S.Avatar>{avatar && <img src={avatar} />}</S.Avatar>
 
@@ -97,13 +98,15 @@ export const ProfilePage: FC = memo(() => {
                         </S.UploadPhotoButton>
                     </S.ProfilePaper>
 
-                    <Button
-                        style={{ marginTop: '30px' }}
-                        onClick={() => changePasswordMode(true)}
-                    >
-                        Сменить пароль
-                    </Button>
-                </S.AlignCenterColumn>
+                    {!passwordMode && (
+                        <Button
+                            style={{ marginTop: '30px' }}
+                            onClick={() => changePasswordMode(true)}
+                        >
+                            Сменить пароль
+                        </Button>
+                    )}
+                </S.AvatarBlock>
 
                 <ProfileForm
                     fields={fields}

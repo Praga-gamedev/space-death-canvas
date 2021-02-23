@@ -10,8 +10,12 @@ interface IIconWrapperProps {
 
 export const S: Record<string, any> = {};
 
+S.StatBlock = styled.div`
+    margin-top: -8px;
+`;
+
 S.StatTitle = styled.div`
-    font-size: 14px;
+    font-size: 18px;
     line-height: 20px;
     color: ${colors.GrayScale_30};
 `;
@@ -50,5 +54,6 @@ S.StatResult = styled.div`
 `;
 
 S.StatName = styled(S.StatTitle)`
+    margin-top: 9px;
     font-size: 16px;
 `;
