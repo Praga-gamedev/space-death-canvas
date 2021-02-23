@@ -98,12 +98,14 @@ export const ProfilePage: FC = memo(() => {
                         </S.UploadPhotoButton>
                     </S.ProfilePaper>
 
-                    <Button
-                        style={{ marginTop: '30px' }}
-                        onClick={() => changePasswordMode(true)}
-                    >
-                        Сменить пароль
-                    </Button>
+                    {!passwordMode && (
+                        <Button
+                            style={{ marginTop: '30px' }}
+                            onClick={() => changePasswordMode(true)}
+                        >
+                            Сменить пароль
+                        </Button>
+                    )}
                 </S.AvatarBlock>
 
                 <ProfileForm

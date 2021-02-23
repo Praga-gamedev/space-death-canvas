@@ -9,8 +9,14 @@ export const S: Record<string, any> = {};
 S.ProfileContainer = styled.div`
     padding: 170px 0 80px;
     height: 100vh;
-    overflow-y: auto;
     background-color: ${colors.GrayScale_50};
+    overflow-y: auto;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
 `;
 
 S.Title = styled.h1`
