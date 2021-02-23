@@ -16,9 +16,15 @@ describe('ErrorBoundary', () => {
             </ErrorBoundary>
         );
 
-        expect(ErrorBoundaryComponent.find('h1')).toHaveLength(0);
-        expect(ErrorBoundaryComponent.find('span')).toHaveLength(1);
-        expect(ErrorBoundaryComponent.find('span').at(0).text()).toBe(text);
+        expect(
+            ErrorBoundaryComponent.find({
+                'data-test-id': 'error-boundary-div',
+            }).hostNodes()
+        ).toHaveLength(0);
+
+        const ChildSpan = ErrorBoundaryComponent.find('span');
+        expect(ChildSpan).toHaveLength(1);
+        expect(ChildSpan.at(0).text()).toBe(text);
     });
 
     it('should display an ErrorMessage if wrapped component throws', () => {
@@ -34,10 +40,10 @@ describe('ErrorBoundary', () => {
         const error = new Error('test');
 
         ErrorBoundaryComponent.find(ChildComponent).simulateError(error);
+        const ErrorDiv = ErrorBoundaryComponent.find({
+            'data-test-id': 'error-boundary-div',
+        }).hostNodes();
 
-        expect(ErrorBoundaryComponent.find('h1')).toHaveLength(1);
-        expect(ErrorBoundaryComponent.find('h1').at(0).text()).toBe(
-            'Что-то пошло не так.'
-        );
+        expect(ErrorDiv).toHaveLength(1);
     });
 });

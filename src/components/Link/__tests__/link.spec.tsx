@@ -32,13 +32,16 @@ describe('Link component', () => {
             </Link>
         );
 
-        expect(LinkComponent.find('span')).toHaveLength(1);
-        expect(LinkComponent.find('span').at(0).text()).toBe(linkText);
+        const SpanChild = LinkComponent.find('span');
+        expect(SpanChild).toHaveLength(1);
+        expect(SpanChild.at(0).text()).toBe(linkText);
     });
 
     test('change browser history onClick', () => {
         const LinkComponent = mount(<Link path={path} />);
-        LinkComponent.find('label').simulate('click');
+        LinkComponent.find({ 'data-test-id': 'link-test-id' })
+            .hostNodes()
+            .simulate('click');
 
         expect(history.push).toBeCalledTimes(1);
     });

@@ -12,15 +12,21 @@ describe('Input component', () => {
 
     test('label not exist when label prop undefined', () => {
         const InputComponent = mount(<Input />);
-        expect(InputComponent.find('span')).toHaveLength(0);
+        const InputLabel = InputComponent.find({
+            'data-test-id': 'input-label',
+        }).hostNodes();
+        expect(InputLabel).toHaveLength(0);
     });
 
     test('label exist when label prop defined', () => {
         const labelText = 'text';
         const InputComponent = mount(<Input label={labelText} />);
+        const InputLabel = InputComponent.find({
+            'data-test-id': 'input-label',
+        }).hostNodes();
 
-        expect(InputComponent.find('span')).toHaveLength(1);
-        expect(InputComponent.find('span').at(0).text()).toBe(labelText);
+        expect(InputLabel).toHaveLength(1);
+        expect(InputLabel.at(0).text()).toBe(labelText);
     });
 
     test('change event working', () => {
@@ -28,9 +34,7 @@ describe('Input component', () => {
         const props = { onChange };
         const InputComponent = mount(<Input {...props} />);
 
-        InputComponent.find('input').simulate('change', {
-            target: { value: 'Hello' },
-        });
+        InputComponent.find('input').simulate('change');
 
         expect(onChange).toBeCalledTimes(1);
     });

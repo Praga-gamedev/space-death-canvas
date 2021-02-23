@@ -3,6 +3,7 @@
 exports[`Link component link rendered correctly 1`] = `
 <label
   className="css-1gpyte2"
+  data-test-id="link-test-id"
   onClick={[Function]}
 >
   Snapshot!

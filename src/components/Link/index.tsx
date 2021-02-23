@@ -13,7 +13,11 @@ export const Link: FC<ILinkProps> = ({ path, children, ...props }) => {
     };
 
     return (
-        <S.Link onClick={(e: Event) => onClick(e)} {...props}>
+        <S.Link
+            data-test-id="link-test-id"
+            onClick={(e: Event) => onClick(e)}
+            {...props}
+        >
             {children}
         </S.Link>
     );

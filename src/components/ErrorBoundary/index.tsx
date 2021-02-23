@@ -8,19 +8,20 @@ class ErrorBoundary extends PureComponent<IProps, IState> {
     };
 
     static getDerivedStateFromError(_: Error): IState {
-        // Обновить состояние с тем, чтобы следующий рендер показал запасной UI.
         return { hasError: true };
     }
 
     componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-        // Можно также сохранить информацию об ошибке в соответствующую службу журнала ошибок
         console.error(error, errorInfo);
     }
 
     render() {
         if (this.state.hasError) {
-            // Можно отрендерить запасной UI произвольного вида
-            return <h1>Что-то пошло не так.</h1>;
+            return (
+                <div data-test-id="error-boundary-div">
+                    <h1>Что-то пошло не так.</h1>
+                </div>
+            );
         }
 
         return this.props.children;
