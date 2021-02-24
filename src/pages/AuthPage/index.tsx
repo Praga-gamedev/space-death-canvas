@@ -1,4 +1,4 @@
-import React, { useState, FormEvent } from 'react';
+import React, { useState, FormEvent, memo } from 'react';
 
 import { history } from '@store/initStore';
 
@@ -8,7 +8,7 @@ import { login as auth, getUser as user } from '@api/auth';
 
 import { S } from '../units';
 
-export const AuthPage = () => {
+export const AuthPage = memo(() => {
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
 
@@ -69,4 +69,4 @@ export const AuthPage = () => {
             </Paper>
         </S.WrapperPage>
     );
-};
+});

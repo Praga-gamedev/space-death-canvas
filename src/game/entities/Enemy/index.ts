@@ -1,3 +1,5 @@
+import { colors } from 'src/colors';
+
 import Entity from '../Entity';
 
 export class Enemy extends Entity {
@@ -14,7 +16,7 @@ export class Enemy extends Entity {
         const { x, y } = this.pos;
 
         this.ctx.save();
-        this.ctx.fillStyle = '#4447E2';
+        this.ctx.fillStyle = colors.secondary;
 
         this.ctx.moveTo(x, y);
         this.ctx.fillRect(x, y, this.width, this.height);

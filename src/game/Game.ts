@@ -1,7 +1,10 @@
-import { InputManager, CONTROLS, hasCollides } from './core';
-import { Player, Enemy, Entity, Bullet } from './entities';
 import { IPosition } from '@game/entities/types';
 import { cos, sin } from '@game/core/utils/calculation';
+
+import { InputManager, CONTROLS, hasCollides } from './core';
+import { Player, Enemy, Entity, Bullet } from './entities';
+
+import {colors} from 'src/colors'
 
 export interface IGameState {
     isGameOver: boolean;
@@ -192,7 +195,8 @@ export default class Game {
     }
 
     private renderBackground() {
-        this.ctx.fillStyle = '#000';
+        this.ctx.fillStyle = colors.GrayScale_100;
+        
         this.ctx.fillRect(0, 0, this.width, this.height);
     }
 

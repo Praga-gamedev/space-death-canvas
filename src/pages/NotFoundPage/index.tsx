@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 import { history } from '@store/initStore';
 
@@ -8,7 +8,7 @@ import gif404 from '@images/404.gif';
 
 import { S } from '../units';
 
-export const NotFoundPage = () => {
+export const NotFoundPage = memo(() => {
     return (
         <S.WrapperErrorPage>
             <img
@@ -24,4 +24,4 @@ export const NotFoundPage = () => {
             <Button children={'Вернуться'} onClick={() => history.push('/')} />
         </S.WrapperErrorPage>
     );
-};
+});

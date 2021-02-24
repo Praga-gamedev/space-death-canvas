@@ -40,7 +40,6 @@ S.InputFileName = styled.div`
     font-size: 18px;
     line-height: 16px;
     text-align: center;
-    color: #8d8d8d;
     max-width: 200px;
     word-break: break-all;
 `;

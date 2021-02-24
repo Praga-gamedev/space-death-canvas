@@ -13,13 +13,13 @@ class ErrorBoundary extends PureComponent<IProps, IState> {
     }
 
     componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-        // Можно также сохранить информацию об ошибке в соответствующую службу журнала ошибок
+        // TODO: Можно также сохранить информацию об ошибке в соответствующую службу журнала ошибок
         console.error(error, errorInfo);
     }
 
     render() {
         if (this.state.hasError) {
-            // Можно отрендерить запасной UI произвольного вида
+            // TODO: Можно отрендерить запасной UI произвольного вида
             return <h1>Что-то пошло не так.</h1>;
         }
 
