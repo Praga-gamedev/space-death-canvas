@@ -21,6 +21,7 @@ module.exports = {
             '@api': path.resolve(__dirname, '../src/api'),
             '@icons': path.resolve(__dirname, '../src/assets/icons'),
             '@images': path.resolve(__dirname, '../src/assets/images'),
+            '@sprites': path.resolve(__dirname, '../src/assets/sprites'),
             '@components': path.resolve(__dirname, '../src/components'),
             '@pages': path.resolve(__dirname, '../src/pages'),
             '@types': path.resolve(__dirname, '../src/types'),

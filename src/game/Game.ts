@@ -1,7 +1,6 @@
-import { InputManager, CONTROLS, hasCollides } from './core';
-import { Player, Enemy, Entity, Bullet } from './entities';
+import { CONTROLS, hasCollides, InputManager, cos, sin } from '@game/core';
+import { Bullet, Enemy, Entity, Player } from '@game/entities';
 import { IPosition } from '@game/entities/types';
-import { cos, sin } from '@game/core/utils/calculation';
 
 export interface IGameState {
     isGameOver: boolean;
@@ -74,7 +73,6 @@ export default class Game {
         this.isPaused = false;
         this.lastTime = performance.now();
         this.main();
-
         return this;
     }
 

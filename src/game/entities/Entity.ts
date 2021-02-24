@@ -1,4 +1,5 @@
 import { IPosition, ISize } from './types';
+import { Sprite } from '@game/core';
 
 export interface IEntityOptions {
     ctx: CanvasRenderingContext2D;
@@ -11,6 +12,8 @@ export default abstract class Entity {
     public ctx: CanvasRenderingContext2D;
     public pos: IPosition;
     public size: ISize = { height: 0, width: 0 };
+
+    protected sprite?: Sprite;
 
     constructor(opts: IEntityOptions) {
         const { ctx, pos } = opts;

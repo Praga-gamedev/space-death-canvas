@@ -4,6 +4,8 @@ import Game, { IGameState } from 'src/game';
 
 import { S as SGlobal } from '@pages/units';
 import { S } from '@pages/GamePage/units';
+import { resources } from '@game/core';
+import spaceships from '@sprites/spaceships.png';
 
 export const GamePage: FC = () => {
     const canvas = useRef<HTMLCanvasElement>(null);
@@ -26,9 +28,12 @@ export const GamePage: FC = () => {
         if (!game) {
             return;
         }
-
-        setGameActive(true);
-        game.play();
+        // загружаем ресурсы в контейнер, ждем пока они загрузятся и начинаем игру
+        resources.load(spaceships);
+        resources.onReady(() => {
+            setGameActive(true);
+            game.play();
+        });
     };
 
     const restartGame = () => {
@@ -77,7 +82,7 @@ export const GamePage: FC = () => {
                         </S.ButtonGame>
                     ) : (
                         <S.ButtonGame onClick={togglePause}>
-                            {gameState.isPaused ? 'Плей' : 'Пауза'}
+                            {gameState.isPaused ? 'Продолжить' : 'Пауза'}
                         </S.ButtonGame>
                     )}
                 </S.ButtonsBlock>
