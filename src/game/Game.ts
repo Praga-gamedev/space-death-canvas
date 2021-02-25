@@ -1,6 +1,9 @@
+
 import { CONTROLS, hasCollides, InputManager, cos, sin } from '@game/core';
 import { Bullet, Enemy, Entity, Player } from '@game/entities';
 import { IPosition } from '@game/entities/types';
+
+import {colors} from 'src/colors'
 
 export interface IGameState {
     isGameOver: boolean;
@@ -190,7 +193,8 @@ export default class Game {
     }
 
     private renderBackground() {
-        this.ctx.fillStyle = '#000';
+        this.ctx.fillStyle = colors.GrayScale_100;
+        
         this.ctx.fillRect(0, 0, this.width, this.height);
     }
 

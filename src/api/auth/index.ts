@@ -13,11 +13,6 @@ export const logout = async () => {
     return Api.post({
         url: '/auth/logout',
         data: {},
-        /*
-             Есть вопрос - что будет, если куки не обнулять?
-             Просто оно и без этого хидера работает
-            */
-        headers: { 'Set-Cookie': 'expires=0' },
     });
 };
 
