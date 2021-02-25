@@ -1,5 +1,5 @@
 import Entity from '../Entity';
-import { drawRotatedRectangle } from '@game/core/utils/canvas';
+import { rotate } from '@game/core';
 
 export class Bullet extends Entity {
     static size = {
@@ -16,13 +16,20 @@ export class Bullet extends Entity {
     public render() {
         this.ctx.save();
         this.ctx.fillStyle = this.color;
-        drawRotatedRectangle(
+        rotate(
             this.ctx,
             this.x,
             this.y,
             this.width,
             this.height,
-            this.angle
+            this.angle,
+            (ctx) =>
+                ctx.fillRect(
+                    -this.width / 2,
+                    -this.height / 2,
+                    this.width,
+                    this.height
+                )
         );
     }
 }

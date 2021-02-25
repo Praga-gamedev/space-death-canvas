@@ -21,6 +21,7 @@
             "@api/*": ["./src/api/*"],
             "@icons/*": ["./src/assets/icons/*"],
             "@images/*": ["./src/assets/images/*"],
+            "@sprites/*": ["./src/assets/sprites/*"],
             "@components/*": ["./src/components/*"],
             "@components": ["./src/components/index.ts"],
             "@pages/*": ["./src/pages/*"],
