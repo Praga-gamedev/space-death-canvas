@@ -1,31 +1,29 @@
-import React, { useState, FormEvent, memo } from 'react';
-
-import { history } from '@store/initStore';
+import React, { useState, useEffect, FormEvent, memo } from 'react';
+import { useActions, useValues } from 'kea';
 
 import { Paper, Input, Button, Link } from '@components';
 
-import { login as auth, getUser as user } from '@api/auth';
-
 import { S } from '../units';
 
+import { history } from '@store/initStore';
+import { logic } from '@store/AuthPage';
+
 export const AuthPage = memo(() => {
+    const { logIn } = useActions(logic);
+    const { isAuth } = useValues(logic);
+
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
+
+    useEffect(() => {
+        isAuth && history.push('/');
+    }, [isAuth]);
 
     const onSubmitAuth = async (e: FormEvent<HTMLDivElement>) => {
         e.preventDefault();
 
         if (login && password) {
-            try {
-                await auth({ login, password });
-                const res = await user();
-
-                console.log('Данные:', res);
-
-                history.push('/game');
-            } catch (e) {
-                console.log('Ошибка:', e);
-            }
+            await logIn(login, password);
         } else {
             console.error('Неверный логин или пароль.');
         }

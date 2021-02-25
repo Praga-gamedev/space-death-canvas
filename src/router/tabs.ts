@@ -1,13 +1,5 @@
 export const tabs = [
     {
-        path: '/auth',
-        title: 'Авторизация',
-    },
-    {
-        path: '/registration',
-        title: 'Регистрация',
-    },
-    {
         path: '/leaderboard',
         title: 'Таблица лидеров',
     },
