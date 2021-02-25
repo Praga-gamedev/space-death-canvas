@@ -1,6 +1,7 @@
 import Entity, { IEntityOptions } from '../Entity';
 import spaceships from '@sprites/spaceships.png';
-import { rotate, Sprite } from '@game/core';
+import { Sprite } from '@game/core';
+import { rotate } from '@game/core/utils';
 
 export class Enemy extends Entity {
     static size = {

@@ -1,6 +1,6 @@
 import Equipment from '@game/equipments/Equipment';
 import { Bullet } from '@game/entities';
-import { cos, sin } from '@game/core';
+import { cos, sin } from '@game/core/utils';
 
 export class Gun extends Equipment {
     static cooldown = 200;

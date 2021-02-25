@@ -1,4 +1,5 @@
-import { CONTROLS, hasCollides, InputManager, cos, sin } from '@game/core';
+import { CONTROLS, InputManager } from '@game/core';
+import { hasCollides, cos, sin, isBeyoundCanvasBorder } from '@game/core/utils';
 import { Bullet, Enemy, Entity, Player } from '@game/entities';
 import { IPosition } from '@game/entities/types';
 
@@ -149,7 +150,7 @@ export default class Game {
             enemy.y += enemy.speed * dt;
 
             // Удаляем врагов, ушедших за канвас
-            if (enemy.y - enemy.height >= this.height) {
+            if (isBeyoundCanvasBorder(this.ctx, enemy)) {
                 this.enemies.splice(i, 1);
                 i--;
             }
@@ -161,8 +162,8 @@ export default class Game {
             bullet.y -= bullet.speed * dt * cos(bullet.angle);
             bullet.x += bullet.speed * dt * sin(bullet.angle);
 
-            // Удаляем врагов, ушедших за канвас
-            if (bullet.y + bullet.height < 0) {
+            // Удаляем пули, ушедшие за канвас
+            if (isBeyoundCanvasBorder(this.ctx, bullet)) {
                 this.bullets.splice(i, 1);
                 i--;
             }
