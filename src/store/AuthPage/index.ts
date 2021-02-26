@@ -1,8 +1,10 @@
 import { kea } from 'kea';
 
-import store, { history } from '../initStore';
+import store from '../initStore';
 
 import { login as auth, logout, getUser } from '@api/auth';
+
+import {TState, IUserProps} from '../types'
 
 export const logic = kea({
     path: () => ['scenes', 'authPage'],
@@ -11,7 +13,7 @@ export const logic = kea({
         setLoading: (loading: boolean) => loading,
         setError: (error: boolean) => error,
         setAuth: (bool: boolean) => bool,
-        setUser: (payload: object) => payload,
+        setUser: (payload: IUserProps) => payload,
     }),
     reducers: ({ actions }) => ({
         isLoading: [
@@ -19,9 +21,8 @@ export const logic = kea({
             {
                 /* Если выполняется данный экшн, то isLoading всегда будет false */
                 [actions.setError]: () => false,
-                // @ts-ignore
 
-                [actions.setLoading]: (_, payload) => payload,
+                [actions.setLoading]: (_: TState, payload: boolean) => payload,
                 [actions.startLoading]: () => true,
             },
         ],
@@ -29,26 +30,20 @@ export const logic = kea({
             false,
             { persist: true },
             {
-                // @ts-ignore
-
-                [actions.setAuth]: (_, payload) => payload,
+                [actions.setAuth]: (_: TState, payload: boolean) => payload,
             },
         ],
         user: [
             {},
             { persist: true },
             {
-                // @ts-ignore
-
-                [actions.setUser]: (_, payload) => payload,
+                [actions.setUser]: (_: TState, payload: IUserProps) => payload,
             },
         ],
         error: [
             '',
             {
-                // @ts-ignore
-
-                [actions.setError]: (_, payload) => payload,
+                [actions.setError]: (_: TState, payload: string) => payload,
             },
         ],
     }),
@@ -67,8 +62,6 @@ export const logic = kea({
                 if (res === 'OK') {
                     actions.setAuth(true);
                     actions.setUser(await getUser());
-
-                    history.push('/game');
                 }
 
                 /*
@@ -81,6 +74,16 @@ export const logic = kea({
                 actions.setError(e.response.data.reason);
 
                 // TODO: Показать в Notification ошибку, если есть
+            }
+        },
+
+        checkLoginOfServer: async () => {
+            try {
+                actions.setUser(await getUser());
+                actions.setAuth(true);
+            } catch (e) {
+                actions.setError(e.response.data.reason);
+                actions.setAuth(false);
             }
         },
 

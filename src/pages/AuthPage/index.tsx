@@ -9,11 +9,15 @@ import { history } from '@store/initStore';
 import { logic } from '@store/AuthPage';
 
 export const AuthPage = memo(() => {
-    const { logIn } = useActions(logic);
+    const { logIn, checkLoginOfServer } = useActions(logic);
     const { isAuth } = useValues(logic);
 
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
+
+    useEffect(() => {
+        checkLoginOfServer();
+    }, []);
 
     useEffect(() => {
         isAuth && history.push('/');

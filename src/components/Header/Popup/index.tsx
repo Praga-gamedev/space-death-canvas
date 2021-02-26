@@ -25,7 +25,7 @@ export const Popup: FC<IPopupProps> = memo(({ buttonRef, isOpen, setOpen }) => {
         setOpen(false);
     }, []);
 
-    const logoutClick = useCallback(async () => {
+    const handleLogoutClick = useCallback(async () => {
         await logOut();
     }, []);
 
@@ -45,7 +45,7 @@ export const Popup: FC<IPopupProps> = memo(({ buttonRef, isOpen, setOpen }) => {
         <S.Popup ref={popupRef} isOpen={isOpen}>
             <S.PopupItem onClick={redirectToProfile}>Профиль</S.PopupItem>
 
-            <S.PopupItem onClick={logoutClick}>Выйти</S.PopupItem>
+            <S.PopupItem onClick={handleLogoutClick}>Выйти</S.PopupItem>
         </S.Popup>
     );
 });
