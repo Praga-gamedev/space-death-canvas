@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Input component input rendered correctly 1`] = `
+<div
+  className="css-1vr8bhw"
+>
+  <input
+    className="css-1k2zxyw"
+  />
+</div>
+`;

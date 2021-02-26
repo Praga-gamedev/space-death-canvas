@@ -1,37 +1,42 @@
 {
-  "compilerOptions": {
-    "lib": [
-      "dom",
-      "es2017"
-    ],
-    "module": "esnext",
-    "moduleResolution": "node",
-    "target": "es5",
-    "jsx": "react",
-    "importHelpers": true,
-    "noUnusedLocals": true,
-    "esModuleInterop": true,
-    "strict": true,
-    "allowSyntheticDefaultImports": true,
-    "experimentalDecorators": true,
-    "skipLibCheck": true,
-    "declaration": false,
-    "sourceMap": false,
-    "baseUrl": ".",
-    "outDir": "./dist",
-    "paths": {
-      "src/*": ["./src/*"]
+    "compilerOptions": {
+        "lib": ["dom", "es2017"],
+        "module": "esnext",
+        "moduleResolution": "node",
+        "target": "es5",
+        "jsx": "react",
+        "importHelpers": true,
+        "noUnusedLocals": true,
+        "esModuleInterop": true,
+        "strict": true,
+        "allowSyntheticDefaultImports": true,
+        "experimentalDecorators": true,
+        "skipLibCheck": true,
+        "declaration": false,
+        "sourceMap": false,
+        "baseUrl": "./",
+        "outDir": "./dist",
+        "paths": {
+            "src/*": ["./src/*"],
+            "@api/*": ["./src/api/*"],
+            "@icons/*": ["./src/assets/icons/*"],
+            "@images/*": ["./src/assets/images/*"],
+            "@sprites/*": ["./src/assets/sprites/*"],
+            "@components/*": ["./src/components/*"],
+            "@components": ["./src/components/index.ts"],
+            "@pages/*": ["./src/pages/*"],
+            "@pages": ["./src/pages/index.ts"],
+            "@types/*": ["./src/types/*"],
+            "@store/*": ["./src/store/*"],
+            "@store/": ["./src/store/index.ts"],
+            "@game/*": ["./src/game/*"],
+            "@game/": ["./src/game/index.ts"]
+        },
+        "typeRoots": ["src/types/**/*.d.ts", "node_modules/@types"]
     },
-    "typeRoots": ["typings/**/*.d.ts", "node_modules/@types"]
-  },
-  "include": [
-    "src/*.ts",
-    "src/*.tsx",
-    "typings/**/*.d.ts",
-    "./node_modules/@types"
-  ],
-  "exclude": [
-    "**/*.js",
-    "node_modules"
-  ]
+    "include": [
+        "src",
+        "./node_modules/@types"
+    ],
+    "exclude": ["**/*.js", "node_modules", "**/*.spec.ts", "**/*.spec.tsx", "**/__tests__"]
 }
