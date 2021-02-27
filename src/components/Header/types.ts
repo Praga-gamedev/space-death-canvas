@@ -1,3 +1,5 @@
+import { ButtonHTMLAttributes } from 'react';
+
 export interface IHeaderProps {
     tabs: ITab[];
 }
@@ -9,4 +11,9 @@ export interface ITab {
 
 export interface ITabProps {
     isActive: string;
+}
+
+export interface IFullScreenBtnProps
+    extends ButtonHTMLAttributes<HTMLButtonElement> {
+    isFullScreen: boolean;
 }

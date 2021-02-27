@@ -1,10 +1,13 @@
+import { FC } from 'react';
 import styled from '@emotion/styled';
 
 import { colors } from 'src/colors';
 
 import arrow from '@icons/dropdown.svg';
+import expandAlt from '@icons/expand-alt.svg';
+import minimiseAlt from '@icons/minimise-alt.svg';
 
-import { ITabProps } from './types';
+import { ITabProps, IFullScreenBtnProps } from './types';
 
 export const S: Record<string, any> = {};
 
@@ -52,4 +55,19 @@ S.DropdownArrow = styled.div`
     background-repeat: no-repeat;
     transition: transform ease 0.2s;
     cursor: pointer;
+`;
+
+export const FullScreenToggleBtn: FC<IFullScreenBtnProps> = styled.button`
+    background-image: ${({ isFullScreen }: IFullScreenBtnProps) =>
+        isFullScreen ? `url(${minimiseAlt})` : `url(${expandAlt})`};
+
+    width: 25px;
+    height: 25px;
+    position: relative;
+    margin-right: 50px;
+    border-radius: 5px;
+    border-color: ${colors.GrayScale_20};
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: transparent;
 `;
