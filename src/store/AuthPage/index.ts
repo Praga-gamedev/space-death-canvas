@@ -1,4 +1,5 @@
 import { kea } from 'kea';
+import { store } from 'react-notifications-component';
 
 import { login as auth, logout, getUser } from '@api/auth';
 
@@ -32,7 +33,6 @@ export const logic = kea({
         isLoadingUser: [
             null,
             {
-                /* Если выполняется данный экшн, то isLoading всегда будет false */
                 [actions.setError]: () => false,
 
                 [actions.setLoadingUser]: (_: TState, payload: boolean) =>
@@ -60,13 +60,9 @@ export const logic = kea({
         ],
     }),
 
-    thunks: ({ actions }: { actions: any }) => ({
+    thunks: ({ actions, getState }: { actions: any; getState: any }) => ({
         logIn: async (login: string, password: string) => {
             try {
-                /*
-                            isLoading при вызове данного экшна всегда будет true (начало загрузки),
-                            используется как дефолт
-                            */
                 actions.startLoadingAuth();
 
                 const res: any = await auth({ login, password });
@@ -75,16 +71,23 @@ export const logic = kea({
                     actions.checkLoginOfServer();
                 }
 
-                /*
-                            здесь уже можем манипулировать состояние isLoading, как хотим
-                            В дальнейшем, стоит добавить лоудеры в кнопку и отдельные на страницы,
-                            при запросе данных //TODO
-                            */
                 actions.setLoadingAuth(false);
             } catch (e) {
                 actions.setError(e.response.data.reason);
 
-                // TODO: Показать в Notification ошибку, если есть
+                store.addNotification({
+                    title: 'Ошибка!',
+                    message: e.response.data.reason,
+                    type: 'danger',
+                    insert: 'top',
+                    container: 'bottom-right',
+                    animationIn: ['animate__animated', 'animate__fadeIn'],
+                    animationOut: ['animate__animated', 'animate__fadeOut'],
+                    dismiss: {
+                        duration: 5000,
+                        onScreen: true,
+                    },
+                });
             }
         },
 
@@ -96,21 +99,23 @@ export const logic = kea({
                 actions.setLoadingUser(false);
             } catch (e) {
                 actions.setError(e.response.data.reason);
-                actions.setAuth(false);
+                actions.setAuth(false)
             }
+        },
+
+        resetUser: () => {
+            actions.setAuth(false);
+            actions.setUser({});
         },
 
         logOut: async () => {
             try {
                 await logout();
 
-                actions.setAuth(false);
-                actions.setUser({});
+                actions.resetUser();
             } catch (e) {
                 actions.setError(e.response.data.reason);
             }
-
-            // TODO: Здесь нужно сбросить все нотификейшны методом типа clearNotificationList()
         },
     }),
 });
