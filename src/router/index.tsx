@@ -1,5 +1,5 @@
 import React, { useEffect, memo } from 'react';
-import { useValues } from 'kea';
+import { useActions, useValues } from 'kea';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
 import { history } from '@store/initStore';
@@ -22,7 +22,12 @@ import { S } from './units';
 import { tabs } from './tabs';
 
 const NavigationRouter = memo(() => {
+    const { checkLoginOfServer } = useActions(logic);
     const { isAuth } = useValues(logic);
+
+    useEffect(() => {
+        checkLoginOfServer();
+    }, []);
 
     useEffect(() => {
         !isAuth && history.push('/auth');

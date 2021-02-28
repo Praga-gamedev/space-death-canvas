@@ -9,15 +9,11 @@ import { history } from '@store/initStore';
 import { logic } from '@store/AuthPage';
 
 export const AuthPage = memo(() => {
-    const { logIn, checkLoginOfServer } = useActions(logic);
-    const { isAuth } = useValues(logic);
+    const { logIn } = useActions(logic);
+    const { isAuth, isLoadingAuth } = useValues(logic);
 
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
-
-    useEffect(() => {
-        checkLoginOfServer();
-    }, []);
 
     useEffect(() => {
         isAuth && history.push('/');
@@ -60,6 +56,7 @@ export const AuthPage = memo(() => {
                     <Button
                         style={{ margin: '30px auto 0 auto' }}
                         children={'Войти'}
+                        disabled={isLoadingAuth}
                     />
 
                     <Link
