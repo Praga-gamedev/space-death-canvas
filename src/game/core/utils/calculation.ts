@@ -16,16 +16,10 @@ export function isBeyoundCanvasBorder(
     ctx: CanvasRenderingContext2D,
     entity: Entity
 ) {
-    if (
-        entity.x + entity.width > ctx.canvas.width ||
-        entity.x + entity.width < 0
-    ) {
+    if (entity.x > ctx.canvas.width || entity.x + entity.width < 0) {
         return true;
     }
-    if (
-        entity.y - entity.height > ctx.canvas.height ||
-        entity.y + entity.height < 0
-    ) {
+    if (entity.y > ctx.canvas.height || entity.y + entity.height < 0) {
         return true;
     }
     return false;
