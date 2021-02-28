@@ -1,4 +1,4 @@
-import React, { useState, FormEvent } from 'react';
+import React, { useState, FormEvent, memo } from 'react';
 
 import { history } from '@store/initStore';
 
@@ -8,7 +8,7 @@ import { registration } from '@api/registration';
 
 import { S } from '../units';
 
-export const RegistrationPage = () => {
+export const RegistrationPage = memo(() => {
     const [login, setLogin] = useState('');
     const [firstName, setFirstName] = useState('');
     const [secondName, setSecondName] = useState('');
@@ -105,4 +105,4 @@ export const RegistrationPage = () => {
             </Paper>
         </S.WrapperPage>
     );
-};
+});

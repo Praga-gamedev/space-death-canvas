@@ -1,20 +1,15 @@
-import React, { FC, useState, useRef } from 'react';
-import { kea, useValues } from 'kea';
+import React, { FC, useState, useRef, memo } from 'react';
+import { useValues } from 'kea';
 
 import { history } from '@store/initStore';
+import { logicRouter } from '@store/logicRouter';
 
 import { Popup } from './Popup';
 
 import { S } from './units';
 import { IHeaderProps } from './types';
 
-const logicRouter = kea({
-    connect: () => ({
-        values: [(state: Record<string, any>) => state, ['router']],
-    }),
-});
-
-export const Header: FC<IHeaderProps> = ({ tabs }) => {
+export const Header: FC<IHeaderProps> = memo(({ tabs }) => {
     const {
         router: {
             location: { pathname },
@@ -33,6 +28,8 @@ export const Header: FC<IHeaderProps> = ({ tabs }) => {
                 <S.Tab
                     key={path}
                     isActive={isActive(path)}
+                    /* стоит ли вот для таких коротких записей писать отдельные ф-ии с useCallback?
+                                     не понимаю, почему здесь может произойти перерендер (к ревьюверу) */
                     onClick={() => history.push(path)}
                 >
                     {title}
@@ -56,4 +53,4 @@ export const Header: FC<IHeaderProps> = ({ tabs }) => {
             </S.DropdownWrapper>
         </S.Header>
     );
-};
+});

@@ -43,7 +43,7 @@ S.ProfileContent = styled.div`
 
 S.ProfilePaper = styled.div`
     padding: 20px;
-    background-color: #1c1c24;
+    background-color: ${colors.GrayScale_40};
     border-radius: 15px;
 `;
 
@@ -54,7 +54,7 @@ S.AvatarBlock = styled(S.AlignCenterColumn)`
 S.Avatar = styled.div`
     width: 250px;
     height: 250px;
-    background-color: #fff;
+    background-color: ${colors.GrayScale_0};
     border-radius: 15px;
     position: relative;
     overflow: hidden;

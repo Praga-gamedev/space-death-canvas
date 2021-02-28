@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 import { history } from '@store/initStore';
 
@@ -8,7 +8,7 @@ import gif500 from '@images/500.gif';
 
 import { S } from '../units';
 
-export const ServerErrorPage = () => {
+export const ServerErrorPage = memo(() => {
     return (
         <S.WrapperErrorPage>
             <img
@@ -27,4 +27,4 @@ export const ServerErrorPage = () => {
             />
         </S.WrapperErrorPage>
     );
-};
+});

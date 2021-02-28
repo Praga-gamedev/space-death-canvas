@@ -1,3 +1,4 @@
+
 import Entity, { IEntityOptions } from '../Entity';
 import spaceships from '@sprites/spaceships.png';
 import { Sprite } from '@game/core';

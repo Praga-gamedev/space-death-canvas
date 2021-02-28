@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
 import { Header } from '@components/Header';
@@ -17,7 +17,7 @@ import { LeaderBoard } from '@pages/LeaderBoard';
 import { S } from './units';
 import { tabs } from './tabs';
 
-const NavigationRouter = () => {
+const NavigationRouter = memo(() => {
     return (
         <S.Page>
             <Header tabs={tabs} />
@@ -80,6 +80,6 @@ const NavigationRouter = () => {
             </Switch>
         </S.Page>
     );
-};
+});
 
 export default NavigationRouter;
