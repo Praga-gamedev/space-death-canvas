@@ -60,7 +60,7 @@ export const logic = kea({
         ],
     }),
 
-    thunks: ({ actions, getState }: { actions: any; getState: any }) => ({
+    thunks: ({ actions }: { actions: any }) => ({
         logIn: async (login: string, password: string) => {
             try {
                 actions.startLoadingAuth();
