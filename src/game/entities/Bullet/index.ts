@@ -1,5 +1,5 @@
 import Entity from '../Entity';
-import { rotate } from '@game/core';
+import { rotate } from '@game/core/utils';
 
 export class Bullet extends Entity {
     static size = {
