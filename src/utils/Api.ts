@@ -1,5 +1,7 @@
 import axios, { AxiosRequestConfig } from 'axios';
 
+import { logicAuth } from '@store/logics';
+
 export const HOST = 'https://ya-praktikum.tech';
 
 type CustomAxiosRequestConfig = Omit<AxiosRequestConfig, 'method'>;
@@ -28,6 +30,7 @@ axiosInstance.interceptors.response.use(
                 break;
             case 401:
                 error.errorText = 'Неавторизованный запрос';
+                logicAuth().actions.resetUser();
                 break;
         }
         return Promise.reject(error);
