@@ -14,7 +14,7 @@ export const logic = kea({
         startLoadingUser: () => undefined,
         setLoadingUser: (loading: boolean) => loading,
 
-        setError: (error: boolean) => error,
+        setError: true,
         setAuth: (bool: boolean) => bool,
         setUser: (payload: IUserProps) => payload,
     }),
@@ -52,12 +52,6 @@ export const logic = kea({
                 [actions.setUser]: (_: TState, payload: IUserProps) => payload,
             },
         ],
-        error: [
-            '',
-            {
-                [actions.setError]: (_: TState, payload: string) => payload,
-            },
-        ],
     }),
 
     thunks: ({ actions }: { actions: any }) => ({
@@ -73,7 +67,7 @@ export const logic = kea({
 
                 actions.setLoadingAuth(false);
             } catch (e) {
-                actions.setError(e.response.data.reason);
+                actions.setError();
 
                 store.addNotification({
                     title: 'Ошибка!',
@@ -98,8 +92,7 @@ export const logic = kea({
                 actions.setAuth(true);
                 actions.setLoadingUser(false);
             } catch (e) {
-                actions.setError(e.response.data.reason);
-                actions.setAuth(false)
+                actions.setError();
             }
         },
 
@@ -114,7 +107,7 @@ export const logic = kea({
 
                 actions.resetUser();
             } catch (e) {
-                actions.setError(e.response.data.reason);
+                actions.setError();
             }
         },
     }),
