@@ -6,6 +6,7 @@ import { S as SGlobal } from '@pages/units';
 import { S } from '@pages/GamePage/units';
 import { resources } from '@game/core';
 import spaceships from '@sprites/spaceships.png';
+import { showInfoNotification } from 'src/utils/notification';
 
 export const GamePage: FC = () => {
     const canvas = useRef<HTMLCanvasElement>(null);
@@ -31,6 +32,10 @@ export const GamePage: FC = () => {
         // загружаем ресурсы в контейнер, ждем пока они загрузятся и начинаем игру
         resources.load(spaceships);
         resources.onReady(() => {
+            showInfoNotification(
+                'Игра началась!',
+                'Управляйте кораблем и уничтожайте противников!'
+            );
             setGameActive(true);
             game.play();
         });
