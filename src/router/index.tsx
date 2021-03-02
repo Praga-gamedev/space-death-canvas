@@ -1,5 +1,9 @@
-import React, { memo } from 'react';
+import React, { useEffect, memo } from 'react';
+import { useActions, useValues } from 'kea';
 import { Route, Switch, Redirect } from 'react-router-dom';
+
+import { history } from '@store/initStore';
+import { logic } from '@store/AuthPage';
 
 import { Header } from '@components/Header';
 import {
@@ -18,17 +22,22 @@ import { S } from './units';
 import { tabs } from './tabs';
 
 const NavigationRouter = memo(() => {
+    const { checkLoginOfServer } = useActions(logic);
+    const { isAuth } = useValues(logic);
+
+    useEffect(() => {
+        checkLoginOfServer();
+    }, []);
+
+    useEffect(() => {
+        !isAuth && history.push('/auth');
+    }, [isAuth]);
+
     return (
         <S.Page>
-            <Header tabs={tabs} />
+            {isAuth && <Header tabs={tabs} />}
 
             <Switch>
-                <Route
-                    path="/info"
-                    title="Информация"
-                    render={() => <div>Информация</div>}
-                />
-
                 <Route path="/auth" title="Авторизация" component={AuthPage} />
 
                 <Route
@@ -49,7 +58,7 @@ const NavigationRouter = memo(() => {
                     title="Форум"
                     component={ForumPage}
                 />
-                
+
                 <Route
                     path="/forum/:id"
                     title="Форум"
