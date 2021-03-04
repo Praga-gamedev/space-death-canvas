@@ -3,7 +3,7 @@ import { hasCollides, cos, sin, isBeyoundCanvasBorder } from '@game/core/utils';
 import { Bullet, Enemy, Entity, Player } from '@game/entities';
 import { IPosition } from '@game/entities/types';
 
-import {colors} from 'src/colors'
+import { colors } from 'src/colors';
 
 export interface IGameState {
     isGameOver: boolean;
@@ -131,13 +131,12 @@ export default class Game {
         this.checkControls(dt);
         this.updateEntities(dt);
 
-        if (Math.random() < 0.05) {
-            const enemyX = Math.random() * (this.width - Enemy.size.width);
-            const enemyY = -Enemy.size.height;
+        if (Math.random() < 0.02) {
             const enemy = new Enemy({
                 ctx: this.ctx,
-                pos: { x: enemyX, y: enemyY },
+                pos: { x: 0, y: 0 },
             });
+            enemy.setRandomStartPosition(this.ctx);
             this.enemies.push(enemy);
         }
 
@@ -148,10 +147,7 @@ export default class Game {
     private updateEntities(dt: number) {
         for (let i = 0; i < this.enemies.length; i++) {
             const enemy = this.enemies[i];
-
-            enemy.y += enemy.speed * dt;
-
-            // Удаляем врагов, ушедших за канвас
+            enemy.updatePosition(dt);
             if (isBeyoundCanvasBorder(this.ctx, enemy)) {
                 this.enemies.splice(i, 1);
                 i--;
@@ -194,7 +190,7 @@ export default class Game {
 
     private renderBackground() {
         this.ctx.fillStyle = colors.GrayScale_100;
-        
+
         this.ctx.fillRect(0, 0, this.width, this.height);
     }
 
