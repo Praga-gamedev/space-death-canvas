@@ -1,19 +1,9 @@
-import Entity, { IEntityOptions } from '../Entity';
+import Entity from '../Entity';
 import { rotate } from '@game/core/utils';
 import { IPosition, StartPosition } from '@game/entities/types';
 
 export class Enemy extends Entity {
-    static size = {
-        height: 50,
-        width: 48,
-    };
-
-    constructor(opts: IEntityOptions) {
-        super(opts);
-        this.size = { ...Enemy.size };
-    }
-
-    public size = { ...Enemy.size };
+    public size: { height: number; width: number } = { height: 0, width: 0 };
 
     public speed = 100;
 
@@ -37,20 +27,20 @@ export class Enemy extends Entity {
         this.startPos = Enemy.getRandomPosition();
         switch (this.startPos) {
             case 'top':
-                this.pos.x = Math.random() * (width - Enemy.size.width);
-                this.pos.y = -Enemy.size.height;
+                this.pos.x = Math.random() * (width - this.size.width);
+                this.pos.y = -this.size.height;
                 break;
             case 'bottom':
-                this.pos.x = Math.random() * (width - Enemy.size.width);
-                this.pos.y = height + Enemy.size.height;
+                this.pos.x = Math.random() * (width - this.size.width);
+                this.pos.y = height + this.size.height;
                 break;
             case 'left':
-                this.pos.x = -Enemy.size.width;
-                this.pos.y = Math.random() * (height - Enemy.size.height);
+                this.pos.x = -this.size.width;
+                this.pos.y = Math.random() * (height - this.size.height);
                 break;
             case 'right':
                 this.pos.x = width;
-                this.pos.y = Math.random() * (height - Enemy.size.height);
+                this.pos.y = Math.random() * (height - this.size.height);
                 break;
         }
     }

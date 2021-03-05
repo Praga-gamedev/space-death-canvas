@@ -5,6 +5,11 @@ import asteroids from '@sprites/asteroids.png';
 import { IPosition } from '@game/entities/types';
 
 export class Asteroid extends Enemy {
+    size = {
+        height: 50,
+        width: 48,
+    };
+
     constructor(opts: IEntityOptions) {
         super(opts);
         this.sprite = new Sprite(
