@@ -46,12 +46,6 @@ export class Enemy extends Entity {
     }
 
     updatePosition(dt: number, playerPos: IPosition) {
-        // Вычисляем синус и косинус угла между вертикалью и игроком с началом отчета в центре противника
-        const dx = Math.abs(this.x - playerPos.x);
-        const dy = Math.abs(this.y - playerPos.y);
-        let cos = dx / Math.sqrt(dx ** 2 + dy ** 2);
-        let sin = dy / Math.sqrt(dx ** 2 + dy ** 2);
-
         /* Отнимаем или прибавляем итоговое приращение в зависимости от координатной четверти
         в которой находится игрок относительно противника */
         let coeffX = 1;
@@ -63,23 +57,14 @@ export class Enemy extends Entity {
             coeffY = -1;
         }
 
-        /* Без этих условий враги доходят до позиции игрока по X или Y и тупо стоят
-        с ними - они начинают двигаться в сторону игрока */
-        if (cos < 0.02) {
-            cos = 1;
-        }
-        if (sin < 0.02) {
-            sin = 1;
-        }
-
         /* Условия тут, чтобы снять дергание врага:
          при пересечении вертикально или горизонтальной осей игрока меняется координатная четверть и он осциллирует туда-сюда
          из-за условий на координатные четверти, описанных выше */
         if (Math.abs(playerPos.x - this.x) > 1) {
-            this.x += coeffX * this.speed * dt * sin;
+            this.x += coeffX * this.speed * dt;
         }
         if (Math.abs(playerPos.y - this.y) > 1) {
-            this.y += coeffY * this.speed * dt * cos;
+            this.y += coeffY * this.speed * dt;
         }
     }
 
