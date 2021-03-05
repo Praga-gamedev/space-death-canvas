@@ -1,6 +1,4 @@
 import Entity, { IEntityOptions } from '../Entity';
-import asteroids from '@sprites/asteroids.png';
-import { Sprite } from '@game/core';
 import { rotate } from '@game/core/utils';
 import { IPosition, StartPosition } from '@game/entities/types';
 
@@ -13,11 +11,6 @@ export class Enemy extends Entity {
     constructor(opts: IEntityOptions) {
         super(opts);
         this.size = { ...Enemy.size };
-        this.sprite = new Sprite(
-            asteroids,
-            { x: 313, y: 12 },
-            { x: this.width, y: this.height }
-        );
     }
 
     public size = { ...Enemy.size };
@@ -98,13 +91,6 @@ export class Enemy extends Entity {
         if (Math.abs(playerPos.y - this.y) > 1) {
             this.y += coeffY * this.speed * dt * cos;
         }
-
-        // астероиды, вылетевшие с разных сторон - крутятся в разные строны
-        let rotationCoeff = 1;
-        if (this.startPos === 'top' || this.startPos === 'left') {
-            rotationCoeff = -1;
-        }
-        this.angle += rotationCoeff * Math.random() * this.speed * dt;
     }
 
     private static getRandomPosition(): StartPosition {

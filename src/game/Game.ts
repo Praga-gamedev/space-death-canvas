@@ -4,6 +4,7 @@ import { Bullet, Enemy, Entity, Player } from '@game/entities';
 import { IPosition } from '@game/entities/types';
 
 import { colors } from 'src/colors';
+import { Asteroid } from '@game/entities/Enemy/Asteroid';
 
 export interface IGameState {
     isGameOver: boolean;
@@ -132,12 +133,12 @@ export default class Game {
         // Эта цифра по сути регулирует напор спавна
         // При ее уменьшении уменьшается и вероятность попадания случайного числа в заданный диапазон
         if (Math.random() < 0.01) {
-            const enemy = new Enemy({
+            const asteroid = new Asteroid({
                 ctx: this.ctx,
                 pos: { x: 0, y: 0, angle: 0 },
             });
-            enemy.setRandomStartPosition(this.ctx);
-            this.enemies.push(enemy);
+            asteroid.setRandomStartPosition(this.ctx);
+            this.enemies.push(asteroid);
         }
 
         this.checkCollisions();
