@@ -6,7 +6,7 @@ import { logicRouter } from '@store/logicRouter';
 
 import { Popup } from './Popup';
 
-import { S, FullScreenToggleBtn } from './units';
+import { FullScreenToggleBtn, S } from './units';
 import { IHeaderProps } from './types';
 
 export const Header: FC<IHeaderProps> = memo(({ tabs }) => {
@@ -17,7 +17,7 @@ export const Header: FC<IHeaderProps> = memo(({ tabs }) => {
     } = useValues(logicRouter);
 
     const [isOpen, setOpen] = useState<boolean>(false);
-    const [isFullScreen, toggleFullScreen] = useState<boolean>(false);
+    const [isFullScreen, setFullScreen] = useState<boolean>(false);
 
     const buttonRef = useRef<HTMLDivElement | undefined>();
 
@@ -26,12 +26,10 @@ export const Header: FC<IHeaderProps> = memo(({ tabs }) => {
     const handleToggleFullScreen = useCallback(() => {
         if (!document.fullscreenElement) {
             document.documentElement.requestFullscreen();
-            toggleFullScreen(true);
-        } else {
-            if (document.exitFullscreen) {
-                document.exitFullscreen();
-                toggleFullScreen(false);
-            }
+            setFullScreen(true);
+        } else if (document.exitFullscreen) {
+            document.exitFullscreen();
+            setFullScreen(false);
         }
     }, []);
 
