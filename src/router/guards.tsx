@@ -36,7 +36,7 @@ export const NotAuthorizedRoute: FC<ProtectedRouteProps> = ({
     const { isAuth, isOffline } = useValues(logic);
     const ProtectedRoute = useCallback(
         withProtect(Route, !isAuth && !isOffline, redirectTo),
-        []
+        [isAuth, isOffline]
     );
 
     return <ProtectedRoute {...restProps} />;

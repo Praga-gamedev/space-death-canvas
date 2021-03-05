@@ -5,12 +5,14 @@ import { useActions, useValues } from 'kea';
 import { logic } from '@store/AuthPage';
 
 export const Main = () => {
-    const { isAuth, loading } = useValues(logic);
+    const { isAuth, loading, initialized } = useValues(logic);
     const { init } = useActions(logic);
 
     useEffect(() => {
         init();
     }, [isAuth]);
 
-    return loading ? <div>Крутилка</div> : <NavigationRouter />;
+    const appIsReady = initialized && !loading;
+
+    return appIsReady ? <NavigationRouter /> : <div>Крутилка</div>;
 };

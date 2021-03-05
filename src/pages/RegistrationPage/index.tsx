@@ -2,7 +2,8 @@ import React, { useState, FormEvent, memo } from 'react';
 
 import { Paper, Input, Button, Link } from '@components';
 
-import { registration } from '@api/registration';
+import { logic } from '@store/AuthPage';
+import { useActions, useValues } from 'kea';
 
 import { S } from '../units';
 
@@ -13,6 +14,9 @@ export const RegistrationPage = memo(() => {
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
     const [password, setPassword] = useState('');
+
+    const { isLoadingRegistration } = useValues(logic);
+    const { registration } = useActions(logic);
 
     const onSubmitRegistr = async (e: FormEvent<HTMLDivElement>) => {
         e.preventDefault();
@@ -89,6 +93,7 @@ export const RegistrationPage = memo(() => {
 
                     <Button
                         style={{ margin: '30px auto 0 auto' }}
+                        disabled={isLoadingRegistration}
                         children={'Регистрация'}
                     />
 

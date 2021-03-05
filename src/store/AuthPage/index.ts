@@ -2,8 +2,10 @@ import { kea } from 'kea';
 import { store } from 'react-notifications-component';
 
 import { login as auth, logout, getUser } from '@api/auth';
+import { registration } from '@api/registration';
 
-import { TState, IUserProps } from '../types';
+import { TState, IUserProps, IInitOptions } from '../types';
+import { IRegistrationData } from '@api/registration/types';
 
 export const logic = kea({
     path: () => ['scenes', 'authPage'],
@@ -15,12 +17,15 @@ export const logic = kea({
         startLoadingUser: () => undefined,
         setLoadingUser: (loading: boolean) => loading,
 
+        setLoadingRegistration: (loading: boolean) => loading,
+
         setError: true,
         setAuth: (value: boolean) => value,
         setOffline: (value: boolean) => value,
         setUser: (payload: IUserProps) => payload,
 
         setLoading: (value: boolean) => value,
+        setInitialized: (value: boolean) => value,
     }),
 
     reducers: ({ actions }) => ({
@@ -37,9 +42,15 @@ export const logic = kea({
             },
         ],
         loading: [
-            true,
+            false,
             {
-                [actions.setLoading]: (_: TState, bool: boolean) => bool,
+                [actions.setLoading]: (_: TState, value: boolean) => value,
+            },
+        ],
+        initialized: [
+            false,
+            {
+                [actions.setInitialized]: (_: TState, value: boolean) => value,
             },
         ],
         isLoadingAuth: [
@@ -51,6 +62,13 @@ export const logic = kea({
                 [actions.setLoadingAuth]: (_: TState, payload: boolean) =>
                     payload,
                 [actions.startLoadingAuth]: () => true,
+            },
+        ],
+        isLoadingRegistration: [
+            false,
+            {
+                [actions.setLoadingRegistration]: (_: TState, value: boolean) =>
+                    value,
             },
         ],
         isLoadingUser: [
@@ -85,7 +103,7 @@ export const logic = kea({
                 const res: any = await auth({ login, password });
 
                 if (res === 'OK') {
-                    await actions.init();
+                    await actions.init({ silent: true });
                 }
 
                 actions.setLoadingAuth(false);
@@ -108,17 +126,34 @@ export const logic = kea({
             }
         },
 
-        init: async () => {
-            const { isAuth, loading } = getState();
+        registration: async (payload: IRegistrationData) => {
+            const { isLoadingRegistration } = getState().scenes.authPage;
+            if (isLoadingRegistration) return;
+
+            actions.setLoadingRegistration(true);
+
+            try {
+                await registration(payload);
+                await actions.init({ silent: true });
+            } finally {
+                actions.setLoadingRegistration(false);
+            }
+        },
+
+        init: async (opts: IInitOptions = {}) => {
+            const { isAuth, loading } = getState().scenes.authPage;
+            const { silent = false } = opts;
+
             if (isAuth || loading) return;
 
             if (!navigator.onLine) {
                 actions.setOffline(true);
                 actions.setLoading(false);
+                actions.setInitialized(true);
                 return;
             }
 
-            actions.setLoading(true);
+            !silent && actions.setLoading(true);
 
             try {
                 const user = await getUser();
@@ -129,18 +164,15 @@ export const logic = kea({
                 console.error('__init__', error);
             } finally {
                 actions.setLoading(false);
+                actions.setInitialized(true);
             }
         },
 
         logout: async () => {
-            try {
-                await logout();
+            await logout();
 
-                actions.setUser(null);
-                actions.setAuth(false);
-            } catch (error) {
-                console.error(error);
-            }
+            actions.setUser(null);
+            actions.setAuth(false);
         },
     }),
 });
