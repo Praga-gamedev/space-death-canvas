@@ -1,5 +1,3 @@
-/* eslint-disable indent */
-// Претир воюет с еслинтом
 import React, { ComponentType, FC, useCallback } from 'react';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
 
