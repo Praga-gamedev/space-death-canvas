@@ -1,7 +1,5 @@
 import React, { useState, FormEvent, memo } from 'react';
 
-import { history } from '@store/initStore';
-
 import { Paper, Input, Button, Link } from '@components';
 
 import { registration } from '@api/registration';
@@ -32,8 +30,6 @@ export const RegistrationPage = memo(() => {
                     phone,
                     password,
                 });
-
-                history.push('/game');
             } catch (e) {
                 console.log('Ошибка:', e);
             }

@@ -7,6 +7,7 @@ import { TState, IUserProps } from '../types';
 
 export const logic = kea({
     path: () => ['scenes', 'authPage'],
+
     actions: () => ({
         startLoadingAuth: () => undefined,
         setLoadingAuth: (loading: boolean) => loading,
@@ -15,10 +16,32 @@ export const logic = kea({
         setLoadingUser: (loading: boolean) => loading,
 
         setError: true,
-        setAuth: (bool: boolean) => bool,
+        setAuth: (value: boolean) => value,
+        setOffline: (value: boolean) => value,
         setUser: (payload: IUserProps) => payload,
+
+        setLoading: (value: boolean) => value,
     }),
+
     reducers: ({ actions }) => ({
+        isAuth: [
+            false,
+            {
+                [actions.setAuth]: (_: TState, value: boolean) => value,
+            },
+        ],
+        isOffline: [
+            false,
+            {
+                [actions.setOffline]: (_: TState, value: boolean) => value,
+            },
+        ],
+        loading: [
+            true,
+            {
+                [actions.setLoading]: (_: TState, bool: boolean) => bool,
+            },
+        ],
         isLoadingAuth: [
             null,
             {
@@ -40,21 +63,21 @@ export const logic = kea({
                 [actions.startLoadingUser]: () => true,
             },
         ],
-        isAuth: [
-            false,
-            {
-                [actions.setAuth]: (_: TState, payload: boolean) => payload,
-            },
-        ],
         user: [
-            {},
+            null,
             {
                 [actions.setUser]: (_: TState, payload: IUserProps) => payload,
             },
         ],
     }),
 
-    thunks: ({ actions }: { actions: any }) => ({
+    thunks: ({
+        actions,
+        getState,
+    }: {
+        actions: any;
+        getState: () => TState;
+    }) => ({
         logIn: async (login: string, password: string) => {
             try {
                 actions.startLoadingAuth();
@@ -62,7 +85,7 @@ export const logic = kea({
                 const res: any = await auth({ login, password });
 
                 if (res === 'OK') {
-                    actions.checkLoginOfServer();
+                    await actions.init();
                 }
 
                 actions.setLoadingAuth(false);
@@ -85,29 +108,38 @@ export const logic = kea({
             }
         },
 
-        checkLoginOfServer: async () => {
+        init: async () => {
+            const { isAuth, loading } = getState();
+            if (isAuth || loading) return;
+
+            if (!navigator.onLine) {
+                actions.setOffline(true);
+                actions.setLoading(false);
+                return;
+            }
+
+            actions.setLoading(true);
+
             try {
-                actions.startLoadingUser();
-                actions.setUser(await getUser());
+                const user = await getUser();
+
+                actions.setUser(user);
                 actions.setAuth(true);
-                actions.setLoadingUser(false);
-            } catch (e) {
-                actions.setError();
+            } catch (error) {
+                console.error('__init__', error);
+            } finally {
+                actions.setLoading(false);
             }
         },
 
-        resetUser: () => {
-            actions.setAuth(false);
-            actions.setUser({});
-        },
-
-        logOut: async () => {
+        logout: async () => {
             try {
                 await logout();
 
-                actions.resetUser();
-            } catch (e) {
-                actions.setError();
+                actions.setUser(null);
+                actions.setAuth(false);
+            } catch (error) {
+                console.error(error);
             }
         },
     }),

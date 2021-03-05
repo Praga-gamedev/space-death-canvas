@@ -1,23 +1,18 @@
-import React, { useState, useEffect, FormEvent, memo } from 'react';
+import React, { useState, FormEvent, memo } from 'react';
 import { useActions, useValues } from 'kea';
 
 import { Paper, Input, Button, Link } from '@components';
 
 import { S } from '../units';
 
-import { history } from '@store/initStore';
 import { logic } from '@store/AuthPage';
 
 export const AuthPage = memo(() => {
     const { logIn } = useActions(logic);
-    const { isAuth, isLoadingAuth } = useValues(logic);
+    const { isLoadingAuth } = useValues(logic);
 
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
-
-    useEffect(() => {
-        isAuth && history.push('/');
-    }, [isAuth]);
 
     const onSubmitAuth = async (e: FormEvent<HTMLDivElement>) => {
         e.preventDefault();

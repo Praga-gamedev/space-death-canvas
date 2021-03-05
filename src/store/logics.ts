@@ -7,5 +7,5 @@ export const logicRouter = connect({
 });
 
 export const logicAuth = connect({
-    actions: [authPage, ['resetUser']],
+    actions: [authPage],
 });
