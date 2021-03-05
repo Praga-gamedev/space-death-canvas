@@ -5,8 +5,10 @@ import Game, { IGameState } from 'src/game';
 import { S as SGlobal } from '@pages/units';
 import { S } from '@pages/GamePage/units';
 import { resources } from '@game/core';
-import spaceships from '@sprites/spaceships.png';
 import { showInfoNotification } from 'src/utils/notification';
+
+import spaceships from '@sprites/spaceships.png';
+import asteroids from '@sprites/asteroids.png';
 
 export const GamePage: FC = () => {
     const canvas = useRef<HTMLCanvasElement>(null);
@@ -31,6 +33,7 @@ export const GamePage: FC = () => {
         }
         // загружаем ресурсы в контейнер, ждем пока они загрузятся и начинаем игру
         resources.load(spaceships);
+        resources.load(asteroids);
         resources.onReady(() => {
             showInfoNotification(
                 'Игра началась!',

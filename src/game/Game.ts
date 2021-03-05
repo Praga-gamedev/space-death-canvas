@@ -67,7 +67,7 @@ export default class Game {
     private getPlayerStartPosition(): IPosition {
         return {
             x: (this.width - Player.size.width) / 2,
-            y: this.height - Player.size.height * 2,
+            y: this.height / 2,
             angle: 0,
         };
     }
@@ -103,9 +103,9 @@ export default class Game {
         return this;
     }
 
+    // Главный цикл игры
     private main() {
         if (this.isPaused) return;
-        // Главный цикл игры
         const now = performance.now();
         /*
             delta time нужен для того чтобы правильно обновлять координаты юнитов
@@ -125,16 +125,16 @@ export default class Game {
     }
 
     private update(dt: number) {
-        // this.gameTime += dt;
-
         // В этом методе обновляем все, что касается данных.
         this.checkControls(dt);
         this.updateEntities(dt);
 
-        if (Math.random() < 0.02) {
+        // Эта цифра по сути регулирует напор спавна
+        // При ее уменьшении уменьшается и вероятность попадания случайного числа в заданный диапазон
+        if (Math.random() < 0.01) {
             const enemy = new Enemy({
                 ctx: this.ctx,
-                pos: { x: 0, y: 0 },
+                pos: { x: 0, y: 0, angle: 0 },
             });
             enemy.setRandomStartPosition(this.ctx);
             this.enemies.push(enemy);
@@ -147,7 +147,7 @@ export default class Game {
     private updateEntities(dt: number) {
         for (let i = 0; i < this.enemies.length; i++) {
             const enemy = this.enemies[i];
-            enemy.updatePosition(dt);
+            enemy.updatePosition(dt, this.player.pos);
             if (isBeyoundCanvasBorder(this.ctx, enemy)) {
                 this.enemies.splice(i, 1);
                 i--;
@@ -160,7 +160,6 @@ export default class Game {
             bullet.y -= bullet.speed * dt * cos(bullet.angle);
             bullet.x += bullet.speed * dt * sin(bullet.angle);
 
-            // Удаляем пули, ушедшие за канвас
             if (isBeyoundCanvasBorder(this.ctx, bullet)) {
                 this.bullets.splice(i, 1);
                 i--;
