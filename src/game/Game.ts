@@ -1,4 +1,4 @@
-import { CONTROLS, InputManager } from '@game/core';
+import { CONTROLS, InputManager, resources } from '@game/core';
 import { hasCollides, cos, sin, isBeyoundCanvasBorder } from '@game/core/utils';
 import { Bullet, Enemy, Entity, Player } from '@game/entities';
 import { IPosition } from '@game/entities/types';
@@ -6,9 +6,13 @@ import { IPosition } from '@game/entities/types';
 import { colors } from 'src/colors';
 import { Asteroid } from '@game/entities/Enemy/Asteroid';
 
+import spaceships from '@sprites/spaceships.png';
+import asteroids from '@sprites/asteroids.png';
+
 export interface IGameState {
     isGameOver: boolean;
     isPaused: boolean;
+    initialized: boolean;
     score: number;
 }
 
@@ -33,6 +37,8 @@ export default class Game {
     private enemies: Enemy[] = [];
     private bullets: Bullet[] = [];
 
+    private resourcesUnsubscribe = () => {};
+
     constructor(
         canvas: HTMLCanvasElement,
         onUpdateGameState?: (state: IGameState) => void
@@ -55,14 +61,20 @@ export default class Game {
         });
 
         this.onUpdateGameState = onUpdateGameState || (() => {});
+        this.init();
     }
 
     get gameState() {
         return {
             isGameOver: this.isGameOver,
             isPaused: this.isPaused,
+            initialized: this.initialized,
             score: this.score,
         };
+    }
+
+    get initialized() {
+        return resources.isReady && !resources.isEmpty;
     }
 
     private getPlayerStartPosition(): IPosition {
@@ -73,7 +85,25 @@ export default class Game {
         };
     }
 
+    private init() {
+        if (this.initialized) {
+            this.onUpdateGameState(this.gameState);
+            return this;
+        }
+
+        resources.load(spaceships);
+        resources.load(asteroids);
+
+        this.resourcesUnsubscribe = resources.onReady(() =>
+            this.onUpdateGameState(this.gameState)
+        );
+
+        return this;
+    }
+
     public play() {
+        if (!this.initialized) return;
+
         this.isPaused = false;
         this.lastTime = performance.now();
         this.main();
@@ -87,6 +117,8 @@ export default class Game {
 
     // Reset game to original state
     public reset() {
+        if (!this.initialized) return;
+
         this.isGameOver = false;
         this.score = 0;
         this.enemies = [];
@@ -99,6 +131,8 @@ export default class Game {
     }
 
     public pause() {
+        if (!this.initialized) return;
+
         this.isPaused = true;
         this.onUpdateGameState(this.gameState);
         return this;
@@ -238,14 +272,14 @@ export default class Game {
                 }
             }
 
-            if (hasCollides(this.player, enemy)) {
+            if (hasCollides(this.player, enemy) && !window.__godMode__) {
                 this.gameOver();
             }
         }
     }
 
     public destroy() {
-        // пока не используется, но в дальнейшем может пригодиться
         this.inputManager.destroy();
+        this.resourcesUnsubscribe();
     }
 }

@@ -4,11 +4,7 @@ import Game, { IGameState } from 'src/game';
 
 import { S as SGlobal } from '@pages/units';
 import { S } from '@pages/GamePage/units';
-import { resources } from '@game/core';
 import { showInfoNotification } from 'src/utils/notification';
-
-import spaceships from '@sprites/spaceships.png';
-import asteroids from '@sprites/asteroids.png';
 
 export const GamePage: FC = () => {
     const canvas = useRef<HTMLCanvasElement>(null);
@@ -18,30 +14,33 @@ export const GamePage: FC = () => {
         score: 0,
         isGameOver: false,
         isPaused: false,
+        initialized: false,
     });
     const [isGameActive, setGameActive] = useState(false);
 
     useEffect(() => {
-        if (canvas.current) {
-            setGame(new Game(canvas.current, setGameState));
-        }
+        if (!canvas.current) return;
+
+        const game = new Game(canvas.current, setGameState);
+        setGame(game);
+
+        return () => {
+            game.destroy();
+        };
     }, []);
 
     const startGame = () => {
         if (!game) {
             return;
         }
-        // загружаем ресурсы в контейнер, ждем пока они загрузятся и начинаем игру
-        resources.load(spaceships);
-        resources.load(asteroids);
-        resources.onReady(() => {
-            showInfoNotification(
-                'Игра началась!',
-                'Управляйте кораблем и уничтожайте противников!'
-            );
-            setGameActive(true);
-            game.play();
-        });
+
+        setGameActive(true);
+        game.play();
+
+        showInfoNotification(
+            'Игра началась!',
+            'Управляйте кораблем и уничтожайте противников!'
+        );
     };
 
     const restartGame = () => {
@@ -81,19 +80,23 @@ export const GamePage: FC = () => {
                     </S.InformationBlock>
                 </S.GameDisplay>
 
-                <S.ButtonsBlock>
-                    {!isGameActive ? (
-                        <S.ButtonGame onClick={startGame}>Старт</S.ButtonGame>
-                    ) : gameState.isGameOver ? (
-                        <S.ButtonGame onClick={restartGame}>
-                            Рестарт
-                        </S.ButtonGame>
-                    ) : (
-                        <S.ButtonGame onClick={togglePause}>
-                            {gameState.isPaused ? 'Продолжить' : 'Пауза'}
-                        </S.ButtonGame>
-                    )}
-                </S.ButtonsBlock>
+                {gameState.initialized && (
+                    <S.ButtonsBlock>
+                        {!isGameActive ? (
+                            <S.ButtonGame onClick={startGame}>
+                                Старт
+                            </S.ButtonGame>
+                        ) : gameState.isGameOver ? (
+                            <S.ButtonGame onClick={restartGame}>
+                                Рестарт
+                            </S.ButtonGame>
+                        ) : (
+                            <S.ButtonGame onClick={togglePause}>
+                                {gameState.isPaused ? 'Продолжить' : 'Пауза'}
+                            </S.ButtonGame>
+                        )}
+                    </S.ButtonsBlock>
+                )}
             </S.MainBlock>
         </SGlobal.WrapperPage>
     );

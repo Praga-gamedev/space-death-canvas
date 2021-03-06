@@ -48,14 +48,8 @@ export class Enemy extends Entity {
     updatePosition(dt: number, playerPos: IPosition) {
         /* Отнимаем или прибавляем итоговое приращение в зависимости от координатной четверти
         в которой находится игрок относительно противника */
-        let coeffX = 1;
-        if (this.x > playerPos.x) {
-            coeffX = -1;
-        }
-        let coeffY = 1;
-        if (this.y > playerPos.y) {
-            coeffY = -1;
-        }
+        const coeffX = this.x > playerPos.x ? -1 : 1;
+        const coeffY = this.y > playerPos.y ? -1 : 1;
 
         /* Условия тут, чтобы снять дергание врага:
          при пересечении вертикально или горизонтальной осей игрока меняется координатная четверть и он осциллирует туда-сюда
