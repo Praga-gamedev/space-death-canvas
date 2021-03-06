@@ -1,9 +1,10 @@
-import { IPosition, ISize } from './types';
+import { IPosition, ISize, StartPosition } from './types';
 import { Sprite } from '@game/core';
 
 export interface IEntityOptions {
     ctx: CanvasRenderingContext2D;
     pos: IPosition;
+    startPos?: StartPosition;
 }
 
 export default abstract class Entity {
@@ -11,13 +12,15 @@ export default abstract class Entity {
     // Сюда будем пихать логику рендера, обновления и тд
     public ctx: CanvasRenderingContext2D;
     public pos: IPosition;
+    public startPos?: StartPosition;
     public size: ISize = { height: 0, width: 0 };
 
     protected sprite?: Sprite;
 
     constructor(opts: IEntityOptions) {
-        const { ctx, pos } = opts;
+        const { ctx, pos, startPos } = opts;
 
+        this.startPos = startPos;
         this.ctx = ctx;
         this.pos = pos;
     }
