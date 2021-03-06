@@ -3,9 +3,11 @@ import { store } from 'react-notifications-component';
 
 import { login as auth, logout, getUser } from '@api/auth';
 import { registration } from '@api/registration';
+import { updateProfile, updatePassword, updateAvatar } from '@api/profile';
 
 import { TState, IUserProps, IInitOptions } from '../types';
 import { IRegistrationData } from '@api/registration/types';
+import { IPasswordUpdateData, IProfileUpdateData } from '@api/profile/types';
 
 export const logic = kea({
     path: () => ['scenes', 'authPage'],
@@ -173,6 +175,25 @@ export const logic = kea({
 
             actions.setUser(null);
             actions.setAuth(false);
+        },
+
+        updateProfile: async (profileData: IProfileUpdateData) => {
+            const { user } = getState().scenes.authPage;
+            const newUser = await updateProfile({ ...user, ...profileData });
+
+            actions.setUser(newUser);
+        },
+
+        updatePassword: (passwordData: IPasswordUpdateData) => {
+            return updatePassword(passwordData);
+        },
+
+        updateAvatar: async (file: File) => {
+            const formData = new FormData();
+            formData.append('avatar', file);
+
+            const newUser = await updateAvatar(formData);
+            actions.setUser(newUser);
         },
     }),
 });
