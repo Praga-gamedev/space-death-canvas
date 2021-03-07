@@ -13,9 +13,9 @@ const withProtect = <T extends object>(
     Component: ComponentType,
     condition: boolean,
     redirectTo: string
-): FC<T> => (props) => {
-    return condition ? <Component {...props} /> : <Redirect to={redirectTo} />;
-};
+): FC<T> => (props) =>
+    // eslint-disable-next-line
+    condition ? <Component {...props} /> : <Redirect to={redirectTo} />;
 
 export const AuthorizedRoute: FC<ProtectedRouteProps> = ({
     redirectTo = '/',
@@ -47,6 +47,7 @@ export const OfflineAvailableRoute: FC<ProtectedRouteProps> = ({
     ...restProps
 }) => {
     const { isAuth, isOffline } = useValues(logic);
+
     const ProtectedRoute = useCallback(
         withProtect(Route, isAuth || isOffline, redirectTo),
         [isAuth, isOffline]

@@ -30,7 +30,9 @@ axiosInstance.interceptors.response.use(
                 break;
             case 401:
                 error.errorText = 'Неавторизованный запрос';
+                /* Позволяет использовать данную logic вне контекста React */
                 logic.mount();
+
                 logic.actions.setAuth(false);
                 break;
         }

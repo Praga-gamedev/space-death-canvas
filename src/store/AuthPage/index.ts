@@ -26,8 +26,8 @@ export const logic = kea({
         setOffline: (value: boolean) => value,
         setUser: (payload: IUserProps) => payload,
 
-        setLoading: (value: boolean) => value,
-        setInitialized: (value: boolean) => value,
+        setLoadingMain: (value: boolean) => value,
+        setInit: (value: boolean) => value,
     }),
 
     reducers: ({ actions }) => ({
@@ -43,16 +43,16 @@ export const logic = kea({
                 [actions.setOffline]: (_: TState, value: boolean) => value,
             },
         ],
-        loading: [
+        isLoadingMain: [
             false,
             {
-                [actions.setLoading]: (_: TState, value: boolean) => value,
+                [actions.setLoadingMain]: (_: TState, value: boolean) => value,
             },
         ],
-        initialized: [
+        isInit: [
             false,
             {
-                [actions.setInitialized]: (_: TState, value: boolean) => value,
+                [actions.setInit]: (_: TState, value: boolean) => value,
             },
         ],
         isLoadingAuth: [
@@ -143,19 +143,19 @@ export const logic = kea({
         },
 
         init: async (opts: IInitOptions = {}) => {
-            const { isAuth, loading } = getState().scenes.authPage;
+            const { isAuth, isLoadingMain } = getState().scenes.authPage;
             const { silent = false } = opts;
 
-            if (isAuth || loading) return;
+            if (isAuth || isLoadingMain) return;
 
             if (!navigator.onLine) {
                 actions.setOffline(true);
-                actions.setLoading(false);
-                actions.setInitialized(true);
+                actions.setLoadingMain(false);
+                actions.setInit(true);
                 return;
             }
 
-            !silent && actions.setLoading(true);
+            !silent && actions.setLoadingMain(true);
 
             try {
                 const user = await getUser();
@@ -165,12 +165,12 @@ export const logic = kea({
             } catch (error) {
                 console.error('__init__', error);
             } finally {
-                actions.setLoading(false);
-                actions.setInitialized(true);
+                actions.setLoadingMain(false);
+                actions.setInit(true);
             }
         },
 
-        logout: async () => {
+        logOut: async () => {
             await logout();
 
             actions.setUser(null);

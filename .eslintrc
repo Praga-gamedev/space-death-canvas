@@ -13,6 +13,7 @@
     },
     "rules": {
         "space-before-function-paren": 0,
+        "indent": ["error", 4, { "SwitchCase": 1 }],
         "spaced-comment": ["error", "always"],
         "no-unused-vars": "off",
         "no-use-before-define": "off",

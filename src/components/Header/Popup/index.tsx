@@ -8,7 +8,7 @@ import { S } from './units';
 import { IPopupProps } from './types';
 
 export const Popup: FC<IPopupProps> = memo(({ buttonRef, isOpen, setOpen }) => {
-    const { logout } = useActions(logic);
+    const { logOut } = useActions(logic);
 
     const popupRef = useRef();
 
@@ -26,7 +26,7 @@ export const Popup: FC<IPopupProps> = memo(({ buttonRef, isOpen, setOpen }) => {
     }, []);
 
     const handleLogoutClick = useCallback(async () => {
-        await logout();
+        await logOut();
     }, []);
 
     useEffect(() => {

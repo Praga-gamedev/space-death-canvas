@@ -19,14 +19,14 @@ import { logic } from '@store/AuthPage';
 import { useActions, useValues } from 'kea';
 
 export const ProfilePage: FC = memo(() => {
+    const { updateProfile, updatePassword, updateAvatar } = useActions(logic);
+    const { user } = useValues(logic);
+
     const initialFields = useMemo(getInitialProfileForm, []);
 
     const [fields, setFields] = useState(initialFields);
     const [passwordMode, setPasswordMode] = useState(false);
     const [showAvatarModal, setShowAvatarModal] = useState(false);
-
-    const { updateProfile, updatePassword, updateAvatar } = useActions(logic);
-    const { user } = useValues(logic);
 
     const avatar = user?.avatar ? `${HOST}${user.avatar}` : '';
 
