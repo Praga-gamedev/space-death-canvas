@@ -2,11 +2,16 @@ import { kea } from 'kea';
 import { store } from 'react-notifications-component';
 
 import { login as auth, logout, getUser } from '@api/auth';
+import { registration } from '@api/registration';
+import { updateProfile, updatePassword, updateAvatar } from '@api/profile';
 
-import { TState, IUserProps } from '../types';
+import { TState, IUserProps, IInitOptions } from '../types';
+import { IRegistrationData } from '@api/registration/types';
+import { IPasswordUpdateData, IProfileUpdateData } from '@api/profile/types';
 
 export const logic = kea({
     path: () => ['scenes', 'authPage'],
+
     actions: () => ({
         startLoadingAuth: () => undefined,
         setLoadingAuth: (loading: boolean) => loading,
@@ -14,11 +19,42 @@ export const logic = kea({
         startLoadingUser: () => undefined,
         setLoadingUser: (loading: boolean) => loading,
 
+        setLoadingRegistration: (loading: boolean) => loading,
+
         setError: true,
-        setAuth: (bool: boolean) => bool,
+        setAuth: (value: boolean) => value,
+        setOffline: (value: boolean) => value,
         setUser: (payload: IUserProps) => payload,
+
+        setLoadingMain: (value: boolean) => value,
+        setInit: (value: boolean) => value,
     }),
+
     reducers: ({ actions }) => ({
+        isAuth: [
+            false,
+            {
+                [actions.setAuth]: (_: TState, value: boolean) => value,
+            },
+        ],
+        isOffline: [
+            false,
+            {
+                [actions.setOffline]: (_: TState, value: boolean) => value,
+            },
+        ],
+        isLoadingMain: [
+            false,
+            {
+                [actions.setLoadingMain]: (_: TState, value: boolean) => value,
+            },
+        ],
+        isInit: [
+            false,
+            {
+                [actions.setInit]: (_: TState, value: boolean) => value,
+            },
+        ],
         isLoadingAuth: [
             null,
             {
@@ -28,6 +64,13 @@ export const logic = kea({
                 [actions.setLoadingAuth]: (_: TState, payload: boolean) =>
                     payload,
                 [actions.startLoadingAuth]: () => true,
+            },
+        ],
+        isLoadingRegistration: [
+            false,
+            {
+                [actions.setLoadingRegistration]: (_: TState, value: boolean) =>
+                    value,
             },
         ],
         isLoadingUser: [
@@ -40,21 +83,21 @@ export const logic = kea({
                 [actions.startLoadingUser]: () => true,
             },
         ],
-        isAuth: [
-            false,
-            {
-                [actions.setAuth]: (_: TState, payload: boolean) => payload,
-            },
-        ],
         user: [
-            {},
+            null,
             {
                 [actions.setUser]: (_: TState, payload: IUserProps) => payload,
             },
         ],
     }),
 
-    thunks: ({ actions }: { actions: any }) => ({
+    thunks: ({
+        actions,
+        getState,
+    }: {
+        actions: any;
+        getState: () => TState;
+    }) => ({
         logIn: async (login: string, password: string) => {
             try {
                 actions.startLoadingAuth();
@@ -62,7 +105,7 @@ export const logic = kea({
                 const res: any = await auth({ login, password });
 
                 if (res === 'OK') {
-                    actions.checkLoginOfServer();
+                    await actions.init({ silent: true });
                 }
 
                 actions.setLoadingAuth(false);
@@ -85,30 +128,72 @@ export const logic = kea({
             }
         },
 
-        checkLoginOfServer: async () => {
+        registration: async (payload: IRegistrationData) => {
+            const { isLoadingRegistration } = getState().scenes.authPage;
+            if (isLoadingRegistration) return;
+
+            actions.setLoadingRegistration(true);
+
             try {
-                actions.startLoadingUser();
-                actions.setUser(await getUser());
-                actions.setAuth(true);
-                actions.setLoadingUser(false);
-            } catch (e) {
-                actions.setError();
+                await registration(payload);
+                await actions.init({ silent: true });
+            } finally {
+                actions.setLoadingRegistration(false);
             }
         },
 
-        resetUser: () => {
-            actions.setAuth(false);
-            actions.setUser({});
+        init: async (opts: IInitOptions = {}) => {
+            const { isAuth, isLoadingMain } = getState().scenes.authPage;
+            const { silent = false } = opts;
+
+            if (isAuth || isLoadingMain) return;
+
+            if (!navigator.onLine) {
+                actions.setOffline(true);
+                actions.setLoadingMain(false);
+                actions.setInit(true);
+                return;
+            }
+
+            !silent && actions.setLoadingMain(true);
+
+            try {
+                const user = await getUser();
+
+                actions.setUser(user);
+                actions.setAuth(true);
+            } catch (error) {
+                console.error('__init__', error);
+            } finally {
+                actions.setLoadingMain(false);
+                actions.setInit(true);
+            }
         },
 
         logOut: async () => {
-            try {
-                await logout();
+            await logout();
 
-                actions.resetUser();
-            } catch (e) {
-                actions.setError();
-            }
+            actions.setUser(null);
+            actions.setAuth(false);
+        },
+
+        updateProfile: async (profileData: IProfileUpdateData) => {
+            const { user } = getState().scenes.authPage;
+            const newUser = await updateProfile({ ...user, ...profileData });
+
+            actions.setUser(newUser);
+        },
+
+        updatePassword: (passwordData: IPasswordUpdateData) => {
+            return updatePassword(passwordData);
+        },
+
+        updateAvatar: async (file: File) => {
+            const formData = new FormData();
+            formData.append('avatar', file);
+
+            const newUser = await updateAvatar(formData);
+            actions.setUser(newUser);
         },
     }),
 });

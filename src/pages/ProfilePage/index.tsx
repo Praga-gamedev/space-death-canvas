@@ -2,8 +2,6 @@ import React, { FC, memo, useState, useMemo, useEffect } from 'react';
 
 import { Button } from '@components';
 
-import { getUser } from '@api/auth';
-
 import { Stats } from './components/Stats';
 import {
     ProfileForm,
@@ -14,15 +12,18 @@ import { AvatarModal } from './components/AvatarModal';
 
 import { HOST } from 'src/utils/Api';
 
-import { updateProfile, updatePassword, updateAvatar } from 'src/api/profile';
-
 import { S } from './units';
 import { defaultStats } from './stats';
 
+import { logic } from '@store/AuthPage';
+import { useActions, useValues } from 'kea';
+
 export const ProfilePage: FC = memo(() => {
+    const { updateProfile, updatePassword, updateAvatar } = useActions(logic);
+    const { user } = useValues(logic);
+
     const initialFields = useMemo(getInitialProfileForm, []);
 
-    const [user, setUser] = useState<any>(null);
     const [fields, setFields] = useState(initialFields);
     const [passwordMode, setPasswordMode] = useState(false);
     const [showAvatarModal, setShowAvatarModal] = useState(false);
@@ -30,19 +31,8 @@ export const ProfilePage: FC = memo(() => {
     const avatar = user?.avatar ? `${HOST}${user.avatar}` : '';
 
     useEffect(() => {
-        const fetchUser = async () => {
-            try {
-                const user = await getUser();
-
-                setUser(user);
-
-                setFields({ ...fields, ...getFieldsFromUser(user) });
-            } catch (error) {
-                console.error(error);
-            }
-        };
-        fetchUser();
-    }, []);
+        setFields({ ...fields, ...getFieldsFromUser(user) });
+    }, [user]);
 
     const changePasswordMode = (value: boolean) => {
         setPasswordMode(value);
@@ -53,9 +43,7 @@ export const ProfilePage: FC = memo(() => {
     const onSubmit = async (data: any) => {
         try {
             if (!passwordMode) {
-                const newUser = await updateProfile({ ...user, ...data });
-
-                setUser(newUser);
+                await updateProfile(data);
             } else {
                 await updatePassword(data);
 
@@ -69,14 +57,8 @@ export const ProfilePage: FC = memo(() => {
     const onUpdateAvatar = async (file: File) => {
         setShowAvatarModal(false);
 
-        const formData = new FormData();
-
-        formData.append('avatar', file);
-
         try {
-            const newUser = await updateAvatar(formData);
-
-            setUser(newUser);
+            await updateAvatar(file);
         } catch (error) {
             console.error(error);
         }

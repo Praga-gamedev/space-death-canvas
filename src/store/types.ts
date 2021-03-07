@@ -11,3 +11,6 @@ export interface IUserProps {
     avatar: string;
 }
 
+export interface IInitOptions {
+    silent?: boolean;
+}

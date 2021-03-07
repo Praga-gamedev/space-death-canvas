@@ -10,7 +10,7 @@ import store, { history } from '@store/initStore';
 
 import { RebootCss } from './global-styles';
 
-import NavigationRouter from './router';
+import { Main } from './Main';
 import ErrorBoundary from './components/ErrorBoundary';
 
 const App = () => (
@@ -21,7 +21,7 @@ const App = () => (
         <Provider store={store}>
             <ConnectedRouter history={history}>
                 <ErrorBoundary>
-                    <NavigationRouter />
+                    <Main />
                 </ErrorBoundary>
             </ConnectedRouter>
         </Provider>
