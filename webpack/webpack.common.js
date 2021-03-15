@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -62,6 +63,10 @@ module.exports = {
         }),
         new CopyWebpackPlugin({
             patterns: [path.resolve(__dirname, '../src/sw.js')],
+        }),
+        new webpack.DefinePlugin({
+            isProd,
+            isDev,
         }),
     ],
 };

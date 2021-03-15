@@ -21,6 +21,8 @@
         "camelcase": "off"
     },
     "globals": {
-        "localStorage": true
+        "localStorage": true,
+        "isProd": true,
+        "isDev": true
     }
 }
