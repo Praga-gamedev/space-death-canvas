@@ -1,5 +1,13 @@
 import React, { memo } from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { useValues } from 'kea';
+import { Switch, Redirect, Route } from 'react-router-dom';
+import {
+    AuthorizedRoute,
+    NotAuthorizedRoute,
+    OfflineAvailableRoute,
+} from './guards';
+
+import { logic } from '@store/AuthPage';
 
 import { Header } from '@components/Header';
 import {
@@ -18,52 +26,59 @@ import { S } from './units';
 import { tabs } from './tabs';
 
 const NavigationRouter = memo(() => {
+    const { isAuth } = useValues(logic);
+
     return (
         <S.Page>
-            <Header tabs={tabs} />
+            {isAuth && <Header tabs={tabs} />}
 
             <Switch>
-                <Route
-                    path="/info"
-                    title="Информация"
-                    render={() => <div>Информация</div>}
+                <NotAuthorizedRoute
+                    path="/auth"
+                    redirectTo="/game"
+                    title="Авторизация"
+                    component={AuthPage}
                 />
 
-                <Route path="/auth" title="Авторизация" component={AuthPage} />
-
-                <Route
+                <NotAuthorizedRoute
                     path="/registration"
+                    redirectTo="/game"
                     title="Регистрация"
                     component={RegistrationPage}
                 />
 
-                <Route
+                <OfflineAvailableRoute
                     path="/game"
+                    redirectTo="/auth"
                     title="Space Death Canvas"
                     component={GamePage}
                 />
 
-                <Route
+                <AuthorizedRoute
                     exact
                     path="/forum"
+                    redirectTo="/auth"
                     title="Форум"
                     component={ForumPage}
                 />
-                
-                <Route
+
+                <AuthorizedRoute
                     path="/forum/:id"
+                    redirectTo="/auth"
                     title="Форум"
                     component={ForumThreadDialog}
                 />
 
-                <Route
+                <AuthorizedRoute
                     path="/profile"
+                    redirectTo="/auth"
                     title="Профиль"
                     component={ProfilePage}
                 />
 
-                <Route
+                <AuthorizedRoute
                     path="/leaderboard"
+                    redirectTo="/auth"
                     title="Таблица лидеров"
                     component={LeaderBoard}
                 />

@@ -1,14 +1,16 @@
 import React, { useState, FormEvent, memo } from 'react';
-
-import { history } from '@store/initStore';
+import { useActions, useValues } from 'kea';
 
 import { Paper, Input, Button, Link } from '@components';
 
-import { login as auth, getUser as user } from '@api/auth';
-
 import { S } from '../units';
 
+import { logic } from '@store/AuthPage';
+
 export const AuthPage = memo(() => {
+    const { logIn } = useActions(logic);
+    const { isLoadingAuth } = useValues(logic);
+
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
 
@@ -16,16 +18,7 @@ export const AuthPage = memo(() => {
         e.preventDefault();
 
         if (login && password) {
-            try {
-                await auth({ login, password });
-                const res = await user();
-
-                console.log('Данные:', res);
-
-                history.push('/game');
-            } catch (e) {
-                console.log('Ошибка:', e);
-            }
+            await logIn(login, password);
         } else {
             console.error('Неверный логин или пароль.');
         }
@@ -58,6 +51,7 @@ export const AuthPage = memo(() => {
                     <Button
                         style={{ margin: '30px auto 0 auto' }}
                         children={'Войти'}
+                        disabled={isLoadingAuth}
                     />
 
                     <Link

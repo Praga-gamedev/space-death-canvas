@@ -1,4 +1,4 @@
-import { radians } from '@game/core';
+import { radians } from '@game/core/utils';
 
 // вдохновлено https://stackoverflow.com/questions/17125632/html5-canvas-rotate-object-without-moving-coordinates/17126036
 

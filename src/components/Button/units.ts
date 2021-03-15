@@ -12,7 +12,10 @@ S.Button = styled.button`
     height: 50px;
 
     background-color: ${(props: IButtonProps) =>
-        props.disabled ? colors.GrayScale_50 : 'transparent'};
+        props.disabled ? colors.GrayScale_30 : 'transparent'};
+
+    cursor: ${(props: IButtonProps) =>
+        props.disabled ? 'not-allowed' : 'pointer'};
 
     border: 2px solid ${colors.secondary};
     border-radius: 15px;

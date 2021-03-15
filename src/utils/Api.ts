@@ -1,5 +1,7 @@
 import axios, { AxiosRequestConfig } from 'axios';
 
+import { logic } from '@store/AuthPage';
+
 export const HOST = 'https://ya-praktikum.tech';
 
 type CustomAxiosRequestConfig = Omit<AxiosRequestConfig, 'method'>;
@@ -28,6 +30,10 @@ axiosInstance.interceptors.response.use(
                 break;
             case 401:
                 error.errorText = 'Неавторизованный запрос';
+                /* Позволяет использовать данную logic вне контекста React */
+                logic.mount();
+
+                logic.actions.setAuth(false);
                 break;
         }
         return Promise.reject(error);

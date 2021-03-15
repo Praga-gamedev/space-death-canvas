@@ -19,13 +19,15 @@ export const passwordFormFields: IProfileFormField[] = [
 ];
 
 export const getInitialProfileForm = (): IProfileFields =>
-    [...coreFormFields, ...passwordFormFields].reduce(
-        (acc: IProfileFields, { name }) => ({ ...acc, [name]: '' }),
-        {} as IProfileFields
-    );
+    coreFormFields
+        .concat(passwordFormFields)
+        .reduce(
+            (acc: IProfileFields, { name }) => ({ ...acc, [name]: '' }),
+            {} as IProfileFields
+        );
 
 export const getFieldsFromUser = (user: any): Partial<IProfileFields> =>
     coreFormFields.reduce((acc, { name }) => {
-        const value = user[name] || '';
+        const value = (user && user[name]) || '';
         return { ...acc, [name]: value };
     }, {});

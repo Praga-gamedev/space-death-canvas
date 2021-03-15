@@ -1,6 +1,7 @@
 import Entity, { IEntityOptions } from '@game/entities/Entity';
 import { Gun } from '@game/equipments';
-import { rotate, Sprite } from '@game/core';
+import { Sprite } from '@game/core';
+import { rotate } from '@game/core/utils';
 import spaceships from '@sprites/spaceships.png';
 
 export default class Player extends Entity {

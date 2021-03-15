@@ -1,6 +1,8 @@
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const path = require('path');
 
@@ -58,6 +60,13 @@ module.exports = {
             minify: {
                 collapseWhitespace: isProd,
             },
+        }),
+        new CopyWebpackPlugin({
+            patterns: [path.resolve(__dirname, '../src/sw.js')],
+        }),
+        new webpack.DefinePlugin({
+            isProd,
+            isDev,
         }),
     ],
 };

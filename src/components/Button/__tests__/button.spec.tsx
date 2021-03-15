@@ -7,7 +7,7 @@ import { Button } from '@components/Button';
 describe('Button component', () => {
     test('button rendered correctly', () => {
         const children = 'Snapshot!';
-        const ButtonComponent = renderer
+        const ButtonComponent: renderer.ReactTestRendererJSON | renderer.ReactTestRendererJSON[] = renderer
             .create(<Button>{children}</Button>)
             .toJSON();
         expect(ButtonComponent).toMatchSnapshot();

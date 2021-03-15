@@ -2,7 +2,7 @@ import React, { FC, useState, useRef, memo } from 'react';
 import { useValues } from 'kea';
 
 import { history } from '@store/initStore';
-import { logicRouter } from '@store/logicRouter';
+import { logicRouter } from '@store/logics';
 
 import { Popup } from './Popup';
 
