@@ -5,6 +5,6 @@ import App from './App';
 
 import { startServiceWorker } from 'src/utils/startServiceWorker';
 
-startServiceWorker();
+isProd && startServiceWorker();
 
 ReactDOM.render(<App />, document.getElementById('root'));
