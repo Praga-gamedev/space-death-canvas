@@ -1,10 +1,10 @@
-import { CONTROLS, InputManager, resources } from '@game/core';
-import { hasCollides, cos, sin, isBeyoundCanvasBorder } from '@game/core/utils';
-import { Bullet, Enemy, Entity, Player } from '@game/entities';
+import { InputManager, resources } from '@game/core';
+import { Bullet, Entity, Player } from '@game/entities';
+
+import { isBeyoundCanvasBorder } from '@game/core/utils';
 import { IPosition } from '@game/entities/types';
 
 import { colors } from 'src/colors';
-import { Asteroid } from '@game/entities/Enemy/Asteroid';
 
 import spaceships from '@sprites/spaceships.png';
 import asteroids from '@sprites/asteroids.png';
@@ -34,8 +34,6 @@ export default class Game {
     // private gameTime: number = 0;
 
     private player: Player;
-    private enemies: Enemy[] = [];
-    private bullets: Bullet[] = [];
 
     private resourcesUnsubscribe = () => {};
 
@@ -81,7 +79,7 @@ export default class Game {
         return {
             x: (this.width - Player.size.width) / 2,
             y: this.height / 2,
-            angle: 0,
+            angle: -Math.PI / 2,
         };
     }
 
@@ -121,8 +119,7 @@ export default class Game {
 
         this.isGameOver = false;
         this.score = 0;
-        this.enemies = [];
-        this.bullets = [];
+        Bullet.removeAll();
         this.player.pos = this.getPlayerStartPosition();
 
         this.isPaused && this.play();
@@ -162,42 +159,20 @@ export default class Game {
     private update(dt: number) {
         // В этом методе обновляем все, что касается данных.
         this.checkControls(dt);
+        this.player.update(dt);
         this.updateEntities(dt);
-
-        // Эта цифра по сути регулирует напор спавна
-        // При ее уменьшении уменьшается и вероятность попадания случайного числа в заданный диапазон
-        if (Math.random() < 0.01) {
-            const asteroid = new Asteroid({
-                ctx: this.ctx,
-                pos: { x: 0, y: 0, angle: 0 },
-            });
-            asteroid.setRandomStartPosition(this.ctx);
-            this.enemies.push(asteroid);
-        }
 
         this.checkCollisions();
         this.onUpdateGameState(this.gameState);
     }
 
     private updateEntities(dt: number) {
-        for (let i = 0; i < this.enemies.length; i++) {
-            const enemy = this.enemies[i];
-            enemy.updatePosition(dt, this.player.pos);
-            if (isBeyoundCanvasBorder(this.ctx, enemy)) {
-                this.enemies.splice(i, 1);
-                i--;
-            }
-        }
-
-        for (let i = 0; i < this.bullets.length; i++) {
-            const bullet = this.bullets[i];
-
-            bullet.y -= bullet.speed * dt * cos(bullet.angle);
-            bullet.x += bullet.speed * dt * sin(bullet.angle);
+        for (let i = 0; i < Bullet.instances.length; i++) {
+            const bullet = Bullet.instances[i];
+            bullet.update(dt);
 
             if (isBeyoundCanvasBorder(this.ctx, bullet)) {
-                this.bullets.splice(i, 1);
-                i--;
+                Bullet.remove(i);
             }
         }
     }
@@ -212,8 +187,7 @@ export default class Game {
             this.player.render();
         }
 
-        this.renderEntities(this.enemies);
-        this.renderEntities(this.bullets);
+        this.renderEntities(Bullet.instances);
     }
 
     private renderEntities(list: Entity[]) {
@@ -229,53 +203,28 @@ export default class Game {
     }
 
     private checkControls(dt: number) {
-        // Проверяем нажатие клавиш
-        if (this.isGameOver) return;
-
-        const { speed } = this.player;
-
-        if (this.inputManager.isDown(CONTROLS.UP)) {
-            this.player.y -= dt * speed * cos(this.player.angle);
-            this.player.x += dt * speed * sin(this.player.angle);
-        }
-
-        if (this.inputManager.isDown(CONTROLS.LEFT)) {
-            this.player.angle -= dt * speed;
-        }
-
-        if (this.inputManager.isDown(CONTROLS.RIGHT)) {
-            this.player.angle += dt * speed;
-        }
-
-        if (this.inputManager.isDown(CONTROLS.SPACE)) {
-            const bullet = this.player.shoot();
-            if (!bullet) return;
-
-            this.bullets.push(bullet);
+        if (!this.isGameOver) {
+            this.player.controlHandler(this.inputManager.pressedKeys, dt);
         }
     }
 
     checkCollisions() {
-        for (let i = 0; i < this.enemies.length; i++) {
-            const enemy = this.enemies[i];
-
-            for (let j = 0; j < this.bullets.length; j++) {
-                const bullet = this.bullets[j];
-                if (hasCollides(bullet, enemy)) {
-                    this.enemies.splice(i, 1);
-                    i--;
-
-                    this.bullets.splice(j, 1);
-                    j--;
-
-                    this.score += 200;
-                }
-            }
-
-            if (hasCollides(this.player, enemy) && !window.__godMode__) {
-                this.gameOver();
-            }
-        }
+        // for (let i = 0; i < this.enemies.length; i++) {
+        //     const enemy = this.enemies[i];
+        //     for (let j = 0; j < this.bullets.length; j++) {
+        //         const bullet = this.bullets[j];
+        //         if (hasCollides(bullet, enemy)) {
+        //             this.enemies.splice(i, 1);
+        //             i--;
+        //             this.bullets.splice(j, 1);
+        //             j--;
+        //             this.score += 200;
+        //         }
+        //     }
+        //     if (hasCollides(this.player, enemy) && !window.__godMode__) {
+        //         this.gameOver();
+        //     }
+        // }
     }
 
     public destroy() {

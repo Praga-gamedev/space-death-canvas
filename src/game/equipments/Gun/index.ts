@@ -1,6 +1,5 @@
 import Equipment from '@game/equipments/Equipment';
 import { Bullet } from '@game/entities';
-import { cos, sin } from '@game/core/utils';
 
 export class Gun extends Equipment {
     static cooldown = 200;
@@ -11,33 +10,21 @@ export class Gun extends Equipment {
     public shoot() {
         if (Date.now() - this.lastFire < this.cooldown) return null;
 
-        const bulletX = this.owner.x;
-        const bulletY = this.owner.y;
-        const bulletAngle = this.owner.angle;
+        const { x, y, angle, width, height } = this.owner;
+        const centerX = width / 2 - Bullet.size.width / 2;
+        const centerY = height / 2 - Bullet.size.height / 2;
+
+        const bulletX = x + centerX + Math.cos(angle) * 20;
+        const bulletY = y + centerY + Math.sin(angle) * 20;
+
         this.lastFire = Date.now();
-
-        const calculateX = () => {
-            if (bulletAngle < 90 || bulletAngle > 270) {
-                return bulletX + (this.owner.width * cos(bulletAngle)) / 2;
-            } else {
-                return bulletX - (this.owner.width * cos(bulletAngle)) / 2;
-            }
-        };
-
-        const calculateY = () => {
-            if (bulletAngle > 180) {
-                return bulletY - (this.owner.height * sin(bulletAngle)) / 2;
-            } else {
-                return bulletY + (this.owner.height * sin(bulletAngle)) / 2;
-            }
-        };
 
         return new Bullet({
             ctx: this.ctx,
             pos: {
-                x: calculateX(),
-                y: calculateY(),
-                angle: bulletAngle,
+                angle,
+                x: bulletX,
+                y: bulletY,
             },
         });
     }
