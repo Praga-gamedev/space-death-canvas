@@ -1,7 +1,14 @@
 import { kea } from 'kea';
+
 import { store } from 'react-notifications-component';
 
-import { login as auth, logout, getUser } from '@api/auth';
+import {
+    login as auth,
+    logout,
+    getUser,
+    getOAuthServiceCode,
+    getOAuthCode,
+} from '@api/auth';
 import { registration } from '@api/registration';
 import { updateProfile, updatePassword, updateAvatar } from '@api/profile';
 
@@ -28,6 +35,8 @@ export const logic = kea({
 
         setLoadingMain: (value: boolean) => value,
         setInit: (value: boolean) => value,
+
+        setOAuthCode: (payload: number) => payload,
     }),
 
     reducers: ({ actions }) => ({
@@ -89,6 +98,12 @@ export const logic = kea({
                 [actions.setUser]: (_: TState, payload: IUserProps) => payload,
             },
         ],
+        OAuthCode: [
+            null,
+            {
+                [actions.setOAuthCode]: (_: TState, payload: number) => payload,
+            },
+        ],
     }),
 
     thunks: ({
@@ -128,6 +143,16 @@ export const logic = kea({
             }
         },
 
+        logInOAuth: async () => {
+            const serviceCode: any = await getOAuthServiceCode();
+
+            location.replace(
+                `https://oauth.yandex.ru/authorize?response_type=code&client_id=${serviceCode.service_id}&redirect_uri=`
+            );
+
+            // await getOAuthCode(getState().scenes.authPage.code);
+        },
+
         registration: async (payload: IRegistrationData) => {
             const { isLoadingRegistration } = getState().scenes.authPage;
             if (isLoadingRegistration) return;
@@ -146,6 +171,8 @@ export const logic = kea({
             const { isAuth, isLoadingMain } = getState().scenes.authPage;
             const { silent = false } = opts;
 
+            const codeOAuth = getState().router.location.query?.code;
+
             if (isAuth || isLoadingMain) return;
 
             if (!navigator.onLine) {
@@ -158,6 +185,9 @@ export const logic = kea({
             !silent && actions.setLoadingMain(true);
 
             try {
+                // actions.setOAuthCode(getState().router.location.query?.code);
+                codeOAuth && (await getOAuthCode(codeOAuth));
+
                 const user = await getUser();
 
                 actions.setUser(user);
