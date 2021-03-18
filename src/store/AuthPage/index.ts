@@ -7,7 +7,7 @@ import {
     logout,
     getUser,
     getOAuthServiceCode,
-    getOAuthCode,
+    OAuth,
 } from '@api/auth';
 import { registration } from '@api/registration';
 import { updateProfile, updatePassword, updateAvatar } from '@api/profile';
@@ -35,8 +35,6 @@ export const logic = kea({
 
         setLoadingMain: (value: boolean) => value,
         setInit: (value: boolean) => value,
-
-        setOAuthCode: (payload: number) => payload,
     }),
 
     reducers: ({ actions }) => ({
@@ -98,12 +96,6 @@ export const logic = kea({
                 [actions.setUser]: (_: TState, payload: IUserProps) => payload,
             },
         ],
-        OAuthCode: [
-            null,
-            {
-                [actions.setOAuthCode]: (_: TState, payload: number) => payload,
-            },
-        ],
     }),
 
     thunks: ({
@@ -144,13 +136,15 @@ export const logic = kea({
         },
 
         logInOAuth: async () => {
-            const serviceCode: any = await getOAuthServiceCode();
+            try {
+                const serviceCode: any = await getOAuthServiceCode();
 
-            location.replace(
-                `https://oauth.yandex.ru/authorize?response_type=code&client_id=${serviceCode.service_id}&redirect_uri=`
-            );
-
-            // await getOAuthCode(getState().scenes.authPage.code);
+                location.replace(
+                    `https://oauth.yandex.ru/authorize?response_type=code&client_id=${serviceCode.service_id}&redirect_uri=`
+                );
+            } catch (error) {
+                console.error('OAuth', error);
+            }
         },
 
         registration: async (payload: IRegistrationData) => {
@@ -185,8 +179,7 @@ export const logic = kea({
             !silent && actions.setLoadingMain(true);
 
             try {
-                // actions.setOAuthCode(getState().router.location.query?.code);
-                codeOAuth && (await getOAuthCode(codeOAuth));
+                codeOAuth && (await OAuth(codeOAuth));
 
                 const user = await getUser();
 

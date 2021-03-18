@@ -28,7 +28,7 @@ export const getOAuthServiceCode = async () => {
     });
 };
 
-export const getOAuthCode = async (code: number) => {
+export const OAuth = async (code: number) => {
     return Api.post({
         url: '/oauth/yandex',
         data: { code },
