@@ -1,7 +1,5 @@
 import React, { useCallback } from 'react';
 
-import { history } from '@store/initStore';
-
 import {
     ButtonBlock,
     HeaderButton,
@@ -10,8 +8,11 @@ import {
     ThemeSpan,
     UsernameBlock,
 } from './units';
+import { useHistory } from 'react-router';
 
 export const Header = () => {
+    const history = useHistory();
+
     const redirectForum = useCallback(() => history.push('/forum/'), []);
 
     return (

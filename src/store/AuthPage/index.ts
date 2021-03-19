@@ -32,7 +32,7 @@ export const logic = kea({
 
     reducers: ({ actions }) => ({
         isAuth: [
-            false,
+            true,
             {
                 [actions.setAuth]: (_: TState, value: boolean) => value,
             },

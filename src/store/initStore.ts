@@ -1,31 +1,40 @@
-import { resetContext, getContext } from 'kea';
+import { getContext, resetContext } from 'kea';
 import thunkPlugin from 'kea-thunk';
-import localStoragePlugin from 'kea-localstorage';
-
+import { connectRouter, RouterState } from 'connected-react-router';
 import { Reducer } from 'redux';
-import reduxReset from 'redux-reset';
+import { createBrowserHistory, createMemoryHistory } from 'history';
 
-import { connectRouter, routerMiddleware } from 'connected-react-router';
+export const isServer = !(
+    typeof window !== 'undefined' &&
+    window.document &&
+    window.document.createElement
+);
 
-import { createBrowserHistory } from 'history';
+export const getInitialState = (pathname: string = '/'): any => {
+    return {
+        router: {
+            location: { pathname, search: '', hash: '', key: '' },
+            action: 'POP',
+        } as RouterState,
+    };
+};
 
-export const history = createBrowserHistory();
+export function configureStore(initialState: any, url = '/') {
+    const history = isServer
+        ? createMemoryHistory({ initialEntries: [url] })
+        : createBrowserHistory();
 
-resetContext({
-    createStore: {
-        reducers: {
-            router: connectRouter(history) as Reducer,
+    resetContext({
+        createStore: {
+            reducers: {
+                router: connectRouter(history) as Reducer,
+            },
         },
+        defaults: initialState,
+        plugins: [thunkPlugin],
+    });
 
-        middleware: [routerMiddleware(history)],
-        enhancers: [reduxReset()],
-    },
-    plugins: [
-        thunkPlugin,
-        localStoragePlugin({
-            prefix: 'app',
-        }),
-    ],
-});
+    const store = getContext().store;
 
-export default getContext().store;
+    return { store, history };
+}

@@ -1,10 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import '@src/styles/App.css';
 import App from 'src/App';
 import 'babel-polyfill';
-import { startServiceWorker } from 'src/utils/startServiceWorker';
+import { ConnectedRouter } from 'connected-react-router';
+import { configureStore } from 'src/store/initStore';
+import { Provider } from 'react-redux';
 
-isProd && startServiceWorker();
+const initialState = window.__INITIAL_STATE__;
 
-ReactDOM.hydrate(<App />, document.getElementById('root'));
+const { store, history } = configureStore(initialState);
+
+ReactDOM.hydrate(
+    <Provider store={store}>
+        <ConnectedRouter history={history}>
+            <App />
+        </ConnectedRouter>
+    </Provider>,
+    document.getElementById('root')
+);

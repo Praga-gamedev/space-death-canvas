@@ -5,22 +5,16 @@ import 'react-notifications-component/dist/theme.css';
 import 'src/styles/notification.css';
 
 import { RebootCss } from './global-styles';
-
-import { Main } from './Main';
 import ErrorBoundary from './components/ErrorBoundary';
+import NavigationRouter from 'src/router';
 
 const App = () => (
     <>
         <RebootCss />
         <ReactNotification />
-
-        {/*<Provider store={store}>*/}
-        {/*    <ConnectedRouter history={history}>*/}
         <ErrorBoundary>
-            <Main />
+            <NavigationRouter />
         </ErrorBoundary>
-        {/*    </ConnectedRouter>*/}
-        {/*</Provider>*/}
     </>
 );
 
