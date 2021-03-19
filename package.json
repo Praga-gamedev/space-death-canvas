@@ -87,7 +87,7 @@
     "dependencies": {
         "@babel/core": "7.13.10",
         "@babel/plugin-transform-regenerator": "7.12.13",
-        "@babel/plugin-transform-runtime": "^7.13.10",
+        "@babel/plugin-transform-runtime": "7.13.10",
         "@babel/register": "7.13.8",
         "@babel/runtime": "7.13.10",
         "@emotion/core": "11.0.0",
@@ -110,7 +110,7 @@
         "redux": "4.0.5",
         "redux-thunk": "2.3.0",
         "reselect": "4.0.0",
-        "url": "^0.11.0"
+        "url": "0.11.0"
     },
     "husky": {
         "hooks": {

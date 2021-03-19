@@ -8,7 +8,9 @@ import { RebootCss } from './global-styles';
 import ErrorBoundary from './components/ErrorBoundary';
 import NavigationRouter from 'src/router';
 
-const App = () => (
+import { hot } from 'react-hot-loader/root';
+
+const App = hot(() => (
     <>
         <RebootCss />
         <ReactNotification />
@@ -16,6 +18,6 @@ const App = () => (
             <NavigationRouter />
         </ErrorBoundary>
     </>
-);
+));
 
 export default App;
