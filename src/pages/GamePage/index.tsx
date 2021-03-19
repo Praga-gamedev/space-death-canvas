@@ -1,6 +1,7 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
 
-import Game, { IGameState } from 'src/game';
+import Game from 'src/game';
+import { IGameState } from 'src/game/Game';
 
 import { S as SGlobal } from '@pages/units';
 import { S } from '@pages/GamePage/units';
