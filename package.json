@@ -98,7 +98,6 @@
         "express": "4.17.1",
         "history": "4.10.1",
         "kea": "2.2.2",
-        "kea-localstorage": "1.0.2",
         "kea-router": "0.5.2",
         "kea-thunk": "1.0.0",
         "kea-typegen": "0.5.1",
@@ -109,7 +108,6 @@
         "react-redux": "7.2.2",
         "react-router-dom": "5.2.0",
         "redux": "4.0.5",
-        "redux-reset": "0.3.0",
         "redux-thunk": "2.3.0",
         "reselect": "4.0.0",
         "url": "^0.11.0"
