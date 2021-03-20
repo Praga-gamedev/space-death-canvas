@@ -1,7 +1,14 @@
 import { kea } from 'kea';
+
 import { store } from 'react-notifications-component';
 
-import { login as auth, logout, getUser } from '@api/auth';
+import {
+    login as auth,
+    logout,
+    getUser,
+    getOAuthServiceCode,
+    OAuth,
+} from '@api/auth';
 import { registration } from '@api/registration';
 import { updateProfile, updatePassword, updateAvatar } from '@api/profile';
 
@@ -128,6 +135,18 @@ export const logic = kea({
             }
         },
 
+        logInOAuth: async () => {
+            try {
+                const serviceCode: any = await getOAuthServiceCode();
+
+                location.replace(
+                    `https://oauth.yandex.ru/authorize?response_type=code&client_id=${serviceCode.service_id}&redirect_uri=`
+                );
+            } catch (error) {
+                console.error('OAuth', error);
+            }
+        },
+
         registration: async (payload: IRegistrationData) => {
             const { isLoadingRegistration } = getState().scenes.authPage;
             if (isLoadingRegistration) return;
@@ -146,6 +165,8 @@ export const logic = kea({
             const { isAuth, isLoadingMain } = getState().scenes.authPage;
             const { silent = false } = opts;
 
+            const codeOAuth = getState().router.location.query?.code;
+
             if (isAuth || isLoadingMain) return;
 
             if (!navigator.onLine) {
@@ -158,6 +179,8 @@ export const logic = kea({
             !silent && actions.setLoadingMain(true);
 
             try {
+                codeOAuth && (await OAuth(codeOAuth));
+
                 const user = await getUser();
 
                 actions.setUser(user);

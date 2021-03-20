@@ -22,3 +22,16 @@ export const getUser = async (headers?: any) => {
         headers,
     });
 };
+
+export const getOAuthServiceCode = async () => {
+    return Api.get({
+        baseURL: 'https://ya-praktikum.tech/api/v2/oauth/yandex/service-id',
+    });
+};
+
+export const OAuth = async (code: number) => {
+    return Api.post({
+        url: '/oauth/yandex',
+        data: { code },
+    });
+};
