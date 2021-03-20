@@ -6,34 +6,45 @@ import { Provider as ReduxProvider } from 'react-redux';
 
 import { StaticRouter } from 'react-router-dom';
 import { StaticRouterContext } from 'react-router';
-import { configureStore, getInitialState } from 'src/store/initStore';
+import {
+    configureStore,
+    getInitialState,
+} from '../../src/store/configureStore';
+import { IUserProps } from 'src/types/IUserProps';
+import { logic } from 'src/store/AuthPage';
 
-export const serverMiddleware = (req: Request, res: Response) => {
+const initUser = (userData: IUserProps) => {
+    logic.mount();
+    logic.actions.setUser(userData);
+    logic.actions.setAuth(true);
+};
+
+export const renderMiddleware = (req: Request, res: Response) => {
     const location = req.url;
     const context: StaticRouterContext = {};
     const { store } = configureStore(getInitialState(location), location);
 
-    const renderApp = () => {
-        const jsx = (
-            <ReduxProvider store={store}>
-                <StaticRouter context={context} location={location}>
-                    <App />
-                </StaticRouter>
-            </ReduxProvider>
-        );
-        const reactHtml = renderToString(jsx);
-        const keaState = store.getState();
+    const userData = res.locals.user;
+    if (userData) {
+        initUser(userData);
+    }
 
-        if (context.url) {
-            res.redirect(context.url);
-            return;
-        }
+    const jsx = (
+        <ReduxProvider store={store}>
+            <StaticRouter context={context} location={location}>
+                <App />
+            </StaticRouter>
+        </ReduxProvider>
+    );
+    const reactHtml = renderToString(jsx);
+    const keaState = store.getState();
 
-        res.status(context.statusCode || 200).send(
-            getHtml(reactHtml, keaState)
-        );
-    };
-    renderApp();
+    if (context.url) {
+        res.redirect(context.url);
+        return;
+    }
+
+    res.status(context.statusCode || 200).send(getHtml(reactHtml, keaState));
 };
 
 function getHtml(reactHtml: string, reduxState = {}) {

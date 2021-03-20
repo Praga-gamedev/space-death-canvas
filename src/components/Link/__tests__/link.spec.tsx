@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import { Link } from '../index';
 
 // @ts-ignore
-import { history } from '@store/initStore';
+import { history } from '../../../store/configureStore';
 import renderer from 'react-test-renderer';
 
 const path = '/test';
