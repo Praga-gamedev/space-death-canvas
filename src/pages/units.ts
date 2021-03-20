@@ -1,7 +1,10 @@
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 
+import { Button } from '@components';
+
 import backgroundPicture from '@images/background.png';
+import yaLogo from '@icons/yandex.svg';
 
 import { colors } from 'src/colors';
 
@@ -59,5 +62,25 @@ export const scrollBarStyle = css`
     ::-webkit-scrollbar-thumb {
         -webkit-box-shadow: inset 0 0 6px ${colors.secondary};
         border-radius: 15px;
+    }
+`;
+
+S.YandexButton = styled(Button)`
+    position: relative;
+    text-align: left;
+    padding-left: 20px;
+
+    ::before {
+        position: absolute;
+        right: 14px;
+        top: 8px;
+
+        content: '';
+        background: url(${yaLogo});
+        background-size: cover;
+        display: block;
+        width: 30px;
+        height: 30px;
+        filter: invert(1);
     }
 `;
