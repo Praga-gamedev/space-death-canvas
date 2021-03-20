@@ -41,8 +41,6 @@ export const NotAuthorizedRoute: FC<ProtectedRouteProps> = ({
         [isAuth, isOffline]
     );
 
-    console.log(restProps);
-
     return <ProtectedRoute {...restProps} />;
 };
 
