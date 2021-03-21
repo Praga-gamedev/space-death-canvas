@@ -15,9 +15,9 @@ export default class Player extends Entity {
     public minSpeed = -210;
     public rotateSpeed = 4;
 
-    private acceleration = 8;
-    private backAcceleration = 6;
-    private antiAcceleration = 4;
+    private acceleration = 280;
+    private backAcceleration = 220;
+    private antiAcceleration = 200;
 
     public gun: Gun;
 
@@ -63,23 +63,23 @@ export default class Player extends Entity {
 
     public controlHandler(pressedKeys: Map<string, boolean>, dt: number) {
         if (pressedKeys.get(CONTROLS.UP)) {
-            this.speed += this.acceleration;
+            this.speed += this.acceleration * dt;
         } else if (pressedKeys.get(CONTROLS.DOWN)) {
-            this.speed -= this.backAcceleration;
+            this.speed -= this.backAcceleration * dt;
         } else {
             if (this.speed > 0) {
-                this.speed -= this.antiAcceleration;
+                this.speed -= this.antiAcceleration * dt;
             } else if (this.speed < 0) {
-                this.speed += this.antiAcceleration;
+                this.speed += this.antiAcceleration * dt;
             }
         }
 
         if (pressedKeys.get(CONTROLS.LEFT)) {
-            this.angle -= dt * this.rotateSpeed;
+            this.angle -= this.rotateSpeed * dt;
         }
 
         if (pressedKeys.get(CONTROLS.RIGHT)) {
-            this.angle += dt * this.rotateSpeed;
+            this.angle += this.rotateSpeed * dt;
         }
 
         if (pressedKeys.get(CONTROLS.SPACE)) {
@@ -105,5 +105,9 @@ export default class Player extends Entity {
         if (this.y > this.ctx.canvas.height) {
             this.y = -this.height;
         }
+    }
+
+    reset() {
+        this.speed = 0;
     }
 }

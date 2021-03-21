@@ -1,4 +1,4 @@
 export { Player } from './Player';
-export { Enemy } from './Enemy';
+export { Asteroid } from './Asteroid';
 export { Bullet } from './Bullet';
 export { default as Entity } from './Entity';
