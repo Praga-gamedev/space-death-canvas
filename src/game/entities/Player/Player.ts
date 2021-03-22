@@ -62,6 +62,10 @@ export default class Player extends Entity {
     }
 
     public controlHandler(pressedKeys: Map<string, boolean>, dt: number) {
+        /*
+         Теперь по нажатию на клавиши корабль меняет свою скорость
+         Перемещение происходит в методе update если скорость корабля не равна 0
+        */
         if (pressedKeys.get(CONTROLS.UP)) {
             this.speed += this.acceleration * dt;
         } else if (pressedKeys.get(CONTROLS.DOWN)) {
@@ -93,6 +97,7 @@ export default class Player extends Entity {
             this.y += Math.sin(this.angle) * this.speed * dt;
         }
 
+        // Уход за канвас и появление с другой стороны
         if (this.x < -this.width) {
             this.x = this.ctx.canvas.width;
         }

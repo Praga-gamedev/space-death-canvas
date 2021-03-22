@@ -41,8 +41,10 @@ export default class Game {
         canvas: HTMLCanvasElement,
         onUpdateGameState?: (state: IGameState) => void
     ) {
-        // @ts-ignore
-        window.game = this;
+        if (isDev) {
+            // @ts-ignore
+            window.game = this;
+        }
         this.canvas = canvas;
         this.ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
 

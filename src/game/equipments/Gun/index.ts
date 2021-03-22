@@ -1,6 +1,7 @@
 import Equipment from '@game/equipments/Equipment';
 import { Bullet } from '@game/entities';
 
+// Это расстояние от пули до корабля. Оно нужно чтобы пуля не появлялась прямо вплотную к короблю. Можете поиграться с этой константой
 const BULLET_OFFSET = 20;
 
 export class Gun extends Equipment {

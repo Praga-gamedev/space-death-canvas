@@ -40,6 +40,7 @@ export class Asteroid extends Entity {
         Asteroid.instances.push(this);
 
         this.angle = random(0, Math.PI * 2);
+        // Получаем координаты рандомного астероида со спрайта
         this.spritePosition = this.getRandomSpritePosition();
     }
 
@@ -85,6 +86,7 @@ export class Asteroid extends Entity {
         this.x += Math.cos(this.angle) * this.speed * dt;
         this.y += Math.sin(this.angle) * this.speed * dt;
 
+        // Уход за канвас и появление с другой стороны
         if (this.x < -this.width) {
             this.x = this.ctx.canvas.width;
         }

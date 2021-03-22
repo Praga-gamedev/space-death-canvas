@@ -23,6 +23,11 @@ export class Bullet extends Entity {
         super(opts);
         Bullet.instances.push(this);
 
+        /*
+          В других сущностях я нахожу косинус и синус в методе update,
+          но пуля не меняет свое направление, так что имеет смысл сразу найти те величины,
+          которые будут прибавляться в методе update
+        */
         this.dx = Math.cos(this.angle) * this.speed;
         this.dy = Math.sin(this.angle) * this.speed;
     }
