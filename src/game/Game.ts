@@ -252,5 +252,9 @@ export default class Game {
     public destroy() {
         this.inputManager.destroy();
         this.resourcesUnsubscribe();
+
+        Bullet.removeAll();
+        Asteroid.removeAll();
+        this.player.reset();
     }
 }

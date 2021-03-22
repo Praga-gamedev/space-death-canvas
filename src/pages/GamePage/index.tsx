@@ -6,6 +6,10 @@ import { S as SGlobal } from '@pages/units';
 import { S } from '@pages/GamePage/units';
 import { showInfoNotification } from 'src/utils/notification';
 
+import { useFullscreen } from 'src/utils/hooks';
+
+import fullscreenIcon from '@icons/full-screen-icon.png';
+
 export const GamePage: FC = () => {
     const canvas = useRef<HTMLCanvasElement>(null);
 
@@ -17,6 +21,7 @@ export const GamePage: FC = () => {
         initialized: false,
     });
     const [isGameActive, setGameActive] = useState(false);
+    const [, toggleFullscrean] = useFullscreen('#game-view');
 
     const resizeGame = (canvas: HTMLCanvasElement) => {
         const resW = 1024;
@@ -79,7 +84,7 @@ export const GamePage: FC = () => {
 
     return (
         <SGlobal.WrapperPage background={true}>
-            <S.GameView>
+            <S.GameView id="game-view">
                 <S.GameCanvas ref={canvas} />
 
                 {showScore && <S.Score>Очки: {gameState.score}</S.Score>}
@@ -108,6 +113,11 @@ export const GamePage: FC = () => {
                         </S.ButtonGame>
                     </S.GameOver>
                 )}
+
+                <S.FullscreanIcon
+                    src={fullscreenIcon}
+                    onClick={toggleFullscrean}
+                />
             </S.GameView>
         </SGlobal.WrapperPage>
     );

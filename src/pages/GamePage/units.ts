@@ -74,3 +74,11 @@ S.GameOverDescription = styled.div`
 S.ButtonGame = styled(Button)`
     margin-top: 20px;
 `;
+
+S.FullscreanIcon = styled.img`
+    position: absolute;
+    bottom: 40px;
+    right: 40px;
+    z-index: 100;
+    cursor: pointer;
+`;
