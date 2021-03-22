@@ -1,10 +1,9 @@
-import { IPosition, ISize, StartPosition } from './types';
+import { IPosition, ISize } from './types';
 import { Sprite } from '@game/core';
 
 export interface IEntityOptions {
     ctx: CanvasRenderingContext2D;
     pos: IPosition;
-    startPos?: StartPosition;
 }
 
 export default abstract class Entity {
@@ -12,15 +11,13 @@ export default abstract class Entity {
     // Сюда будем пихать логику рендера, обновления и тд
     public ctx: CanvasRenderingContext2D;
     public pos: IPosition;
-    public startPos?: StartPosition;
     public size: ISize = { height: 0, width: 0 };
 
     protected sprite?: Sprite;
 
     constructor(opts: IEntityOptions) {
-        const { ctx, pos, startPos } = opts;
+        const { ctx, pos } = opts;
 
-        this.startPos = startPos;
         this.ctx = ctx;
         this.pos = pos;
     }
@@ -42,18 +39,11 @@ export default abstract class Entity {
     }
 
     set angle(angle: number) {
-        if (angle < 0) {
-            angle = 360 + angle;
-        }
-        if (angle > 360) {
-            this.pos.angle = 0;
-        } else {
-            this.pos.angle = angle;
-        }
+        this.pos.angle = angle;
     }
 
     get angle() {
-        return this.pos.angle ? this.pos.angle : 0;
+        return this.pos.angle || 0;
     }
 
     get height() {
