@@ -1,6 +1,7 @@
 import { kea } from 'kea';
 
-import { leaderboardData } from '@api/leaderboard';
+import { leaderboardData, leaderboardAddNewLeader } from '@api/leaderboard';
+import { ILeaderboardLeaderData } from '@api/leaderboard/types';
 
 import { TState } from '../types';
 
@@ -11,8 +12,6 @@ export const logic = kea({
         startLoading: () => undefined,
         setLoading: (loading: boolean) => loading,
 
-        setError: true,
-
         setLeaders: (payload: any) => payload,
     }),
 
@@ -20,21 +19,28 @@ export const logic = kea({
         isLoading: [
             null,
             {
-                [actions.setError]: () => false,
-
                 [actions.setLoading]: (_: TState, payload: boolean) => payload,
                 [actions.startLoading]: () => true,
             },
         ],
         leaders: [
-            null,
+            [],
             {
-                [actions.setLeaders]: (_: TState, payload: any) => payload,
+                [actions.setLeaders]: (
+                    _: TState,
+                    payload: Array<ILeaderboardLeaderData>
+                ) => payload,
             },
         ],
     }),
 
-    thunks: ({ actions }: { actions: any }) => ({
+    thunks: ({
+        actions,
+        getState,
+    }: {
+        actions: any;
+        getState: () => TState;
+    }) => ({
         getLeaders: async (page: number) => {
             try {
                 actions.startLoading();
@@ -42,12 +48,24 @@ export const logic = kea({
                 const res = await leaderboardData({ cursor: page });
 
                 actions.setLeaders(res);
-
-                actions.setLoading(false);
             } catch (error) {
-                actions.setError();
-
                 console.error('get leaderboards', error);
+            } finally {
+                actions.setLoading(false);
+            }
+        },
+        postLeaderScore: async (score: number) => {
+            const { id, login, avatar } = getState().scenes.authPage.user;
+            
+            try {
+                await leaderboardAddNewLeader({
+                    sdcScore: score,
+                    name: login,
+                    avatar,
+                    id,
+                });
+            } catch (error) {
+                console.error('post leaderboards', error);
             }
         },
     }),

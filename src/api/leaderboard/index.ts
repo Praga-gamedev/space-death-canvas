@@ -1,24 +1,22 @@
 import Api from 'src/utils/Api';
 
-import { ILeaderboardData } from './types';
+import { ILeaderboardData, ILeaderboardLeaderData } from './types';
+
+const key = 'sdcScore';
 
 export const leaderboardData = async ({
     cursor = 0,
     limit = 10,
-    ratingFieldName = 'sdcScore',
 }: ILeaderboardData) => {
     return Api.post({
         url: '/leaderboard/all',
-        data: { ratingFieldName, cursor, limit },
+        data: { ratingFieldName: key, cursor, limit },
     });
 };
 
-export const leaderboardNewLeader = async (
-    ratingFieldName = 'sdcScore',
-    data: Record<string, any>
-) => {
+export const leaderboardAddNewLeader = async (data: ILeaderboardLeaderData) => {
     return Api.post({
         url: '/leaderboard',
-        data: { data, ratingFieldName },
+        data: { data, ratingFieldName: key },
     });
 };
