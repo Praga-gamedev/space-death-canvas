@@ -9,6 +9,8 @@ import { colors } from 'src/colors';
 import spaceships from '@sprites/spaceships.png';
 import asteroids from '@sprites/asteroids.png';
 
+const GOD_MODE = localStorage.getItem('GOD_MODE') === '1';
+
 export interface IGameState {
     isGameOver: boolean;
     isPaused: boolean;
@@ -26,9 +28,6 @@ export default class Game {
     private ctx: CanvasRenderingContext2D;
 
     private inputManager: InputManager;
-
-    private width: number;
-    private height: number;
 
     private lastTime: number;
     // private gameTime: number = 0;
@@ -49,9 +48,6 @@ export default class Game {
         this.ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
 
         this.lastTime = performance.now();
-
-        this.width = this.canvas.width;
-        this.height = this.canvas.height;
 
         this.inputManager = new InputManager();
 
@@ -79,8 +75,8 @@ export default class Game {
 
     private getPlayerStartPosition(): IPosition {
         return {
-            x: (this.width - Player.size.width) / 2,
-            y: this.height / 2,
+            x: (this.canvas.width - Player.size.width) / 2,
+            y: this.canvas.height / 2,
             angle: -Math.PI / 2,
         };
     }
@@ -205,7 +201,7 @@ export default class Game {
     private render() {
         this.ctx.translate(0, 0);
         // Чистим канвас
-        this.ctx.clearRect(0, 0, this.width, this.height);
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
         this.renderBackground();
         if (!this.isGameOver) {
@@ -225,7 +221,7 @@ export default class Game {
     private renderBackground() {
         this.ctx.fillStyle = colors.GrayScale_100;
 
-        this.ctx.fillRect(0, 0, this.width, this.height);
+        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
     }
 
     private checkControls(dt: number) {
@@ -247,7 +243,7 @@ export default class Game {
                     this.score += 200;
                 }
             }
-            if (hasCollides(this.player, enemy) && !window.__godMode__) {
+            if (hasCollides(this.player, enemy) && !GOD_MODE) {
                 this.gameOver();
             }
         }

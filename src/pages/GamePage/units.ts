@@ -6,50 +6,71 @@ import { Button } from 'src/components';
 
 export const S: Record<string, any> = {};
 
-S.MainBlock = styled.div`
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
-    width: 70%;
-    height: 100%;
-    padding-top: 80px !important;
-`;
-
-S.GameDisplay = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    /* временный хардкод */
-    width: 800px;
-    height: 500px;
-`;
-
-S.InformationBlock = styled.div`
-    display: ${({ isActive }: { isActive: boolean }) =>
-        isActive ? 'flex' : 'none'};
-
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: inherit;
-    height: inherit;
-    background-color: ${colors.GrayScale_100};
+S.GameView = styled.div`
     font-family: 'Comfortaa', sans-serif;
     color: ${colors.GrayScale_0};
+    margin-top: 80px;
+    width: 100%;
+    height: calc(100% - 80px);
+    position: relative;
 `;
 
-S.ButtonsBlock = styled.div`
-    margin-top: 20px;
+S.GameCanvas = styled.canvas`
+    width: 100%;
+    height: 100%;
 `;
 
 S.Score = styled.div`
-    margin-bottom: 20px;
+    position: absolute;
+    left: 50%;
+    top: 60px;
     font-size: 24px;
     color: ${colors.GrayScale_0};
+    transform: translateX(-50%);
+`;
+
+S.StartScreen = styled.div`
+    background-color: ${colors.GrayScale_100};
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+`;
+
+S.StartScreenInfo = styled.div`
+    font-size: 25px;
+    text-align: center;
+`;
+
+S.GameOver = styled.div`
+    background-color: rgba(0, 0, 0, 0.7);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+`;
+
+S.GameOverTitle = styled.div`
+    font-size: 50px;
+`;
+
+S.GameOverDescription = styled.div`
+    margin-top: 20px;
+    font-size: 30px;
 `;
 
 S.ButtonGame = styled(Button)`
-    background-color: ${colors.secondaryAccent}
-`
+    margin-top: 20px;
+`;

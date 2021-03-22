@@ -18,16 +18,17 @@ export const GamePage: FC = () => {
     });
     const [isGameActive, setGameActive] = useState(false);
 
-    useEffect(() => {
-        if (!canvas.current) return;
+    const resizeGame = (canvas: HTMLCanvasElement) => {
+        const resW = 1024;
+        const resH = 768;
 
-        const game = new Game(canvas.current, setGameState);
-        setGame(game);
+        const devW = window.innerWidth;
+        const devH = window.innerHeight;
 
-        return () => {
-            game.destroy();
-        };
-    }, []);
+        const scaleToCover = Math.max(devW / resW, devH / resH);
+        canvas.width = Math.floor(devW / scaleToCover);
+        canvas.height = Math.floor(devH / scaleToCover);
+    };
 
     const startGame = () => {
         if (!game) {
@@ -42,7 +43,6 @@ export const GamePage: FC = () => {
             'Управляйте кораблем и уничтожайте противников!'
         );
     };
-
     const restartGame = () => {
         if (!game) {
             return;
@@ -50,7 +50,7 @@ export const GamePage: FC = () => {
 
         game.reset();
     };
-
+    // @ts-ignore
     const togglePause = () => {
         if (!game) {
             return;
@@ -59,45 +59,56 @@ export const GamePage: FC = () => {
         game.isPaused ? game.play() : game.pause();
     };
 
+    useEffect(() => {
+        if (!canvas.current) return;
+
+        resizeGame(canvas.current);
+        const onResize = () => resizeGame(canvas.current as HTMLCanvasElement);
+        window.addEventListener('resize', onResize, false);
+
+        const game = new Game(canvas.current, setGameState);
+        setGame(game);
+
+        return () => {
+            game.destroy();
+            window.removeEventListener('resize', onResize);
+        };
+    }, []);
+
+    const showScore = isGameActive && !gameState.isGameOver;
+
     return (
         <SGlobal.WrapperPage background={true}>
-            <S.MainBlock>
-                <S.Score>Очки: {gameState.score}</S.Score>
+            <S.GameView>
+                <S.GameCanvas ref={canvas} />
 
-                <S.GameDisplay>
-                    <canvas
-                        ref={canvas}
-                        width={800}
-                        height={500}
-                        style={{
-                            display: isGameActive ? undefined : 'none',
-                        }}
-                    />
+                {showScore && <S.Score>Очки: {gameState.score}</S.Score>}
 
-                    <S.InformationBlock isActive={!isGameActive}>
-                        <span>Перемещение: WASD или стрелками</span>
-                        <span>Стрельба: пробел</span>
-                    </S.InformationBlock>
-                </S.GameDisplay>
+                {!isGameActive && (
+                    <S.StartScreen>
+                        <S.StartScreenInfo>
+                            <div>Перемещение: WASD или стрелками</div>
+                            <div>Стрельба: пробел</div>
+                        </S.StartScreenInfo>
 
-                {gameState.initialized && (
-                    <S.ButtonsBlock>
-                        {!isGameActive ? (
-                            <S.ButtonGame onClick={startGame}>
-                                Старт
-                            </S.ButtonGame>
-                        ) : gameState.isGameOver ? (
-                            <S.ButtonGame onClick={restartGame}>
-                                Рестарт
-                            </S.ButtonGame>
-                        ) : (
-                            <S.ButtonGame onClick={togglePause}>
-                                {gameState.isPaused ? 'Продолжить' : 'Пауза'}
-                            </S.ButtonGame>
-                        )}
-                    </S.ButtonsBlock>
+                        <S.ButtonGame onClick={startGame}>Старт</S.ButtonGame>
+                    </S.StartScreen>
                 )}
-            </S.MainBlock>
+
+                {gameState.isGameOver && (
+                    <S.GameOver>
+                        <S.GameOverTitle>Астероиды победили</S.GameOverTitle>
+                        {!!gameState.score && (
+                            <S.GameOverDescription>
+                                Но вы набрали {gameState.score} очков
+                            </S.GameOverDescription>
+                        )}
+                        <S.ButtonGame onClick={restartGame}>
+                            Начать заново
+                        </S.ButtonGame>
+                    </S.GameOver>
+                )}
+            </S.GameView>
         </SGlobal.WrapperPage>
     );
 };
