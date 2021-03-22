@@ -70,12 +70,13 @@ export class Asteroid extends Entity {
         const col = randomInteger(0, 1);
         const row = randomInteger(0, 2);
 
-        const rightOffset = 10;
-        const bottomOffset = 20;
+        const RIGHT_OFFSET = 10;
+        const BOTTOM_OFFSET = 20;
+        const SPRITE_SIZE = 140;
 
         return {
-            x: col * (140 + rightOffset),
-            y: row * (140 + bottomOffset),
+            x: col * (SPRITE_SIZE + RIGHT_OFFSET),
+            y: row * (SPRITE_SIZE + BOTTOM_OFFSET),
         };
     }
 

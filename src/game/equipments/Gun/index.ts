@@ -1,6 +1,8 @@
 import Equipment from '@game/equipments/Equipment';
 import { Bullet } from '@game/entities';
 
+const BULLET_OFFSET = 20;
+
 export class Gun extends Equipment {
     static cooldown = 200;
 
@@ -14,8 +16,8 @@ export class Gun extends Equipment {
         const centerX = width / 2 - Bullet.size.width / 2;
         const centerY = height / 2 - Bullet.size.height / 2;
 
-        const bulletX = x + centerX + Math.cos(angle) * 20;
-        const bulletY = y + centerY + Math.sin(angle) * 20;
+        const bulletX = x + centerX + Math.cos(angle) * BULLET_OFFSET;
+        const bulletY = y + centerY + Math.sin(angle) * BULLET_OFFSET;
 
         this.lastFire = Date.now();
 
