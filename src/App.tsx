@@ -4,7 +4,6 @@ import { ConnectedRouter } from 'connected-react-router';
 
 import ReactNotification from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
-import 'src/styles/notification.css';
 
 import store, { history } from '@store/initStore';
 

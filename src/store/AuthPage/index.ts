@@ -1,6 +1,6 @@
 import { kea } from 'kea';
 
-import { store } from 'react-notifications-component';
+import { Notification } from 'src/utils/notification';
 
 import {
     login as auth,
@@ -12,9 +12,10 @@ import {
 import { registration } from '@api/registration';
 import { updateProfile, updatePassword, updateAvatar } from '@api/profile';
 
-import { TState, IUserProps, IInitOptions } from '../types';
 import { IRegistrationData } from '@api/registration/types';
 import { IPasswordUpdateData, IProfileUpdateData } from '@api/profile/types';
+
+import { TState, IUserProps, IInitOptions } from '../types';
 
 export const logic = kea({
     path: () => ['scenes', 'authPage'],
@@ -116,21 +117,11 @@ export const logic = kea({
                 }
 
                 actions.setLoadingAuth(false);
-            } catch (e) {
+            } catch (error) {
                 actions.setError();
 
-                store.addNotification({
-                    title: 'Ошибка!',
-                    message: e.response.data.reason,
-                    type: 'danger',
-                    insert: 'top',
-                    container: 'bottom-right',
-                    animationIn: ['animate__animated', 'animate__fadeIn'],
-                    animationOut: ['animate__animated', 'animate__fadeOut'],
-                    dismiss: {
-                        duration: 5000,
-                        onScreen: true,
-                    },
+                Notification({
+                    message: error.response.data.reason,
                 });
             }
         },
@@ -143,12 +134,16 @@ export const logic = kea({
                     `https://oauth.yandex.ru/authorize?response_type=code&client_id=${serviceCode.service_id}&redirect_uri=`
                 );
             } catch (error) {
-                console.error('OAuth', error);
+                Notification({
+                    message: error.response.data.reason,
+                });
             }
         },
 
         registration: async (payload: IRegistrationData) => {
+            // TODO: Не нужно вытаскивать редьюсер. Достаточно блочить кнопку при запросе, как на стр Auth
             const { isLoadingRegistration } = getState().scenes.authPage;
+
             if (isLoadingRegistration) return;
 
             actions.setLoadingRegistration(true);
@@ -156,6 +151,10 @@ export const logic = kea({
             try {
                 await registration(payload);
                 await actions.init({ silent: true });
+            } catch (error) {
+                Notification({
+                    message: error.response.data.reason,
+                });
             } finally {
                 actions.setLoadingRegistration(false);
             }
@@ -202,21 +201,45 @@ export const logic = kea({
 
         updateProfile: async (profileData: IProfileUpdateData) => {
             const { user } = getState().scenes.authPage;
-            const newUser = await updateProfile({ ...user, ...profileData });
 
-            actions.setUser(newUser);
+            try {
+                // TODO: стоит именовать санки и запросы по разному
+                const newUser = await updateProfile({
+                    ...user,
+                    ...profileData,
+                });
+
+                actions.setUser(newUser);
+            } catch (error) {
+                Notification({
+                    message: error.response.data.reason,
+                });
+            }
         },
 
-        updatePassword: (passwordData: IPasswordUpdateData) => {
-            return updatePassword(passwordData);
+        updatePassword: async (passwordData: IPasswordUpdateData) => {
+            try {
+                await updatePassword(passwordData);
+            } catch (error) {
+                Notification({
+                    message: error.response.data.reason,
+                });
+            }
         },
 
         updateAvatar: async (file: File) => {
             const formData = new FormData();
             formData.append('avatar', file);
 
-            const newUser = await updateAvatar(formData);
-            actions.setUser(newUser);
+            try {
+                const newUser = await updateAvatar(formData);
+
+                actions.setUser(newUser);
+            } catch (error) {
+                Notification({
+                    message: error.response.data.reason,
+                });
+            }
         },
     }),
 });
