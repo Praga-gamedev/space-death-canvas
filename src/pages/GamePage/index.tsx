@@ -1,10 +1,14 @@
-import React, { FC, useEffect, useRef, useState } from 'react';
+import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
 
 import Game, { IGameState } from 'src/game';
 
 import { S as SGlobal } from '@pages/units';
 import { S } from '@pages/GamePage/units';
 import { Notification } from 'src/utils/notification';
+
+import { useFullscreen, useEventListener } from 'src/utils/hooks';
+
+import fullscreenIcon from '@icons/full-screen-icon.png';
 
 export const GamePage: FC = () => {
     const canvas = useRef<HTMLCanvasElement>(null);
@@ -17,17 +21,19 @@ export const GamePage: FC = () => {
         initialized: false,
     });
     const [isGameActive, setGameActive] = useState(false);
+    const [, toggleFullscrean] = useFullscreen('#game-view');
 
-    useEffect(() => {
-        if (!canvas.current) return;
+    const resizeGame = (canvas: HTMLCanvasElement) => {
+        const resW = 1024;
+        const resH = 768;
 
-        const game = new Game(canvas.current, setGameState);
-        setGame(game);
+        const devW = window.innerWidth;
+        const devH = window.innerHeight;
 
-        return () => {
-            game.destroy();
-        };
-    }, []);
+        const scaleToCover = Math.max(devW / resW, devH / resH);
+        canvas.width = Math.floor(devW / scaleToCover);
+        canvas.height = Math.floor(devH / scaleToCover);
+    };
 
     const startGame = () => {
         if (!game) {
@@ -43,7 +49,6 @@ export const GamePage: FC = () => {
             message: 'Управляйте кораблем и уничтожайте противников',
         });
     };
-
     const restartGame = () => {
         if (!game) {
             return;
@@ -53,52 +58,111 @@ export const GamePage: FC = () => {
     };
 
     const togglePause = () => {
-        if (!game) {
+        if (!game || gameState.isGameOver) {
             return;
         }
 
         game.isPaused ? game.play() : game.pause();
     };
 
+    useEffect(() => {
+        if (!canvas.current) return;
+
+        resizeGame(canvas.current);
+        const onResize = () => resizeGame(canvas.current as HTMLCanvasElement);
+        window.addEventListener('resize', onResize, false);
+
+        const game = new Game(canvas.current, setGameState);
+        setGame(game);
+
+        return () => {
+            game.destroy();
+            window.removeEventListener('resize', onResize);
+        };
+    }, []);
+
+    const pauseOnPressEscape = useCallback(
+        (event: Event) => {
+            const escapePressed = (event as KeyboardEvent).code === 'Escape';
+            if (escapePressed && !gameState.isPaused) {
+                togglePause();
+            }
+        },
+        [game, gameState.isPaused, gameState.isGameOver]
+    );
+
+    useEventListener('keyup', pauseOnPressEscape, window);
+
+    useEffect(() => {
+        if (!canvas.current) return;
+
+        const needLock =
+            !gameState.isPaused && !gameState.isGameOver && isGameActive;
+        needLock
+            ? canvas.current?.requestPointerLock()
+            : document?.exitPointerLock();
+
+        return () => {
+            document?.exitPointerLock();
+        };
+    }, [
+        canvas.current,
+        gameState.isPaused,
+        gameState.isGameOver,
+        isGameActive,
+    ]);
+
+    const showScore = isGameActive && !gameState.isGameOver;
+
     return (
         <SGlobal.WrapperPage background={true}>
-            <S.MainBlock>
-                <S.Score>Очки: {gameState.score}</S.Score>
+            <S.GameView id="game-view">
+                <S.GameCanvas ref={canvas} />
 
-                <S.GameDisplay>
-                    <canvas
-                        ref={canvas}
-                        width={800}
-                        height={500}
-                        style={{
-                            display: isGameActive ? undefined : 'none',
-                        }}
-                    />
+                {showScore && <S.Score>Очки: {gameState.score}</S.Score>}
 
-                    <S.InformationBlock isActive={!isGameActive}>
-                        <span>Перемещение: WASD или стрелками</span>
-                        <span>Стрельба: пробел</span>
-                    </S.InformationBlock>
-                </S.GameDisplay>
+                {!isGameActive && (
+                    <S.StartScreen>
+                        <S.StartScreenInfo>
+                            <div>Перемещение: WASD или стрелками</div>
+                            <div>Стрельба: пробел</div>
+                        </S.StartScreenInfo>
 
-                {gameState.initialized && (
-                    <S.ButtonsBlock>
-                        {!isGameActive ? (
-                            <S.ButtonGame onClick={startGame}>
-                                Старт
-                            </S.ButtonGame>
-                        ) : gameState.isGameOver ? (
-                            <S.ButtonGame onClick={restartGame}>
-                                Рестарт
-                            </S.ButtonGame>
-                        ) : (
-                            <S.ButtonGame onClick={togglePause}>
-                                {gameState.isPaused ? 'Продолжить' : 'Пауза'}
-                            </S.ButtonGame>
-                        )}
-                    </S.ButtonsBlock>
+                        <S.ButtonGame onClick={startGame}>Старт</S.ButtonGame>
+                    </S.StartScreen>
                 )}
-            </S.MainBlock>
+
+                {gameState.isGameOver && (
+                    <S.Overlay>
+                        <S.GameTitle>Астероиды победили</S.GameTitle>
+                        {!!gameState.score && (
+                            <S.GameOverDescription>
+                                Но вы набрали {gameState.score} очков
+                            </S.GameOverDescription>
+                        )}
+                        <S.ButtonGame onClick={restartGame}>
+                            Начать заново
+                        </S.ButtonGame>
+                    </S.Overlay>
+                )}
+
+                {gameState.isPaused && (
+                    <>
+                        <S.Overlay>
+                            <S.GameTitle>Пауза</S.GameTitle>
+
+                            <S.ButtonGame onClick={togglePause}>
+                                Продолжить
+                            </S.ButtonGame>
+                        </S.Overlay>
+
+                        <S.FullscreanIcon
+                            src={fullscreenIcon}
+                            onClick={toggleFullscrean}
+                        />
+                    </>
+                )}
+            </S.GameView>
         </SGlobal.WrapperPage>
     );
 };
