@@ -3,6 +3,7 @@ import thunkPlugin from 'kea-thunk';
 import { connectRouter, RouterState } from 'connected-react-router';
 import { Reducer } from 'redux';
 import { createBrowserHistory, createMemoryHistory } from 'history';
+import { TState } from '@store/types';
 
 export const isServer = !(
     typeof window !== 'undefined' &&
@@ -10,7 +11,7 @@ export const isServer = !(
     window.document.createElement
 );
 
-export const getInitialState = (pathname: string = '/'): any => {
+export const getInitialState = (pathname: string = '/'): TState => {
     return {
         router: {
             location: { pathname, search: '', hash: '', key: '' },
@@ -19,7 +20,7 @@ export const getInitialState = (pathname: string = '/'): any => {
     };
 };
 
-export function configureStore(initialState: any, url = '/') {
+export function configureStore(initialState: TState, url = '/') {
     const history = isServer
         ? createMemoryHistory({ initialEntries: [url] })
         : createBrowserHistory();

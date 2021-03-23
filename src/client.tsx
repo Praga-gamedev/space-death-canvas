@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from 'src/App';
 import 'babel-polyfill';
 import { ConnectedRouter } from 'connected-react-router';
-import { configureStore } from '@store/configureStore';
 import { Provider } from 'react-redux';
+import { configureStore } from '@store/configureStore';
+import App from 'src/App';
 
 const initialState = window.__INITIAL_STATE__;
 

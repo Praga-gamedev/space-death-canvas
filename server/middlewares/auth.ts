@@ -7,8 +7,8 @@ export const authMiddleware = async (
     next: NextFunction
 ): Promise<void> => {
     const requestCookies = {
-        uuid: request?.cookies?.uuid,
-        authCookie: request?.cookies?.authCookie,
+        uuid: request.cookies?.uuid,
+        authCookie: request.cookies?.authCookie,
     };
 
     response.locals.user = null;
@@ -21,8 +21,8 @@ export const authMiddleware = async (
             response.locals.user = await getUser({
                 Cookie: cookies,
             });
-        } catch (err) {
-            console.error(err);
+        } catch (error) {
+            console.error(error);
         }
     }
 

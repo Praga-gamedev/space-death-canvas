@@ -1,15 +1,12 @@
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { Request, Response } from 'express';
-import App from 'src/App';
 import { Provider as ReduxProvider } from 'react-redux';
-
 import { StaticRouter } from 'react-router-dom';
 import { StaticRouterContext } from 'react-router';
-import {
-    configureStore,
-    getInitialState,
-} from '../../src/store/configureStore';
+
+import { configureStore, getInitialState } from 'src/store/configureStore';
+import App from 'src/App';
 import { IUserProps } from 'src/types/IUserProps';
 import { logic } from 'src/store/AuthPage';
 
