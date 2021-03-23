@@ -48,7 +48,7 @@ S.StartScreenInfo = styled.div`
     text-align: center;
 `;
 
-S.GameOver = styled.div`
+S.Overlay = styled.div`
     background-color: rgba(0, 0, 0, 0.7);
     position: absolute;
     top: 0;
@@ -62,7 +62,7 @@ S.GameOver = styled.div`
     align-items: center;
 `;
 
-S.GameOverTitle = styled.div`
+S.GameTitle = styled.div`
     font-size: 50px;
 `;
 

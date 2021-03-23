@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef, useState } from 'react';
+import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
 
 import Game, { IGameState } from 'src/game';
 
@@ -6,7 +6,7 @@ import { S as SGlobal } from '@pages/units';
 import { S } from '@pages/GamePage/units';
 import { showInfoNotification } from 'src/utils/notification';
 
-import { useFullscreen } from 'src/utils/hooks';
+import { useFullscreen, useEventListener } from 'src/utils/hooks';
 
 import fullscreenIcon from '@icons/full-screen-icon.png';
 
@@ -55,9 +55,9 @@ export const GamePage: FC = () => {
 
         game.reset();
     };
-    // @ts-ignore
+
     const togglePause = () => {
-        if (!game) {
+        if (!game || gameState.isGameOver) {
             return;
         }
 
@@ -80,6 +80,18 @@ export const GamePage: FC = () => {
         };
     }, []);
 
+    const pauseOnPressEscape = useCallback(
+        (event: Event) => {
+            const escapePressed = (event as KeyboardEvent).code === 'Escape';
+            if (escapePressed && !gameState.isPaused) {
+                togglePause();
+            }
+        },
+        [game, gameState.isPaused, gameState.isGameOver]
+    );
+
+    useEventListener('keyup', pauseOnPressEscape, window);
+
     const showScore = isGameActive && !gameState.isGameOver;
 
     return (
@@ -101,8 +113,8 @@ export const GamePage: FC = () => {
                 )}
 
                 {gameState.isGameOver && (
-                    <S.GameOver>
-                        <S.GameOverTitle>Астероиды победили</S.GameOverTitle>
+                    <S.Overlay>
+                        <S.GameTitle>Астероиды победили</S.GameTitle>
                         {!!gameState.score && (
                             <S.GameOverDescription>
                                 Но вы набрали {gameState.score} очков
@@ -111,13 +123,25 @@ export const GamePage: FC = () => {
                         <S.ButtonGame onClick={restartGame}>
                             Начать заново
                         </S.ButtonGame>
-                    </S.GameOver>
+                    </S.Overlay>
                 )}
 
-                <S.FullscreanIcon
-                    src={fullscreenIcon}
-                    onClick={toggleFullscrean}
-                />
+                {gameState.isPaused && (
+                    <>
+                        <S.Overlay>
+                            <S.GameTitle>Пауза</S.GameTitle>
+
+                            <S.ButtonGame onClick={togglePause}>
+                                Продолжить
+                            </S.ButtonGame>
+                        </S.Overlay>
+
+                        <S.FullscreanIcon
+                            src={fullscreenIcon}
+                            onClick={toggleFullscrean}
+                        />
+                    </>
+                )}
             </S.GameView>
         </SGlobal.WrapperPage>
     );
