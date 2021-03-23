@@ -103,7 +103,9 @@ export default class Game {
     }
 
     public play() {
-        if (!this.initialized || this.destroyed) return;
+        if (!this.initialized || this.destroyed) {
+            return;
+        }
 
         this.isPaused = false;
         this.lastTime = performance.now();
@@ -114,7 +116,9 @@ export default class Game {
     }
 
     public gameOver() {
-        if (this.isGameOver) return;
+        if (this.isGameOver) {
+            return;
+        }
 
         this.isGameOver = true;
         this.emitGameState();
@@ -123,7 +127,9 @@ export default class Game {
 
     // Reset game to original state
     public reset() {
-        if (!this.initialized || this.destroyed) return;
+        if (!this.initialized || this.destroyed) {
+            return;
+        }
 
         this.isGameOver = false;
         this.score = 0;
@@ -140,7 +146,9 @@ export default class Game {
     }
 
     public pause() {
-        if (!this.initialized || this.destroyed) return;
+        if (!this.initialized || this.destroyed) {
+            return;
+        }
 
         this.isPaused = true;
         this.emitGameState();
@@ -149,7 +157,9 @@ export default class Game {
 
     // Главный цикл игры
     private main() {
-        if (this.isPaused || this.destroyed) return;
+        if (this.isPaused || this.destroyed) {
+            return;
+        }
         const now = performance.now();
         /*
             delta time нужен для того чтобы правильно обновлять координаты юнитов
@@ -244,7 +254,9 @@ export default class Game {
     }
 
     checkCollisions() {
-        if (this.isGameOver) return;
+        if (this.isGameOver) {
+            return;
+        }
 
         for (let i = 0; i < Asteroid.instances.length; i++) {
             const enemy = Asteroid.instances[i];
