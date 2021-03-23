@@ -4,7 +4,7 @@ import Game, { IGameState } from 'src/game';
 
 import { S as SGlobal } from '@pages/units';
 import { S } from '@pages/GamePage/units';
-import { showInfoNotification } from 'src/utils/notification';
+import { Notification } from 'src/utils/notification';
 
 export const GamePage: FC = () => {
     const canvas = useRef<HTMLCanvasElement>(null);
@@ -37,10 +37,11 @@ export const GamePage: FC = () => {
         setGameActive(true);
         game.play();
 
-        showInfoNotification(
-            'Игра началась!',
-            'Управляйте кораблем и уничтожайте противников!'
-        );
+        Notification({
+            type: 'info',
+            title: 'Игра началась!',
+            message: 'Управляйте кораблем и уничтожайте противников',
+        });
     };
 
     const restartGame = () => {
