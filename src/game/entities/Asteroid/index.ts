@@ -28,7 +28,7 @@ export class Asteroid extends Entity {
     private rotateSpeed = random(-1.5, 3);
     private speed = random(Asteroid.minSpeed, Asteroid.maxSpeed);
 
-    private radius = random(Asteroid.minRadius, Asteroid.maxRadius);
+    private radius = randomInteger(Asteroid.minRadius, Asteroid.maxRadius);
 
     public size = {
         height: this.radius,
@@ -56,12 +56,12 @@ export class Asteroid extends Entity {
     private drawSprite() {
         this.ctx.drawImage(
             resources.get(asteroids),
-            this.spritePosition.x,
-            this.spritePosition.y,
+            Math.floor(this.spritePosition.x),
+            Math.floor(this.spritePosition.y),
             140,
             140,
-            -this.width / 2,
-            -this.height / 2,
+            Math.floor(-this.width / 2),
+            Math.floor(-this.height / 2),
             this.width,
             this.height
         );

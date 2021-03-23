@@ -21,8 +21,9 @@ export interface IGameState {
 export default class Game {
     public isGameOver = false;
     public isPaused = false;
+    public destroyed = false;
     public score = 0;
-    public onUpdateGameState?: (state: IGameState) => void;
+    public onUpdateGameState: ((state: IGameState) => void) | null | undefined;
 
     private canvas: HTMLCanvasElement;
     private ctx: CanvasRenderingContext2D;
@@ -102,7 +103,7 @@ export default class Game {
     }
 
     public play() {
-        if (!this.initialized) return;
+        if (!this.initialized || this.destroyed) return;
 
         this.isPaused = false;
         this.lastTime = performance.now();
@@ -122,7 +123,7 @@ export default class Game {
 
     // Reset game to original state
     public reset() {
-        if (!this.initialized) return;
+        if (!this.initialized || this.destroyed) return;
 
         this.isGameOver = false;
         this.score = 0;
@@ -139,7 +140,7 @@ export default class Game {
     }
 
     public pause() {
-        if (!this.initialized) return;
+        if (!this.initialized || this.destroyed) return;
 
         this.isPaused = true;
         this.emitGameState();
@@ -148,7 +149,7 @@ export default class Game {
 
     // Главный цикл игры
     private main() {
-        if (this.isPaused) return;
+        if (this.isPaused || this.destroyed) return;
         const now = performance.now();
         /*
             delta time нужен для того чтобы правильно обновлять координаты юнитов
@@ -164,7 +165,9 @@ export default class Game {
 
         this.lastTime = now;
         // requestAnimationFrame более предпочтителен чем setInterval, в теории это также указано
-        requestAnimationFrame(this.main.bind(this));
+        requestAnimationFrame(() => {
+            this.main();
+        });
     }
 
     private update(dt: number) {
@@ -265,8 +268,11 @@ export default class Game {
     public destroy() {
         this.inputManager.destroy();
         this.resourcesUnsubscribe();
+        this.onUpdateGameState = null;
 
         Bullet.removeAll();
         Asteroid.removeAll();
+
+        this.destroyed = true;
     }
 }
