@@ -151,6 +151,12 @@ export const logic = kea({
             try {
                 await registration(payload);
                 await actions.init({ silent: true });
+
+                Notification({
+                    type: 'success',
+                    title: 'Регистрация',
+                    message: 'Добро пожаловать!',
+                });
             } catch (error) {
                 Notification({
                     message: error.response.data.reason,
@@ -197,6 +203,12 @@ export const logic = kea({
 
             actions.setUser(null);
             actions.setAuth(false);
+
+            Notification({
+                type: 'info',
+                title: 'Выход',
+                message: 'Вы вышли из системы',
+            });
         },
 
         updateProfile: async (profileData: IProfileUpdateData) => {
@@ -210,6 +222,12 @@ export const logic = kea({
                 });
 
                 actions.setUser(newUser);
+
+                Notification({
+                    type: 'success',
+                    title: 'Профиль',
+                    message: 'Данные успешно изменены',
+                });
             } catch (error) {
                 Notification({
                     message: error.response.data.reason,
@@ -220,6 +238,12 @@ export const logic = kea({
         updatePassword: async (passwordData: IPasswordUpdateData) => {
             try {
                 await updatePassword(passwordData);
+
+                Notification({
+                    type: 'success',
+                    title: 'Профиль',
+                    message: 'Пароль изменен',
+                });
             } catch (error) {
                 Notification({
                     message: error.response.data.reason,
@@ -235,6 +259,12 @@ export const logic = kea({
                 const newUser = await updateAvatar(formData);
 
                 actions.setUser(newUser);
+
+                Notification({
+                    type: 'success',
+                    title: 'Профиль',
+                    message: 'Аватар обновлен',
+                });
             } catch (error) {
                 Notification({
                     message: error.response.data.reason,
