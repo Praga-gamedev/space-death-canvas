@@ -1,4 +1,5 @@
 import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
+import { useActions } from 'kea';
 
 import Game, { IGameState } from 'src/game';
 
@@ -10,7 +11,11 @@ import { useFullscreen, useEventListener } from 'src/utils/hooks';
 
 import fullscreenIcon from '@icons/full-screen-icon.png';
 
+import { logic } from '@store/LeaderboardPage';
+
 export const GamePage: FC = () => {
+    const { postLeaderScore } = useActions(logic);
+
     const canvas = useRef<HTMLCanvasElement>(null);
 
     const [game, setGame] = useState<Game | null>(null);
@@ -111,6 +116,10 @@ export const GamePage: FC = () => {
         gameState.isGameOver,
         isGameActive,
     ]);
+
+    useEffect(() => {
+        gameState.isGameOver && postLeaderScore(gameState.score);
+    }, [gameState.isGameOver]);
 
     const showScore = isGameActive && !gameState.isGameOver;
 
