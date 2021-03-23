@@ -92,6 +92,25 @@ export const GamePage: FC = () => {
 
     useEventListener('keyup', pauseOnPressEscape, window);
 
+    useEffect(() => {
+        if (!canvas.current) return;
+
+        const needLock =
+            !gameState.isPaused && !gameState.isGameOver && isGameActive;
+        needLock
+            ? canvas.current?.requestPointerLock()
+            : document?.exitPointerLock();
+
+        return () => {
+            document?.exitPointerLock();
+        };
+    }, [
+        canvas.current,
+        gameState.isPaused,
+        gameState.isGameOver,
+        isGameActive,
+    ]);
+
     const showScore = isGameActive && !gameState.isGameOver;
 
     return (
