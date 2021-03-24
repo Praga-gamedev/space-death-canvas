@@ -9,7 +9,7 @@ import cookieParser from 'cookie-parser';
 import { IS_DEV } from '../webpack/env';
 import { authMiddleware } from './middlewares/auth';
 
-export const PORT = process.env.PORT || 9000;
+export const PORT = process.env.PORT || 5000;
 export const HOST = `https://local.ya-praktikum.tech:${PORT}`;
 
 const app = express();
