@@ -1,9 +1,8 @@
 import React, { FC, useCallback } from 'react';
 
-import { history } from '@store/initStore';
-
 import { MainBlock, ThemeBlock, ThemeSpan, UsernameBlock } from './units';
 import { IThemeProps } from './types';
+import { useHistory } from 'react-router';
 
 export const Theme: FC<IThemeProps> = ({
     userName,
@@ -12,6 +11,8 @@ export const Theme: FC<IThemeProps> = ({
     id,
     ...rest
 }) => {
+    const history = useHistory();
+
     const redirectToMessages = useCallback(() => history.push(`/forum/${id}`), [
         id,
     ]);

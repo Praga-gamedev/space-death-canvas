@@ -1,13 +1,12 @@
-import React, { FC, useState, useRef, memo } from 'react';
+import React, { FC, memo, useRef, useState } from 'react';
 import { useValues } from 'kea';
-
-import { history } from '@store/initStore';
 import { logicRouter } from '@store/logics';
 
 import { Popup } from './Popup';
 
 import { S } from './units';
 import { IHeaderProps } from './types';
+import { useHistory } from 'react-router';
 
 export const Header: FC<IHeaderProps> = memo(({ tabs }) => {
     const {
@@ -21,6 +20,8 @@ export const Header: FC<IHeaderProps> = memo(({ tabs }) => {
     const buttonRef = useRef<HTMLDivElement | undefined>();
 
     const isActive = (path: string) => path === pathname;
+
+    const history = useHistory();
 
     return (
         <S.Header>

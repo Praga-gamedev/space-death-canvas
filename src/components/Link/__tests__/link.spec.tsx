@@ -1,8 +1,8 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { Link } from '../index';
-
-import { history } from '@store/initStore';
+// @ts-ignore
+import { history } from 'src/store/configureStore';
 import renderer from 'react-test-renderer';
 
 const path = '/test';

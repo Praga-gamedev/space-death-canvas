@@ -16,9 +16,10 @@ export const logout = async () => {
     });
 };
 
-export const getUser = async () => {
+export const getUser = async (headers?: any) => {
     return Api.get({
         url: '/auth/user',
+        headers,
     });
 };
 

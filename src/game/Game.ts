@@ -8,8 +8,7 @@ import { colors } from 'src/colors';
 
 import spaceships from '@sprites/spaceships.png';
 import asteroids from '@sprites/asteroids.png';
-
-const GOD_MODE = localStorage.getItem('GOD_MODE') === '1';
+import { IS_DEV } from '../../webpack/env';
 
 export interface IGameState {
     isGameOver: boolean;
@@ -41,10 +40,9 @@ export default class Game {
         canvas: HTMLCanvasElement,
         onUpdateGameState?: (state: IGameState) => void
     ) {
-        if (isDev) {
-            // @ts-ignore
-            window.game = this;
-        }
+        // @ts-ignore
+        window.game = this;
+
         this.canvas = canvas;
         this.ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
 
@@ -271,7 +269,7 @@ export default class Game {
                     this.emitGameState();
                 }
             }
-            if (hasCollides(this.player, enemy) && !GOD_MODE) {
+            if (hasCollides(this.player, enemy)) {
                 this.gameOver();
             }
         }

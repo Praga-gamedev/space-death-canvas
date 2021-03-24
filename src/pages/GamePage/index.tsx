@@ -1,7 +1,8 @@
 import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
 import { useActions } from 'kea';
 
-import Game, { IGameState } from 'src/game';
+import Game from 'src/game';
+import { IGameState } from 'src/game/Game';
 
 import { S as SGlobal } from '@pages/units';
 import { S } from '@pages/GamePage/units';
@@ -12,6 +13,9 @@ import { useFullscreen, useEventListener } from 'src/utils/hooks';
 import fullscreenIcon from '@icons/full-screen-icon.png';
 
 import { logic } from '@store/LeaderboardPage';
+import { isServer } from '@store/configureStore';
+
+const windowObj = isServer ? ({} as Window) : window;
 
 export const GamePage: FC = () => {
     const { postLeaderScore } = useActions(logic);
@@ -32,8 +36,8 @@ export const GamePage: FC = () => {
         const resW = 1024;
         const resH = 768;
 
-        const devW = window.innerWidth;
-        const devH = window.innerHeight;
+        const devW = windowObj.innerWidth;
+        const devH = windowObj.innerHeight;
 
         const scaleToCover = Math.max(devW / resW, devH / resH);
         canvas.width = Math.floor(devW / scaleToCover);
@@ -75,14 +79,14 @@ export const GamePage: FC = () => {
 
         resizeGame(canvas.current);
         const onResize = () => resizeGame(canvas.current as HTMLCanvasElement);
-        window.addEventListener('resize', onResize, false);
+        windowObj.addEventListener('resize', onResize, false);
 
         const game = new Game(canvas.current, setGameState);
         setGame(game);
 
         return () => {
             game.destroy();
-            window.removeEventListener('resize', onResize);
+            windowObj.removeEventListener('resize', onResize);
         };
     }, []);
 
@@ -96,7 +100,7 @@ export const GamePage: FC = () => {
         [game, gameState.isPaused, gameState.isGameOver]
     );
 
-    useEventListener('keyup', pauseOnPressEscape, window);
+    useEventListener('keyup', pauseOnPressEscape, windowObj);
 
     useEffect(() => {
         if (!canvas.current) return;

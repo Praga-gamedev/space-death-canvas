@@ -1,4 +1,7 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { isServer } from '@store/configureStore';
+
+const document = isServer ? ({} as Document) : window.document;
 
 const exitFullscreen = () => {
     if (document.exitFullscreen) {
