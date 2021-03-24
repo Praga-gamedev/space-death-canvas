@@ -1,13 +1,14 @@
-import { CONTROLS, InputManager, resources } from '@game/core';
-import { hasCollides, cos, sin, isBeyoundCanvasBorder } from '@game/core/utils';
-import { Bullet, Enemy, Entity, Player } from '@game/entities';
+import { InputManager, resources } from '@game/core';
+import { Bullet, Entity, Player, Asteroid } from '@game/entities';
+
+import { isBeyoundCanvasBorder, hasCollides } from '@game/core/utils';
 import { IPosition } from '@game/entities/types';
 
 import { colors } from 'src/colors';
-import { Asteroid } from '@game/entities/Enemy/Asteroid';
 
 import spaceships from '@sprites/spaceships.png';
 import asteroids from '@sprites/asteroids.png';
+import { IS_DEV } from '../../webpack/env';
 
 export interface IGameState {
     isGameOver: boolean;
@@ -19,23 +20,19 @@ export interface IGameState {
 export default class Game {
     public isGameOver = false;
     public isPaused = false;
+    public destroyed = false;
     public score = 0;
-    public onUpdateGameState: (state: IGameState) => void;
+    public onUpdateGameState: ((state: IGameState) => void) | null | undefined;
 
     private canvas: HTMLCanvasElement;
     private ctx: CanvasRenderingContext2D;
 
     private inputManager: InputManager;
 
-    private width: number;
-    private height: number;
-
     private lastTime: number;
     // private gameTime: number = 0;
 
     private player: Player;
-    private enemies: Enemy[] = [];
-    private bullets: Bullet[] = [];
 
     private resourcesUnsubscribe = () => {};
 
@@ -43,15 +40,14 @@ export default class Game {
         canvas: HTMLCanvasElement,
         onUpdateGameState?: (state: IGameState) => void
     ) {
-        // @ts-ignore
-        window.game = this;
+        if (IS_DEV) {
+            // @ts-ignore
+            window.game = this;
+        }
         this.canvas = canvas;
         this.ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
 
         this.lastTime = performance.now();
-
-        this.width = this.canvas.width;
-        this.height = this.canvas.height;
 
         this.inputManager = new InputManager();
 
@@ -60,7 +56,7 @@ export default class Game {
             pos: this.getPlayerStartPosition(),
         });
 
-        this.onUpdateGameState = onUpdateGameState || (() => {});
+        this.onUpdateGameState = onUpdateGameState;
         this.init();
     }
 
@@ -77,17 +73,21 @@ export default class Game {
         return resources.isReady && !resources.isEmpty;
     }
 
+    private emitGameState() {
+        this.onUpdateGameState && this.onUpdateGameState(this.gameState);
+    }
+
     private getPlayerStartPosition(): IPosition {
         return {
-            x: (this.width - Player.size.width) / 2,
-            y: this.height / 2,
-            angle: 0,
+            x: (this.canvas.width - Player.size.width) / 2,
+            y: this.canvas.height / 2,
+            angle: -Math.PI / 2,
         };
     }
 
     private init() {
         if (this.initialized) {
-            this.onUpdateGameState(this.gameState);
+            this.emitGameState();
             return this;
         }
 
@@ -95,52 +95,70 @@ export default class Game {
         resources.load(asteroids);
 
         this.resourcesUnsubscribe = resources.onReady(() =>
-            this.onUpdateGameState(this.gameState)
+            this.emitGameState()
         );
 
         return this;
     }
 
     public play() {
-        if (!this.initialized) return;
+        if (!this.initialized || this.destroyed) {
+            return;
+        }
 
         this.isPaused = false;
         this.lastTime = performance.now();
         this.main();
+
+        this.emitGameState();
         return this;
     }
 
     public gameOver() {
+        if (this.isGameOver) {
+            return;
+        }
+
         this.isGameOver = true;
+        this.emitGameState();
         return this;
     }
 
     // Reset game to original state
     public reset() {
-        if (!this.initialized) return;
+        if (!this.initialized || this.destroyed) {
+            return;
+        }
 
         this.isGameOver = false;
         this.score = 0;
-        this.enemies = [];
-        this.bullets = [];
-        this.player.pos = this.getPlayerStartPosition();
 
-        this.isPaused && this.play();
+        Bullet.removeAll();
+        Asteroid.removeAll();
+
+        this.player.pos = this.getPlayerStartPosition();
+        this.player.reset();
+
+        this.isPaused ? this.play() : this.emitGameState();
 
         return this;
     }
 
     public pause() {
-        if (!this.initialized) return;
+        if (!this.initialized || this.destroyed) {
+            return;
+        }
 
         this.isPaused = true;
-        this.onUpdateGameState(this.gameState);
+        this.emitGameState();
         return this;
     }
 
     // Главный цикл игры
     private main() {
-        if (this.isPaused) return;
+        if (this.isPaused || this.destroyed) {
+            return;
+        }
         const now = performance.now();
         /*
             delta time нужен для того чтобы правильно обновлять координаты юнитов
@@ -156,64 +174,64 @@ export default class Game {
 
         this.lastTime = now;
         // requestAnimationFrame более предпочтителен чем setInterval, в теории это также указано
-        requestAnimationFrame(this.main.bind(this));
+        requestAnimationFrame(() => {
+            this.main();
+        });
     }
 
     private update(dt: number) {
         // В этом методе обновляем все, что касается данных.
         this.checkControls(dt);
+        if (!this.isGameOver) {
+            this.player.update(dt);
+        }
         this.updateEntities(dt);
 
         // Эта цифра по сути регулирует напор спавна
         // При ее уменьшении уменьшается и вероятность попадания случайного числа в заданный диапазон
-        if (Math.random() < 0.01) {
-            const asteroid = new Asteroid({
+        if (Math.random() < 0.01 && Asteroid.instances.length < 12) {
+            const y = Math.random() * this.canvas.height;
+            const x =
+                Math.random() > 0.5 ? -Asteroid.maxRadius : this.canvas.width;
+
+            // eslint-disable-next-line no-new
+            new Asteroid({
                 ctx: this.ctx,
-                pos: { x: 0, y: 0, angle: 0 },
+                pos: { x, y },
             });
-            asteroid.setRandomStartPosition(this.ctx);
-            this.enemies.push(asteroid);
         }
 
         this.checkCollisions();
-        this.onUpdateGameState(this.gameState);
     }
 
     private updateEntities(dt: number) {
-        for (let i = 0; i < this.enemies.length; i++) {
-            const enemy = this.enemies[i];
-            enemy.updatePosition(dt, this.player.pos);
-            if (isBeyoundCanvasBorder(this.ctx, enemy)) {
-                this.enemies.splice(i, 1);
-                i--;
+        for (let i = 0; i < Bullet.instances.length; i++) {
+            const bullet = Bullet.instances[i];
+            bullet.update(dt);
+
+            if (isBeyoundCanvasBorder(this.ctx, bullet)) {
+                Bullet.remove(i);
             }
         }
 
-        for (let i = 0; i < this.bullets.length; i++) {
-            const bullet = this.bullets[i];
-
-            bullet.y -= bullet.speed * dt * cos(bullet.angle);
-            bullet.x += bullet.speed * dt * sin(bullet.angle);
-
-            if (isBeyoundCanvasBorder(this.ctx, bullet)) {
-                this.bullets.splice(i, 1);
-                i--;
-            }
+        for (let i = 0; i < Asteroid.instances.length; i++) {
+            const asteroid = Asteroid.instances[i];
+            asteroid.update(dt);
         }
     }
 
     private render() {
         this.ctx.translate(0, 0);
         // Чистим канвас
-        this.ctx.clearRect(0, 0, this.width, this.height);
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
         this.renderBackground();
         if (!this.isGameOver) {
             this.player.render();
         }
 
-        this.renderEntities(this.enemies);
-        this.renderEntities(this.bullets);
+        this.renderEntities(Bullet.instances);
+        this.renderEntities(Asteroid.instances);
     }
 
     private renderEntities(list: Entity[]) {
@@ -225,54 +243,34 @@ export default class Game {
     private renderBackground() {
         this.ctx.fillStyle = colors.GrayScale_100;
 
-        this.ctx.fillRect(0, 0, this.width, this.height);
+        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
     }
 
     private checkControls(dt: number) {
-        // Проверяем нажатие клавиш
-        if (this.isGameOver) return;
-
-        const { speed } = this.player;
-
-        if (this.inputManager.isDown(CONTROLS.UP)) {
-            this.player.y -= dt * speed * cos(this.player.angle);
-            this.player.x += dt * speed * sin(this.player.angle);
-        }
-
-        if (this.inputManager.isDown(CONTROLS.LEFT)) {
-            this.player.angle -= dt * speed;
-        }
-
-        if (this.inputManager.isDown(CONTROLS.RIGHT)) {
-            this.player.angle += dt * speed;
-        }
-
-        if (this.inputManager.isDown(CONTROLS.SPACE)) {
-            const bullet = this.player.shoot();
-            if (!bullet) return;
-
-            this.bullets.push(bullet);
+        if (!this.isGameOver) {
+            this.player.controlHandler(this.inputManager.pressedKeys, dt);
         }
     }
 
     checkCollisions() {
-        for (let i = 0; i < this.enemies.length; i++) {
-            const enemy = this.enemies[i];
+        if (this.isGameOver) {
+            return;
+        }
 
-            for (let j = 0; j < this.bullets.length; j++) {
-                const bullet = this.bullets[j];
+        for (let i = 0; i < Asteroid.instances.length; i++) {
+            const enemy = Asteroid.instances[i];
+            for (let j = 0; j < Bullet.instances.length; j++) {
+                const bullet = Bullet.instances[j];
                 if (hasCollides(bullet, enemy)) {
-                    this.enemies.splice(i, 1);
+                    Asteroid.remove(i);
                     i--;
-
-                    this.bullets.splice(j, 1);
+                    Bullet.remove(j);
                     j--;
-
                     this.score += 200;
+                    this.emitGameState();
                 }
             }
-
-            if (hasCollides(this.player, enemy) && !window.__godMode__) {
+            if (hasCollides(this.player, enemy)) {
                 this.gameOver();
             }
         }
@@ -281,5 +279,11 @@ export default class Game {
     public destroy() {
         this.inputManager.destroy();
         this.resourcesUnsubscribe();
+        this.onUpdateGameState = null;
+
+        Bullet.removeAll();
+        Asteroid.removeAll();
+
+        this.destroyed = true;
     }
 }

@@ -20,7 +20,7 @@ import {
     NotFoundPage,
     ServerErrorPage,
 } from '@pages';
-import { LeaderBoard } from '@pages/LeaderBoard';
+import { LeaderboardPage } from '@pages/LeaderboardPage';
 
 import { S } from './units';
 import { tabs } from './tabs';
@@ -80,7 +80,7 @@ const NavigationRouter = memo(() => {
                     path="/leaderboard"
                     redirectTo="/auth"
                     title="Таблица лидеров"
-                    component={LeaderBoard}
+                    component={LeaderboardPage}
                 />
 
                 <Route

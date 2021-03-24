@@ -41,7 +41,9 @@ export const renderMiddleware = (req: Request, res: Response) => {
         return;
     }
 
-    res.status(context.statusCode || 200).send(getHtml(reactHtml, keaState));
+    const html = getHtml(reactHtml, keaState);
+
+    res.status(context.statusCode || 200).send(html);
 };
 
 function getHtml(reactHtml: string, reduxState = {}) {

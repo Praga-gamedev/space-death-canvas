@@ -1,27 +1,24 @@
 import { store } from 'react-notifications-component';
 
-export const showErrorNotification = (error: Error) => {
+export const Notification = ({
+    type = 'danger',
+    title = 'Ошибка!',
+    message,
+}: {
+    type?: 'success' | 'danger' | 'info' | 'default' | 'warning';
+    title?: string;
+    message: string;
+}) => {
     store.addNotification({
-        title: 'Произошла ошибка',
-        message: error.message,
-        type: 'warning',
-        insert: 'top',
-        container: 'top-right',
-        dismiss: {
-            duration: 5000,
-        },
-    });
-};
-
-export const showInfoNotification = (title: string, message: string) => {
-    store.addNotification({
+        type,
         title,
         message,
-        type: 'info',
-        insert: 'top',
-        container: 'top-right',
+        insert: 'bottom',
+        container: 'bottom-right',
         dismiss: {
-            duration: 5000,
+            duration: 8000,
+            onScreen: true,
+            pauseOnHover: true,
         },
     });
 };
