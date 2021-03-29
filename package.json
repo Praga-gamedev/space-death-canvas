@@ -97,6 +97,7 @@
         "axios": "0.21.1",
         "connected-react-router": "6.8.0",
         "cookie-parser": "1.4.5",
+        "dotenv": "8.2.0",
         "express": "4.17.1",
         "history": "4.10.1",
         "https": "1.0.0",
@@ -105,6 +106,8 @@
         "kea-thunk": "1.0.0",
         "kea-typegen": "0.5.1",
         "openssl-self-signed-certificate": "1.1.6",
+        "pg": "8.5.1",
+        "pg-hstore": "2.3.3",
         "process": "0.11.10",
         "prop-types": "15.7.2",
         "react": "17.0.1",
@@ -114,7 +117,10 @@
         "react-router-dom": "5.2.0",
         "redux": "4.0.5",
         "redux-thunk": "2.3.0",
+        "reflect-metadata": "0.1.13",
         "reselect": "4.0.0",
+        "sequelize": "6.6.2",
+        "sequelize-typescript": "2.1.0",
         "url": "0.11.0"
     },
     "husky": {

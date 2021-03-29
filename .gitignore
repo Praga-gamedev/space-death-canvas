@@ -4,3 +4,4 @@ dist
 
 server/certificates
 
+.env
