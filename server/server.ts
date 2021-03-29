@@ -3,13 +3,14 @@ import path from 'path';
 import express from 'express';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
+import { sequelize } from './db';
 
 import { authMiddleware } from './middlewares/auth';
 import { renderMiddleware } from './middlewares/render';
 import hmrMiddlewares from './middlewares/hmr';
 
 import { IS_DEV } from '../webpack/env';
-import { sequelize } from './db';
+import { apiRouter } from './routes';
 
 export const PORT = process.env.PORT || 5000;
 export const HOST = `https://local.ya-praktikum.tech:${PORT}`;
@@ -26,8 +27,10 @@ try {
 const app = express();
 
 app.use(compression())
+    .use(express.json())
     .use(cookieParser())
-    .use(express.static(path.resolve(__dirname, '../static')));
+    .use(express.static(path.resolve(__dirname, '../static')))
+    .use(apiRouter);
 
 if (!IS_DEV) {
     app.use(express.static(path.resolve(__dirname, '../dist')));
