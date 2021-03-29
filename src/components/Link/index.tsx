@@ -1,8 +1,9 @@
 import React, { FC } from 'react';
 
+import { useHistory } from 'react-router';
+
 import { S } from './units';
 import { ILinkProps } from './types';
-import { useHistory } from 'react-router';
 
 export const Link: FC<ILinkProps> = ({ path, children, ...props }) => {
     const history = useHistory();

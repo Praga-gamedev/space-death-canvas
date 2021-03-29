@@ -16,8 +16,11 @@ const app = express();
 
 app.use(compression())
     .use(cookieParser())
-    .use(express.static(path.resolve(__dirname, '../dist')))
     .use(express.static(path.resolve(__dirname, '../static')));
+
+if (!IS_DEV) {
+    app.use(express.static(path.resolve(__dirname, '../dist')));
+}
 
 if (IS_DEV) {
     app.use(...hmrMiddlewares);

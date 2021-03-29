@@ -10,6 +10,5 @@ export default [
     hotMiddleware(compiler),
     devMiddleware(compiler, {
         serverSideRender: true,
-        writeToDisk: true,
     }),
 ];

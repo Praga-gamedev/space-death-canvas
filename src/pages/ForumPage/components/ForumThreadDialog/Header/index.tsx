@@ -1,5 +1,7 @@
 import React, { useCallback } from 'react';
 
+import { useHistory } from 'react-router';
+
 import {
     ButtonBlock,
     HeaderButton,
@@ -8,7 +10,6 @@ import {
     ThemeSpan,
     UsernameBlock,
 } from './units';
-import { useHistory } from 'react-router';
 
 export const Header = () => {
     const history = useHistory();

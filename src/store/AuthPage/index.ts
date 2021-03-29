@@ -131,7 +131,7 @@ export const logic = kea({
                 const serviceCode: any = await getOAuthServiceCode();
 
                 location.replace(
-                    `https://oauth.yandex.ru/authorize?response_type=code&client_id=${serviceCode.service_id}&redirect_uri=`
+                    `https://oauth.yandex.ru/authorize?response_type=code&client_id=${serviceCode.service_id}&redirect_uri=https://local.ya-praktikum.tech:5000`
                 );
             } catch (error) {
                 Notification({

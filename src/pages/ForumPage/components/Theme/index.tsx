@@ -1,8 +1,9 @@
 import React, { FC, useCallback } from 'react';
+import { useHistory } from 'react-router';
 
 import { MainBlock, ThemeBlock, ThemeSpan, UsernameBlock } from './units';
+
 import { IThemeProps } from './types';
-import { useHistory } from 'react-router';
 
 export const Theme: FC<IThemeProps> = ({
     userName,
