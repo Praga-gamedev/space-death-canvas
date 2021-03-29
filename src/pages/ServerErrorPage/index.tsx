@@ -1,11 +1,12 @@
 import React, { memo } from 'react';
 
+import { useHistory } from 'react-router';
+
 import { Button } from '@components/Button';
 
 import gif500 from '@images/500.gif';
 
 import { S } from '../units';
-import { useHistory } from 'react-router';
 
 export const ServerErrorPage = memo(() => {
     const history = useHistory();

@@ -1,12 +1,14 @@
 import React, { FC, memo, useRef, useState } from 'react';
+
 import { useValues } from 'kea';
+import { useHistory } from 'react-router';
+
 import { logicRouter } from '@store/logics';
 
 import { Popup } from './Popup';
 
 import { S } from './units';
 import { IHeaderProps } from './types';
-import { useHistory } from 'react-router';
 
 export const Header: FC<IHeaderProps> = memo(({ tabs }) => {
     const {

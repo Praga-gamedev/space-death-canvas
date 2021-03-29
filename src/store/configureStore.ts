@@ -3,6 +3,7 @@ import thunkPlugin from 'kea-thunk';
 import { connectRouter, RouterState } from 'connected-react-router';
 import { Reducer } from 'redux';
 import { createBrowserHistory, createMemoryHistory } from 'history';
+
 import { TState } from '@store/types';
 
 export const isServer = !(

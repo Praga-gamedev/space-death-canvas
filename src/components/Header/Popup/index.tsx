@@ -1,11 +1,12 @@
 import React, { FC, memo, useCallback, useEffect, useRef } from 'react';
+
+import { useHistory } from 'react-router';
 import { useActions } from 'kea';
 
 import { logic } from '@store/AuthPage';
 
 import { S } from './units';
 import { IPopupProps } from './types';
-import { useHistory } from 'react-router';
 
 export const Popup: FC<IPopupProps> = memo(({ buttonRef, isOpen, setOpen }) => {
     const { logOut } = useActions(logic);

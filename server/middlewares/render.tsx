@@ -5,45 +5,16 @@ import { Provider as ReduxProvider } from 'react-redux';
 import { StaticRouter } from 'react-router-dom';
 import { StaticRouterContext } from 'react-router';
 
+import { logic } from 'src/store/AuthPage';
 import { configureStore, getInitialState } from 'src/store/configureStore';
+
 import App from 'src/App';
 import { IUserProps } from 'src/types/IUserProps';
-import { logic } from 'src/store/AuthPage';
 
 const initUser = (userData: IUserProps) => {
     logic.mount();
     logic.actions.setUser(userData);
     logic.actions.setAuth(true);
-};
-
-export const renderMiddleware = (req: Request, res: Response) => {
-    const location = req.url;
-    const context: StaticRouterContext = {};
-    const { store } = configureStore(getInitialState(location), location);
-
-    const userData = res.locals.user;
-    if (userData) {
-        initUser(userData);
-    }
-
-    const jsx = (
-        <ReduxProvider store={store}>
-            <StaticRouter context={context} location={location}>
-                <App />
-            </StaticRouter>
-        </ReduxProvider>
-    );
-    const reactHtml = renderToString(jsx);
-    const keaState = store.getState();
-
-    if (context.url) {
-        res.redirect(context.url);
-        return;
-    }
-
-    const html = getHtml(reactHtml, keaState);
-
-    res.status(context.statusCode || 200).send(html);
 };
 
 function getHtml(reactHtml: string, reduxState = {}) {
@@ -74,3 +45,33 @@ function getHtml(reactHtml: string, reduxState = {}) {
     </html>
     `;
 }
+
+export const renderMiddleware = (req: Request, res: Response) => {
+    const location = req.url;
+    const context: StaticRouterContext = {};
+    const { store } = configureStore(getInitialState(location), location);
+
+    const userData = res.locals.user;
+    if (userData) {
+        initUser(userData);
+    }
+
+    const jsx = (
+        <ReduxProvider store={store}>
+            <StaticRouter context={context} location={location}>
+                <App />
+            </StaticRouter>
+        </ReduxProvider>
+    );
+    const reactHtml = renderToString(jsx);
+    const keaState = store.getState();
+
+    if (context.url) {
+        res.redirect(context.url);
+        return;
+    }
+
+    const html = getHtml(reactHtml, keaState);
+
+    res.status(context.statusCode || 200).send(html);
+};

@@ -8,8 +8,9 @@ import ErrorBoundary from './components/ErrorBoundary';
 import NavigationRouter from 'src/router';
 
 import { hot } from 'react-hot-loader/root';
+import { IS_DEV } from '../webpack/env';
 
-const App = hot(() => (
+let App = () => (
     <>
         <RebootCss />
         <ReactNotification />
@@ -17,6 +18,8 @@ const App = hot(() => (
             <NavigationRouter />
         </ErrorBoundary>
     </>
-));
+);
+
+App = IS_DEV ? hot(App) : App;
 
 export default App;

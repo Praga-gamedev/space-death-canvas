@@ -5,6 +5,7 @@ import {
     Plugin,
     Entry,
     HotModuleReplacementPlugin,
+    ProvidePlugin,
 } from 'webpack';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import CompressionPlugin from 'compression-webpack-plugin';
@@ -15,13 +16,18 @@ import fileLoader from './loaders/file';
 import cssLoader from './loaders/css';
 import jsLoader from './loaders/js';
 
+const entries = IS_DEV
+    ? [
+          'react-hot-loader/patch',
+          'webpack-hot-middleware/client',
+          'css-hot-loader/hotModuleReplacement',
+      ]
+    : [];
+
 const config: Configuration = {
-    entry: ([
-        IS_DEV && 'react-hot-loader/patch',
-        IS_DEV && 'webpack-hot-middleware/client',
-        IS_DEV && 'css-hot-loader/hotModuleReplacement',
-        path.join(SRC_DIR, 'client'),
-    ].filter(Boolean) as unknown) as Entry,
+    entry: ([...entries, path.join(SRC_DIR, 'client')].filter(
+        Boolean
+    ) as unknown) as Entry,
     module: {
         rules: [fileLoader.client, cssLoader.client, jsLoader.client],
     },
@@ -40,6 +46,9 @@ const config: Configuration = {
         new MiniCssExtractPlugin({ filename: '[name].css' }),
         !IS_DEV && new CompressionPlugin(),
         IS_DEV && new HotModuleReplacementPlugin(),
+        new ProvidePlugin({
+            process: 'process/browser',
+        }),
     ].filter(Boolean) as Plugin[],
 
     devtool: 'source-map',
