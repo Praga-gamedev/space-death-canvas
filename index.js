@@ -2,8 +2,11 @@ require('dotenv').config();
 
 const https = require('https');
 const selfSigned = require('openssl-self-signed-certificate');
-const { app, HOST, PORT } = require('./dist/server.js');
+const { app } = require('./dist/server.js');
 const fs = require('fs');
+
+const HOST = process.env.HOST;
+const PORT = process.env.PORT;
 
 // для https нужно создать сертификаты
 // https://medium.com/@nitinpatel_20236/how-to-create-an-https-server-on-localhost-using-express-366435d61f28
@@ -25,5 +28,5 @@ https
         app
     )
     .listen(PORT, () => {
-        console.log('Application is started on ', HOST);
+        console.log('Application is started on ', `${HOST}:${PORT}`);
     });

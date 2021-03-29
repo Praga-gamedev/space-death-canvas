@@ -12,9 +12,6 @@ import hmrMiddlewares from './middlewares/hmr';
 import { IS_DEV } from '../webpack/env';
 import { apiRouter } from './routes';
 
-export const PORT = process.env.PORT || 5000;
-export const HOST = `https://local.ya-praktikum.tech:${PORT}`;
-
 try {
     sequelize.authenticate().then(async () => {
         console.log('Connection to db has been established successfully.');

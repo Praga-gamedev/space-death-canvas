@@ -4,7 +4,7 @@ import { logic } from '@store/AuthPage';
 
 export const HOST = 'https://ya-praktikum.tech';
 
-type CustomAxiosRequestConfig = Omit<AxiosRequestConfig, 'method'>;
+export type CustomAxiosRequestConfig = Omit<AxiosRequestConfig, 'method'>;
 
 const axiosInstance = axios.create({
     baseURL: `${HOST}/api/v2`,
