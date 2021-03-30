@@ -9,7 +9,7 @@ import { authMiddleware } from '../common/middlewares/auth';
 import { renderMiddleware } from './middlewares/render';
 import hmrMiddlewares from './middlewares/hmr';
 
-import { IS_DEV } from '../../webpack/env';
+import { IS_DEV } from '@webpack/env';
 import { initHttpsServer } from '../common/utils';
 
 dotenv.config();

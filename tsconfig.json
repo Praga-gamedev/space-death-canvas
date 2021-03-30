@@ -33,7 +33,8 @@
             "@store/*": ["./src/store/*"],
             "@store/": ["./src/store/index.ts"],
             "@game/*": ["./src/game/*"],
-            "@game/": ["./src/game/index.ts"]
+            "@game/": ["./src/game/index.ts"],
+            "@webpack/*": ["./webpack/*"]
         },
         "typeRoots": ["src/types/**/*.d.ts", "node_modules/@types"]
     },
