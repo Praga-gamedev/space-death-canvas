@@ -2,6 +2,25 @@
 
 ### Макеты в [figma](https://www.figma.com/file/ajQp4tRV6sZM05Q5vDNrLz/Spaceship?node-id=0%3A1), хостинг на [heroku](https://space-death-canvas.herokuapp.com/).
 
+### Инструкция по запуску:
+* В `etc/hosts/` прописать `127.0.0.1 local.ya-praktikum.tech`.
+* Создать .env файл, положить его в корень проекта
+и прописать в нем следующее (звездочкой обозначены настройки вашей базы):
+```$xslt
+DB_HOST= *
+DB_PORT= *
+DB_USER= *
+DB_PASSWORD= *
+DB_NAME= *
+
+HOST=https://local.ya-praktikum.tech
+PORT=5000
+API_PORT=5001
+```
+* Прописать настройки базы в файл postgres-initdb.sh
+  и создать ее командой `docker-cimpose up` (мануал [тут](https://github.com/noveogroup-amorgunov/docker-compose-postgres))
+* `npm run start`
+
 ## Описание игры
 
 ### Идея
@@ -27,6 +46,6 @@
 
 
 ### Утечки памяти:
-    В приложении утечек памяти не обнаружено
+   В приложении утечек памяти не обнаружено
     [скрин1](https://i.ibb.co/Vp9d0Qd/image-2021-03-23-15-42-01.png)
     [скрин2](https://i.ibb.co/SJQVtD0/image-2021-03-23-15-48-15.png)

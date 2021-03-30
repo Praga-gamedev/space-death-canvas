@@ -1,4 +1,4 @@
 import clientConfig from './webpack/client.config';
-import serverConfig from './webpack/server.config';
+import { ssrConfig, apiConfig } from './webpack/server.config';
 
-module.exports = [clientConfig, serverConfig];
+module.exports = [clientConfig, ssrConfig, apiConfig];

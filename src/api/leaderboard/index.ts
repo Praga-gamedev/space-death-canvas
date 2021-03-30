@@ -1,4 +1,4 @@
-import Api from 'src/utils/Api';
+import YandexApi from 'src/utils/api/YandexApi';
 
 import { ILeaderboardData, ILeaderboardLeaderData } from './types';
 
@@ -8,14 +8,14 @@ export const leaderboardData = async ({
     cursor = 0,
     limit = 10,
 }: ILeaderboardData) => {
-    return Api.post({
+    return YandexApi.post({
         url: '/leaderboard/all',
         data: { ratingFieldName: key, cursor, limit },
     });
 };
 
 export const leaderboardAddNewLeader = async (data: ILeaderboardLeaderData) => {
-    return Api.post({
+    return YandexApi.post({
         url: '/leaderboard',
         data: { data, ratingFieldName: key },
     });

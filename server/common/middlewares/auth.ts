@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 
-import { getUser } from 'src/api/auth';
+import { getUser } from '../../../src/api/auth';
 
 export const authMiddleware = async (
     request: Request,

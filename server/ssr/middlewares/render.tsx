@@ -5,11 +5,14 @@ import { Provider as ReduxProvider } from 'react-redux';
 import { StaticRouter } from 'react-router-dom';
 import { StaticRouterContext } from 'react-router';
 
-import { logic } from 'src/store/AuthPage';
-import { configureStore, getInitialState } from 'src/store/configureStore';
+import { logic } from '../../../src/store/AuthPage';
+import {
+    configureStore,
+    getInitialState,
+} from '../../../src/store/configureStore';
 
-import App from 'src/App';
-import { IUserProps } from 'src/types/IUserProps';
+import App from '../../../src/App';
+import { IUserProps } from '../../../src/types/IUserProps';
 
 const initUser = (userData: IUserProps) => {
     logic.mount();
