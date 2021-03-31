@@ -8,7 +8,7 @@ import ErrorBoundary from './components/ErrorBoundary';
 import NavigationRouter from 'src/router';
 
 import { hot } from 'react-hot-loader/root';
-import { IS_DEV } from '../webpack/env';
+import { IS_DEV } from '@webpack/env';
 
 let App = () => (
     <>

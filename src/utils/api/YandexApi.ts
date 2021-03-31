@@ -1,10 +1,11 @@
 import axios, { AxiosRequestConfig } from 'axios';
 
 import { logic } from '@store/AuthPage';
+import Api from 'src/utils/api/Api';
 
 export const HOST = 'https://ya-praktikum.tech';
 
-type CustomAxiosRequestConfig = Omit<AxiosRequestConfig, 'method'>;
+export type CustomAxiosRequestConfig = Omit<AxiosRequestConfig, 'method'>;
 
 const axiosInstance = axios.create({
     baseURL: `${HOST}/api/v2`,
@@ -40,20 +41,4 @@ axiosInstance.interceptors.response.use(
     }
 );
 
-export default class Api {
-    static get(config: CustomAxiosRequestConfig) {
-        return axiosInstance({ ...config, method: 'GET' });
-    }
-
-    static post(config: CustomAxiosRequestConfig) {
-        return axiosInstance({ ...config, method: 'POST' });
-    }
-
-    static delete(config: CustomAxiosRequestConfig) {
-        return axiosInstance({ ...config, method: 'DELETE' });
-    }
-
-    static put(config: CustomAxiosRequestConfig) {
-        return axiosInstance({ ...config, method: 'PUT' });
-    }
-}
+export default new Api(axiosInstance);

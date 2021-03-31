@@ -8,7 +8,6 @@ import { colors } from 'src/colors';
 
 import spaceships from '@sprites/spaceships.png';
 import asteroids from '@sprites/asteroids.png';
-import { IS_DEV } from '../../webpack/env';
 
 export interface IGameState {
     isGameOver: boolean;

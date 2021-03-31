@@ -8,16 +8,19 @@ import jsLoader from './loaders/js';
 
 import { TsconfigPathsPlugin } from 'tsconfig-paths-webpack-plugin';
 
-const config: Configuration = {
+const getServerConfig = (
+    entryPath: string,
+    outputFileName: string
+): Configuration => ({
     name: 'server',
     target: 'node',
     node: { __dirname: false },
-    entry: 'server/server',
+    entry: entryPath,
     module: {
         rules: [fileLoader.server, cssLoader.server, jsLoader.server],
     },
     output: {
-        filename: 'server.js',
+        filename: outputFileName,
         libraryTarget: 'commonjs2',
         path: DIST_DIR,
         publicPath: '/static/',
@@ -33,6 +36,8 @@ const config: Configuration = {
     externals: [nodeExternals({ allowlist: [/\.(?!(?:tsx?|json)$).{1,5}$/i] })],
 
     optimization: { nodeEnv: false },
-};
+});
 
-export default config;
+export const ssrConfig = getServerConfig('server/ssr/server', 'server.js');
+
+export const apiConfig = getServerConfig('server/api/server', 'api_server.js');

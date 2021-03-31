@@ -1,32 +1,38 @@
+import 'babel-polyfill';
 import path from 'path';
+import dotenv from 'dotenv';
 import express from 'express';
 import compression from 'compression';
-import 'babel-polyfill';
-import { renderMiddleware } from './middlewares/render';
-import hmrMiddlewares from './middlewares/hmr';
 import cookieParser from 'cookie-parser';
 
-import { IS_DEV } from '../webpack/env';
-import { authMiddleware } from './middlewares/auth';
+import { authMiddleware } from '../common/middlewares/auth';
+import { renderMiddleware } from './middlewares/render';
+import hmrMiddlewares from './middlewares/hmr';
 
-export const PORT = process.env.PORT || 5000;
-export const HOST = `https://local.ya-praktikum.tech:${PORT}`;
+import { IS_DEV } from '@webpack/env';
+import { initHttpsServer } from '../common/utils';
+
+dotenv.config();
 
 const app = express();
 
 app.use(compression())
+    .use(express.json())
     .use(cookieParser())
     .use(express.static(path.resolve(__dirname, '../static')));
 
 if (!IS_DEV) {
     app.use(express.static(path.resolve(__dirname, '../dist')));
-}
-
-if (IS_DEV) {
+} else {
     app.use(...hmrMiddlewares);
 }
 
 app.use(authMiddleware);
 app.get('/*', renderMiddleware);
 
-export { app };
+const HOST = process.env.HOST;
+const PORT = process.env.PORT;
+
+initHttpsServer(app).listen(PORT, () => {
+    console.log('Application is started on ', `${HOST}:${PORT}`);
+});

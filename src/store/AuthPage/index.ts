@@ -129,9 +129,10 @@ export const logic = kea({
         logInOAuth: async () => {
             try {
                 const serviceCode: any = await getOAuthServiceCode();
-
+                const HOST = process.env.HOST;
+                const PORT = process.env.PORT;
                 location.replace(
-                    `https://oauth.yandex.ru/authorize?response_type=code&client_id=${serviceCode.service_id}&redirect_uri=https://local.ya-praktikum.tech:5000`
+                    `https://oauth.yandex.ru/authorize?response_type=code&client_id=${serviceCode.service_id}&redirect_uri=${HOST}:${PORT}`
                 );
             } catch (error) {
                 Notification({

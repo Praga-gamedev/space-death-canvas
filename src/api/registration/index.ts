@@ -1,9 +1,9 @@
-import Api from 'src/utils/Api';
+import YandexApi from 'src/utils/api/YandexApi';
 
 import { IRegistrationData } from './types';
 
 export const registration = (data: IRegistrationData) => {
-    return Api.post({
+    return YandexApi.post({
         url: '/auth/signup',
         data: data,
     });
