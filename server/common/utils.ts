@@ -6,10 +6,12 @@ import selfSigned from 'openssl-self-signed-certificate';
 
 export const initHttpsServer = (app: Express) => {
     // для https нужно создать сертификаты
-    let key = fs.readFileSync('server/certificates/key.pem');
-    let cert = fs.readFileSync('server/certificates/cert.pem');
-    // если сертификатов в папке не обнаружено, то можно использовать самоподписывающиеся
-    if (!key || !cert) {
+    let key;
+    let cert;
+    try {
+        key = fs.readFileSync('server/certificates/key.pem');
+        cert = fs.readFileSync('server/certificates/cert.pem');
+    } catch (e) {
         key = selfSigned.key;
         cert = selfSigned.cert;
     }
