@@ -8,7 +8,7 @@ export const Row = memo(({ place, name, score }: IRow) => {
         <S.Row place={place}>
             <S.Cell>{place}</S.Cell>
             <S.Cell>{name}</S.Cell>
-            <S.Cell style={{ textAlign: 'center' }}>{score}</S.Cell>
+            <S.CellCenter>{score}</S.CellCenter>
         </S.Row>
     );
 });

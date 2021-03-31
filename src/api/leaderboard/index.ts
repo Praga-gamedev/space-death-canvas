@@ -4,7 +4,7 @@ import { ILeaderboardData, ILeaderboardLeaderData } from './types';
 
 const key = 'sdcScore';
 
-export const leaderboardData = async ({
+export const leaderboardData = ({
     cursor = 0,
     limit = 10,
 }: ILeaderboardData) => {
@@ -14,7 +14,7 @@ export const leaderboardData = async ({
     });
 };
 
-export const leaderboardAddNewLeader = async (data: ILeaderboardLeaderData) => {
+export const leaderboardAddNewLeader = (data: ILeaderboardLeaderData) => {
     return Api.post({
         url: '/leaderboard',
         data: { data, ratingFieldName: key },
