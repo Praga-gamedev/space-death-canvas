@@ -69,6 +69,7 @@ S.YandexButton = styled(Button)`
     position: relative;
     text-align: left;
     padding-left: 20px;
+    margin: 30px auto 0 auto;
 
     ::before {
         position: absolute;

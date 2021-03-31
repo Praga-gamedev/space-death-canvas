@@ -59,7 +59,6 @@ export const AuthPage = memo(() => {
                     />
 
                     <S.YandexButton
-                        style={{ margin: '30px auto 0 auto' }}
                         children={'Войти с помощью'}
                         disabled={isLoadingAuth}
                         type="button"

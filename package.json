@@ -6,8 +6,8 @@
     "scripts": {
         "start:webpack": "webpack --mode=development",
         "start:server": "nodemon index.js --watch dist/server.js",
-        "start": "NODE_ENV=development npm-run-all --print-label --parallel start:server start:webpack",
-        "build": "NODE_ENV=production NODE_PATH=. npm run clean && webpack --mode production",
+        "start": "cross-env NODE_ENV=development npm-run-all --print-label --parallel start:server start:webpack",
+        "build": "cross-env NODE_ENV=production NODE_PATH=. npm run clean && webpack --mode production",
         "lint:eslint": "eslint src/ --ext .ts,.tsx",
         "prettier": "prettier --write src/",
         "test": "jest"
@@ -48,7 +48,7 @@
         "compression": "1.7.4",
         "compression-webpack-plugin": "7.1.2",
         "copy-webpack-plugin": "7.0.0",
-        "cross-env": "7.0.3",
+        "cross-env": "^7.0.3",
         "css-hot-loader": "1.4.4",
         "css-loader": "5.0.1",
         "enzyme": "3.11.0",
