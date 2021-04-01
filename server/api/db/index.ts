@@ -11,6 +11,7 @@ const sequelizeOptions: SequelizeOptions = {
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
     dialect: 'postgres',
+    models: ['../models'],
 };
 
 export const sequelize = new Sequelize(sequelizeOptions);
@@ -20,6 +21,7 @@ export const connectToDb = () => {
         sequelize.authenticate().then(async () => {
             console.log('Connection to db has been established successfully.');
             // здесь будет прописываться синхронизация модель - база данных
+            await sequelize.sync({ force: true });
         });
     } catch (error) {
         console.error('Unable to connect to the database:', error);

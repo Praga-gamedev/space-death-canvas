@@ -18,7 +18,7 @@ PORT=5000
 API_PORT=5001
 ```
 * Прописать настройки базы в файл postgres-initdb.sh
-  и создать ее командой `docker-cimpose up` (мануал [тут](https://github.com/noveogroup-amorgunov/docker-compose-postgres))
+  и создать ее командой `docker-compose up` (мануал [тут](https://github.com/noveogroup-amorgunov/docker-compose-postgres))
 * `npm run start`
 
 ## Описание игры
@@ -49,3 +49,18 @@ API_PORT=5001
    В приложении утечек памяти не обнаружено
     [скрин1](https://i.ibb.co/Vp9d0Qd/image-2021-03-23-15-42-01.png)
     [скрин2](https://i.ibb.co/SJQVtD0/image-2021-03-23-15-48-15.png)
+
+### Схема БД (Форум):
+[ER-Diagram](https://drive.google.com/file/d/19TeQsFsE_uOao01A6v9l1QGvgRRGaTHk/view?usp=sharing)
+
+### Локальный запуск БД:
+    -npm i
+    -npm run start:webpack
+    -docker-compose up -d
+    -npm run start:api
+
+    for connect in terminal: psql postgres://tester:strongpass@localhost:5436/test-db
+    for connect in docker: psql -U tester -d test-db
+    
+    check tables: \dt
+    check users: \du
