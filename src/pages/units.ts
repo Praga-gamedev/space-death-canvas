@@ -3,7 +3,6 @@ import { css } from '@emotion/react';
 
 import { Button } from '@components';
 
-import backgroundPicture from '@images/background.png';
 import yaLogo from '@icons/yandex.svg';
 
 import { ThemeType } from 'src/theme';
@@ -11,8 +10,8 @@ import { ThemeType } from 'src/theme';
 export const S: Record<string, any> = {};
 
 S.WrapperPage = styled.div`
-    background-image: ${({ background }: { background: boolean }) =>
-        background ? `url(${backgroundPicture})` : 'none'};
+    background-image: ${(props: { background: boolean } & ThemeType) =>
+        props.background ? `url(${props.theme.backgroundPicture})` : 'none'};
 
     background-repeat: no-repeat;
     background-position: center;

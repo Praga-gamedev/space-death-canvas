@@ -1,3 +1,6 @@
+import darkPicture from '@images/background.png';
+import lightPicture from '@images/background-light.jpeg';
+
 export type Theme = 'dark' | 'light';
 
 export const THEME: Record<string, Theme> = {
@@ -26,6 +29,7 @@ export const darkTheme = {
     secondary: colors.GrayScale_40,
     fontPrimary: colors.GrayScale_0,
     fontSecondary: colors.GrayScale_20,
+    backgroundPicture: darkPicture,
     ...colors,
 };
 
@@ -34,5 +38,6 @@ export const lightTheme = {
     secondary: colors.GrayScale_10,
     fontPrimary: colors.GrayScale_100,
     fontSecondary: colors.GrayScale_50,
+    backgroundPicture: lightPicture,
     ...colors,
 };
