@@ -1,5 +1,6 @@
 import { Sequelize, SequelizeOptions } from 'sequelize-typescript';
 import dotenv from 'dotenv';
+// import { Theme } from '../models/Theme';
 
 dotenv.config();
 
@@ -19,7 +20,7 @@ export const connectToDb = () => {
     try {
         sequelize.authenticate().then(async () => {
             console.log('Connection to db has been established successfully.');
-            // здесь будет прописываться синхронизация модель - база данных
+            // await Theme.sync({ alter: true });
         });
     } catch (error) {
         console.error('Unable to connect to the database:', error);

@@ -1,3 +1,4 @@
 import { ButtonHTMLAttributes } from 'react';
+import { ThemeType } from 'src/theme';
 
-export interface IButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {}
+export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & ThemeType;

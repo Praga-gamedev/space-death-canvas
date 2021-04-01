@@ -16,6 +16,7 @@ import { IRegistrationData } from '@api/registration/types';
 import { IPasswordUpdateData, IProfileUpdateData } from '@api/profile/types';
 
 import { TState, IUserProps, IInitOptions } from '../types';
+import { THEME, Theme } from '../../theme';
 
 export const logic = kea({
     path: () => ['scenes', 'authPage'],
@@ -36,9 +37,18 @@ export const logic = kea({
 
         setLoadingMain: (value: boolean) => value,
         setInit: (value: boolean) => value,
+        toggleTheme: true,
     }),
 
     reducers: ({ actions }) => ({
+        theme: [
+            THEME.DARK,
+            {
+                [actions.toggleTheme]: (state: Theme) => {
+                    return state === THEME.DARK ? THEME.LIGHT : THEME.DARK;
+                },
+            },
+        ],
         isAuth: [
             false,
             {

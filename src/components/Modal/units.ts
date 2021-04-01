@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { colors } from 'src/colors';
+import { ThemeType } from 'src/theme';
 
 export const S: Record<string, any> = {};
 
@@ -20,7 +20,7 @@ S.ModalOverlay = styled.div`
 `;
 
 S.ModalBody = styled.div`
-    background-color: ${colors.GrayScale_0};
+    background-color: ${(props: ThemeType) => props.theme.GrayScale_0};
     padding: 20px;
     border-radius: 15px;
     cursor: auto;

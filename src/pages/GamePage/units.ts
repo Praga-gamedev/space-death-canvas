@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { colors } from 'src/colors';
+import { ThemeType } from 'src/theme';
 
 import { Button } from 'src/components';
 
@@ -8,7 +8,7 @@ export const S: Record<string, any> = {};
 
 S.GameView = styled.div`
     font-family: 'Comfortaa', sans-serif;
-    color: ${colors.GrayScale_0};
+    color: ${(props: ThemeType) => props.theme.GrayScale_0};
     margin-top: 80px;
     width: 100%;
     height: calc(100% - 80px);
@@ -21,16 +21,18 @@ S.GameCanvas = styled.canvas`
 `;
 
 S.Score = styled.div`
+    color: ${(props: ThemeType) => props.theme.GrayScale_0};
+
     position: absolute;
     left: 50%;
     top: 60px;
     font-size: 24px;
-    color: ${colors.GrayScale_0};
     transform: translateX(-50%);
 `;
 
 S.StartScreen = styled.div`
-    background-color: ${colors.GrayScale_100};
+    background-color: ${(props: ThemeType) => props.theme.GrayScale_100};
+
     position: absolute;
     top: 0;
     left: 0;

@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { colors } from 'src/colors';
+import { ThemeType } from 'src/theme';
 
 import { S as ProfileUnits } from '@pages/ProfilePage/units';
 
@@ -17,7 +17,7 @@ S.StatBlock = styled.div`
 S.StatTitle = styled.div`
     font-size: 18px;
     line-height: 20px;
-    color: ${colors.GrayScale_30};
+    color: ${(props: ThemeType) => props.theme.GrayScale_30};
 `;
 
 S.StatPaper = styled(ProfileUnits.ProfilePaper)`
@@ -31,8 +31,8 @@ S.StatPaper = styled(ProfileUnits.ProfilePaper)`
 `;
 
 S.IconWrapper = styled(ProfileUnits.ProfilePaper)`
-    background: ${(props: IIconWrapperProps) =>
-        props.color || colors.secondaryAccent};
+    background: ${(props: IIconWrapperProps & ThemeType) =>
+        props.color || props.theme.lightBlue};
 
     width: 50px;
     height: 50px;
@@ -50,7 +50,7 @@ S.StatResult = styled.div`
     font-weight: 500;
     font-size: 24px;
     line-height: 20px;
-    color: ${colors.GrayScale_0};
+    color: ${(props: ThemeType) => props.theme.GrayScale_0};
 `;
 
 S.StatName = styled(S.StatTitle)`

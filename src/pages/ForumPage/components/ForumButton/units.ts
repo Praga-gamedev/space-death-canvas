@@ -2,13 +2,13 @@ import styled from '@emotion/styled';
 
 import { Button } from '@components';
 
-import { colors } from 'src/colors';
+import { ThemeType } from 'src/theme';
 
 export const S: Record<string, any> = {};
 
 S.ForumButton = styled(Button)`
-    background-color: ${(props: { isClicked: boolean }) => {
-        return props.isClicked ? colors.secondary : colors.GrayScale_20;
+    background-color: ${(props: { isClicked: boolean } & ThemeType) => {
+        return props.isClicked ? props.theme.blue : props.theme.GrayScale_20;
     }};
 
     margin-bottom: 24px;

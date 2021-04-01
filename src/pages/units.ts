@@ -6,7 +6,7 @@ import { Button } from '@components';
 import backgroundPicture from '@images/background.png';
 import yaLogo from '@icons/yandex.svg';
 
-import { colors } from 'src/colors';
+import { ThemeType } from 'src/theme';
 
 export const S: Record<string, any> = {};
 
@@ -25,13 +25,13 @@ S.WrapperPage = styled.div`
 `;
 
 S.WrapperErrorPage = styled(S.WrapperPage)`
-    background: ${colors.GrayScale_100};
+    background: ${(props: ThemeType) => props.theme.GrayScale_100};
     flex-direction: column;
     align-items: center;
 `;
 
 S.ErrorMessage = styled.h1`
-    color: ${colors.GrayScale_0};
+    color: ${(props: ThemeType) => props.theme.fontPrimary};
     font-family: 'Comfortaa', sans-serif;
     text-align: center;
     margin: 50px;
@@ -46,7 +46,7 @@ S.PaperColumn = styled.div`
 `;
 
 S.TitlePage = styled.h1`
-    color: ${colors.GrayScale_20};
+    color: ${(props: ThemeType) => props.theme.fontSecondary};
 `;
 
 export const scrollBarStyle = css`
@@ -60,7 +60,7 @@ export const scrollBarStyle = css`
     }
 
     ::-webkit-scrollbar-thumb {
-        -webkit-box-shadow: inset 0 0 6px ${colors.secondary};
+        -webkit-box-shadow: inset 0 0 6px #4447e2;
         border-radius: 15px;
     }
 `;

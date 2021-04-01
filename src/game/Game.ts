@@ -4,7 +4,7 @@ import { Bullet, Entity, Player, Asteroid } from '@game/entities';
 import { isBeyoundCanvasBorder, hasCollides } from '@game/core/utils';
 import { IPosition } from '@game/entities/types';
 
-import { colors } from 'src/colors';
+import { colors } from 'src/theme';
 
 import spaceships from '@sprites/spaceships.png';
 import asteroids from '@sprites/asteroids.png';

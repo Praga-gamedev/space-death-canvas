@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { colors } from 'src/colors';
+import { ThemeType } from 'src/theme';
 
 import arrow from '@icons/dropdown.svg';
 
@@ -9,31 +9,34 @@ import { ITabProps } from './types';
 export const S: Record<string, any> = {};
 
 S.Header = styled.header`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
+    background-color: ${(props: ThemeType) => props.theme.primary};
+
+    border-bottom: 2px solid ${(props: ThemeType) => props.theme.secondary};
+
     top: 0;
     left: 0;
     width: 100%;
     height: 80px;
-    background-color: ${colors.GrayScale_50};
-    border-bottom: 2px solid ${colors.GrayScale_40};
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
 `;
 
 S.Tab = styled.div`
-    color: ${({ isActive }: ITabProps) =>
-        isActive ? colors.secondary : colors.GrayScale_20};
+    background-color: ${(props: ThemeType) => props.theme.primary};
 
-    background-color: ${colors.GrayScale_50};
+    color: ${(props: ITabProps & ThemeType) =>
+        props.isActive ? props.theme.blue : props.theme.fontSecondary};
+
+    &:hover {
+        color: ${(props: ThemeType) => props.theme.blue};
+    }
+
     cursor: pointer;
     margin: 0 10px;
     transition: color 0.2s linear;
     user-select: none;
-
-    &:hover {
-        color: ${colors.secondary};
-    }
 `;
 
 S.DropdownWrapper = styled.div`

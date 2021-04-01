@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { colors } from 'src/colors';
+import { ThemeType } from 'src/theme';
 
 import { IPaperProps } from './types';
 
@@ -8,10 +8,10 @@ export const S: Record<string, any> = {};
 
 S.Paper = styled.div`
     display: block;
-    background-color: ${colors.GrayScale_50};
+    background-color: ${(props: ThemeType) => props.theme.primary};
     box-shadow: 8px 4px 30px rgba(0, 0, 0, 0.5);
     padding-top: 80px !important;
-    color: ${colors.GrayScale_0};
+    color: ${(props: ThemeType) => props.theme.fontPrimary};
     overflow-y: auto;
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
