@@ -195,7 +195,9 @@ export const logic = kea({
             !silent && actions.setLoadingMain(true);
 
             try {
-                codeOAuth && (await OAuth(codeOAuth));
+                if (codeOAuth) {
+                    await OAuth(codeOAuth);
+                }
 
                 const user = await getUser();
 

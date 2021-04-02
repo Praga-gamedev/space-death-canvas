@@ -48,3 +48,7 @@ S.Row = styled.div`
 S.Cell = styled.div`
     width: 33%;
 `;
+
+S.CellCenter = styled(S.Cell)`
+    text-align: center;
+`;

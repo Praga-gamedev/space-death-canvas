@@ -23,7 +23,7 @@ export const LeaderboardPage = memo(() => {
                 <S.TitlePage style={{ margin: '90px 0px 40px' }}>
                     Таблица лидеров
                 </S.TitlePage>
-                
+
                 <Table />
             </Paper>
         </S.WrapperPage>

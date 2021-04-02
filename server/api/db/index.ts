@@ -2,9 +2,10 @@ import { Sequelize, SequelizeOptions } from 'sequelize-typescript';
 import dotenv from 'dotenv';
 // import { Theme } from '../models/Theme';
 
+import { Topic, Comment } from '../models';
+
 dotenv.config();
 
-// нижеперечисленные переменные нужно задать в файле .env в корне
 const sequelizeOptions: SequelizeOptions = {
     host: process.env.DB_HOST,
     port: Number.parseInt(process.env.DB_PORT!),
@@ -16,11 +17,13 @@ const sequelizeOptions: SequelizeOptions = {
 
 export const sequelize = new Sequelize(sequelizeOptions);
 
+sequelize.addModels([Topic, Comment]);
+
 export const connectToDb = () => {
     try {
         sequelize.authenticate().then(async () => {
             console.log('Connection to db has been established successfully.');
-            // await Theme.sync({ alter: true });
+            sequelize.sync({ alter: true });
         });
     } catch (error) {
         console.error('Unable to connect to the database:', error);
