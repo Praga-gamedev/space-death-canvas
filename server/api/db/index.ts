@@ -23,7 +23,7 @@ export const connectToDb = () => {
         sequelize.authenticate().then(async () => {
             console.log('Connection to db has been established successfully.');
 
-            sequelize.sync({ force: true });
+            sequelize.sync({ alter: true });
         });
     } catch (error) {
         console.error('Unable to connect to the database:', error);
