@@ -1,9 +1,6 @@
-// класс для обращений к экспресс-серверу с фронта
 import axios from 'axios';
 import Api from 'src/utils/api/Api';
-
-const HOST = process.env.HOST;
-const API_PORT = process.env.PORT;
+import { API_PORT, HOST } from 'src/env';
 
 const axiosInstance = axios.create({
     baseURL: `${HOST}:${API_PORT}/api`,

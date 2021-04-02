@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es6",
+        "moduleResolution": "node",
+        "noImplicitAny": true,
+        "esModuleInterop": true,
+        "strictPropertyInitialization": false,
+        "allowJs": true,
+        "rootDir": "./",
+        "skipLibCheck": true,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true
+    },
+    "include": ["api"]
+}

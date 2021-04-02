@@ -1,26 +1,30 @@
 import styled from '@emotion/styled';
 
 import { ButtonProps } from './types';
+import { ThemeType } from 'src/theme';
 
 export const S: Record<string, any> = {};
 
 S.Button = styled.button`
-    background-color: ${(props: ButtonProps) =>
+    background-color: ${(props: ButtonProps & ThemeType) =>
         props.disabled ? props.theme.GrayScale_30 : 'transparent'};
 
-    cursor: ${(props: ButtonProps) =>
+    cursor: ${(props: ButtonProps & ThemeType) =>
         props.disabled ? 'not-allowed' : 'pointer'};
 
-    border: ${(props: ButtonProps) => `2px solid ${props.theme.blue}`};
+    border: ${(props: ButtonProps & ThemeType) =>
+        `2px solid ${props.theme.blue}`};
 
-    color: ${(props: ButtonProps) => props.theme.GrayScale_0};
+    color: ${(props: ButtonProps & ThemeType) => props.theme.GrayScale_0};
 
     &:hover:not(:disabled) {
-        background-color: ${(props: ButtonProps) => props.theme.blue};
+        background-color: ${(props: ButtonProps & ThemeType) =>
+            props.theme.blue};
     }
 
     &:active:not(:disabled) {
-        background-color: ${(props: ButtonProps) => props.theme.lightBlue};
+        background-color: ${(props: ButtonProps & ThemeType) =>
+            props.theme.lightBlue};
     }
 
     display: block;

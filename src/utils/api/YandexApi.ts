@@ -3,12 +3,12 @@ import axios, { AxiosRequestConfig } from 'axios';
 import { logic } from '@store/AuthPage';
 import Api from 'src/utils/api/Api';
 
-export const HOST = 'https://ya-praktikum.tech';
+export const YANDEX_HOST = 'https://ya-praktikum.tech';
 
 export type CustomAxiosRequestConfig = Omit<AxiosRequestConfig, 'method'>;
 
 const axiosInstance = axios.create({
-    baseURL: `${HOST}/api/v2`,
+    baseURL: `${YANDEX_HOST}/api/v2`,
     withCredentials: true,
     headers: { 'Content-Type': 'application/json' },
 });

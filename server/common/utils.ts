@@ -9,8 +9,8 @@ export const initHttpsServer = (app: Express) => {
     let key;
     let cert;
     try {
-        key = fs.readFileSync('server/certificates/key.pem');
-        cert = fs.readFileSync('server/certificates/cert.pem');
+        key = fs.readFileSync('../certificates/key.pem');
+        cert = fs.readFileSync('../certificates/cert.pem');
     } catch (e) {
         key = selfSigned.key;
         cert = selfSigned.cert;

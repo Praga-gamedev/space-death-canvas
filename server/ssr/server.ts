@@ -5,12 +5,13 @@ import express from 'express';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
 
-import { authMiddleware } from '../common/middlewares/auth';
+import { authMiddleware } from './middlewares/auth';
 import { renderMiddleware } from './middlewares/render';
 import hmrMiddlewares from './middlewares/hmr';
 
 import { IS_DEV } from '@webpack/env';
 import { initHttpsServer } from '../common/utils';
+import { HOST, PORT } from '../../src/env';
 
 dotenv.config();
 
@@ -29,9 +30,6 @@ if (!IS_DEV) {
 
 app.use(authMiddleware);
 app.get('/*', renderMiddleware);
-
-const HOST = process.env.HOST;
-const PORT = process.env.PORT;
 
 initHttpsServer(app).listen(PORT, () => {
     console.log('Application is started on ', `${HOST}:${PORT}`);

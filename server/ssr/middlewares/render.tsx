@@ -10,11 +10,18 @@ import { configureStore, getInitialState } from 'src/store/configureStore';
 
 import App from 'src/App';
 import { IUserProps } from 'src/types/IUserProps';
+import { getUserTheme } from 'src/api/theme';
+import { Theme } from 'src/theme';
 
 const initUser = (userData: IUserProps) => {
     logic.mount();
     logic.actions.setUser(userData);
     logic.actions.setAuth(true);
+};
+
+const setTheme = (theme: Theme) => {
+    logic.mount();
+    logic.actions.setTheme(theme);
 };
 
 function getHtml(reactHtml: string, reduxState = {}) {
@@ -46,7 +53,7 @@ function getHtml(reactHtml: string, reduxState = {}) {
     `;
 }
 
-export const renderMiddleware = (req: Request, res: Response) => {
+export const renderMiddleware = async (req: Request, res: Response) => {
     const location = req.url;
     const context: StaticRouterContext = {};
     const { store } = configureStore(getInitialState(location), location);
@@ -54,6 +61,13 @@ export const renderMiddleware = (req: Request, res: Response) => {
     const userData = res.locals.user;
     if (userData) {
         initUser(userData);
+    }
+    try {
+        const themeData = await getUserTheme(userData?.login);
+        console.log('themeData', themeData);
+    } catch (e) {
+        console.log('ERROR WHEN THEME DATA');
+        console.log(e);
     }
 
     const jsx = (
