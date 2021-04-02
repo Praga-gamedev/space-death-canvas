@@ -1,9 +1,10 @@
 import { Sequelize, SequelizeOptions } from 'sequelize-typescript';
 import dotenv from 'dotenv';
 
+import { Topic, Comment } from '../models';
+
 dotenv.config();
 
-// нижеперечисленные переменные нужно задать в файле .env в корне
 const sequelizeOptions: SequelizeOptions = {
     host: process.env.DB_HOST,
     port: Number.parseInt(process.env.DB_PORT!),
@@ -11,17 +12,18 @@ const sequelizeOptions: SequelizeOptions = {
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
     dialect: 'postgres',
-    models: ['../models'],
 };
 
 export const sequelize = new Sequelize(sequelizeOptions);
+
+sequelize.addModels([Topic, Comment]);
 
 export const connectToDb = () => {
     try {
         sequelize.authenticate().then(async () => {
             console.log('Connection to db has been established successfully.');
-            // здесь будет прописываться синхронизация модель - база данных
-            await sequelize.sync({ force: true });
+
+            sequelize.sync({ force: true });
         });
     } catch (error) {
         console.error('Unable to connect to the database:', error);
