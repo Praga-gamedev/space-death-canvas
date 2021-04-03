@@ -1,8 +1,7 @@
 import { Sequelize, SequelizeOptions } from 'sequelize-typescript';
 import dotenv from 'dotenv';
 
-import { Topic, Comment, Theme } from '../models';
-import { ThemeUser } from '../models/ThemeUser.model';
+import { Topic, Comment, Theme, ThemeUser } from '../models';
 
 dotenv.config();
 

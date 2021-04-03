@@ -1,6 +1,5 @@
 import express, { Request, Response } from 'express';
-import { ThemeUser } from '../models/ThemeUser.model';
-import { Theme } from '../models';
+import { Theme, ThemeUser } from '../models';
 import { THEME } from 'src/theme';
 
 export const apiRouter = express.Router();

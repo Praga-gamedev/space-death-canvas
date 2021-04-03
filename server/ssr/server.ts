@@ -11,7 +11,7 @@ import hmrMiddlewares from './middlewares/hmr';
 
 import { IS_DEV } from '@webpack/env';
 import { initHttpsServer } from '../common/utils';
-import { HOST, PORT } from '../../src/env';
+import { HOST, PORT } from 'src/env';
 
 dotenv.config();
 
