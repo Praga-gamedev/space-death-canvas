@@ -44,7 +44,7 @@ export const logic = kea({
 
     reducers: ({ actions }) => ({
         theme: [
-            THEME.DARK,
+            null,
             {
                 [actions.toggleTheme]: (state: Theme) => {
                     return state === THEME.DARK ? THEME.LIGHT : THEME.DARK;

@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import { ThemeUser } from '../models/ThemeUser.model';
 import { Theme } from '../models';
-import { THEME } from '../../../src/theme';
+import { THEME } from 'src/theme';
 
 export const apiRouter = express.Router();
 
@@ -16,7 +16,9 @@ apiRouter.get('/theme', async (request: Request, response: Response) => {
                 },
             });
             if (themeUser) {
-                const theme = await Theme.findByPk(themeUser.theme_id);
+                const theme = await Theme.findByPk(
+                    themeUser.getDataValue('theme_id')
+                );
                 return response.json(theme);
             }
         }
@@ -48,8 +50,16 @@ apiRouter.put('/theme', async (request: Request, response: Response) => {
         });
 
         if (themeUser) {
-            themeUser.theme_id = theme.id;
-            await themeUser.save();
+            await ThemeUser.update(
+                {
+                    theme_id: theme.id,
+                },
+                {
+                    where: {
+                        user_login: userLogin,
+                    },
+                }
+            );
         } else {
             await ThemeUser.create({
                 theme_id: theme.id,

@@ -5,26 +5,25 @@ import { ThemeType } from 'src/theme';
 
 export const S: Record<string, any> = {};
 
+type ButtonThemeType = ButtonProps & ThemeType;
+
 S.Button = styled.button`
-    background-color: ${(props: ButtonProps & ThemeType) =>
+    background-color: ${(props: ButtonThemeType) =>
         props.disabled ? props.theme.GrayScale_30 : 'transparent'};
 
-    cursor: ${(props: ButtonProps & ThemeType) =>
+    cursor: ${(props: ButtonThemeType) =>
         props.disabled ? 'not-allowed' : 'pointer'};
 
-    border: ${(props: ButtonProps & ThemeType) =>
-        `2px solid ${props.theme.blue}`};
+    border: ${(props: ButtonThemeType) => `2px solid ${props.theme.blue}`};
 
-    color: ${(props: ButtonProps & ThemeType) => props.theme.GrayScale_0};
+    color: ${(props: ButtonThemeType) => props.theme.GrayScale_0};
 
     &:hover:not(:disabled) {
-        background-color: ${(props: ButtonProps & ThemeType) =>
-            props.theme.blue};
+        background-color: ${(props: ButtonThemeType) => props.theme.blue};
     }
 
     &:active:not(:disabled) {
-        background-color: ${(props: ButtonProps & ThemeType) =>
-            props.theme.lightBlue};
+        background-color: ${(props: ButtonThemeType) => props.theme.lightBlue};
     }
 
     display: block;

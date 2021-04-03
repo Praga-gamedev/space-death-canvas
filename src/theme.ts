@@ -34,10 +34,10 @@ export const darkTheme = {
 };
 
 export const lightTheme = {
-    primary: colors.GrayScale_0,
-    secondary: colors.GrayScale_10,
-    fontPrimary: colors.GrayScale_100,
-    fontSecondary: colors.GrayScale_50,
+    primary: '#D1EAFF',
+    secondary: '#E2F2FF',
+    fontPrimary: colors.lightBlue,
+    fontSecondary: colors.lightBlue,
     backgroundPicture: lightPicture,
     ...colors,
 };

@@ -13,7 +13,7 @@ import { IUserProps } from 'src/types/IUserProps';
 import { getUserTheme } from 'src/api/theme';
 import { Theme } from 'src/theme';
 
-const initUser = (userData: IUserProps) => {
+const setUser = (userData: IUserProps) => {
     logic.mount();
     logic.actions.setUser(userData);
     logic.actions.setAuth(true);
@@ -22,6 +22,20 @@ const initUser = (userData: IUserProps) => {
 const setTheme = (theme: Theme) => {
     logic.mount();
     logic.actions.setTheme(theme);
+};
+
+const setStoreVariables = async (userData: IUserProps) => {
+    if (userData) {
+        setUser(userData);
+    }
+    try {
+        const themeData = await getUserTheme(userData?.login);
+        if (themeData.status === 200) {
+            setTheme(themeData.data.name);
+        }
+    } catch (error) {
+        console.log('ERROR WHEN RETRIEVE THEME DATA ', error.message);
+    }
 };
 
 function getHtml(reactHtml: string, reduxState = {}) {
@@ -58,17 +72,7 @@ export const renderMiddleware = async (req: Request, res: Response) => {
     const context: StaticRouterContext = {};
     const { store } = configureStore(getInitialState(location), location);
 
-    const userData = res.locals.user;
-    if (userData) {
-        initUser(userData);
-    }
-    try {
-        const themeData = await getUserTheme(userData?.login);
-        console.log('themeData', themeData);
-    } catch (e) {
-        console.log('ERROR WHEN THEME DATA');
-        console.log(e);
-    }
+    await setStoreVariables(res.locals.user);
 
     const jsx = (
         <ReduxProvider store={store}>

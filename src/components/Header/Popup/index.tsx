@@ -9,10 +9,11 @@ import { logic } from '@store/AuthPage';
 
 import { S } from './units';
 import { IPopupProps } from './types';
-import { THEME } from '../../../theme';
+import { THEME } from 'src/theme';
+import { setUserTheme } from '@api/theme';
 
 export const Popup: FC<IPopupProps> = memo(({ buttonRef, isOpen, setOpen }) => {
-    const { theme } = useValues(logic);
+    const { theme, user } = useValues(logic);
     const { logOut, toggleTheme } = useActions(logic);
 
     const popupRef = useRef();
@@ -30,16 +31,6 @@ export const Popup: FC<IPopupProps> = memo(({ buttonRef, isOpen, setOpen }) => {
         }
     };
 
-    const redirectToProfile = useCallback(() => {
-        history.push('/profile');
-
-        setOpen(false);
-    }, []);
-
-    const handleLogoutClick = useCallback(async () => {
-        await logOut();
-    }, []);
-
     useEffect(() => {
         document.body.addEventListener('click', ({ target }) =>
             handleBodyClick(target)
@@ -52,6 +43,22 @@ export const Popup: FC<IPopupProps> = memo(({ buttonRef, isOpen, setOpen }) => {
         };
     }, []);
 
+    const redirectToProfile = useCallback(() => {
+        history.push('/profile');
+
+        setOpen(false);
+    }, []);
+
+    const handleLogoutClick = useCallback(async () => {
+        await logOut();
+    }, []);
+
+    const handleChangeTheme = useCallback(async () => {
+        toggleTheme();
+        const newTheme = theme === THEME.DARK ? THEME.LIGHT : THEME.DARK;
+        await setUserTheme(user.login, newTheme);
+    }, [theme, user]);
+
     return (
         <S.Popup ref={popupRef} isOpen={isOpen}>
             <S.PopupItem onClick={redirectToProfile}>Профиль</S.PopupItem>
@@ -61,10 +68,11 @@ export const Popup: FC<IPopupProps> = memo(({ buttonRef, isOpen, setOpen }) => {
             <S.PopupItem style={{ marginLeft: '10%' }}>
                 Темная тема
                 <Switch
+                    color="primary"
                     inputRef={switchRef}
                     checked={theme === THEME.DARK}
-                    onChange={() => toggleTheme()}
-                    inputProps={{ 'aria-label': 'secondary checkbox' }}
+                    onChange={handleChangeTheme}
+                    inputProps={{ 'aria-label': 'primary checkbox' }}
                 />
             </S.PopupItem>
         </S.Popup>
