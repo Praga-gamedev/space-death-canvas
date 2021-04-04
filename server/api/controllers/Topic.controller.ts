@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+
 import { Topic } from '../models/Topic.model';
 
 const createError = (err: any, defaultMessage = 'Something went wrong') => ({

@@ -10,13 +10,15 @@ import {
     HasMany,
 } from 'sequelize-typescript';
 
+import { ITopic } from '../interfaces';
+
 import { Comment } from './Comment.model';
 
 @Table({
     tableName: 'topics',
     updatedAt: false,
 })
-export class Topic extends Model {
+export class Topic extends Model<ITopic> {
     @AutoIncrement
     @PrimaryKey
     @Column(DataType.INTEGER)
@@ -31,7 +33,7 @@ export class Topic extends Model {
 
     @AllowNull(false)
     @Column(DataType.INTEGER)
-    author_id: string;
+    author_id: number;
 
     @AllowNull(false)
     @CreatedAt

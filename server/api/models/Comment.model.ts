@@ -12,13 +12,15 @@ import {
     HasMany,
 } from 'sequelize-typescript';
 
+import { IComment } from '../interfaces';
+
 import { Topic } from './Topic.model';
 
 @Table({
     tableName: 'comments',
     updatedAt: false,
 })
-export class Comment extends Model {
+export class Comment extends Model<IComment> {
     @AutoIncrement
     @PrimaryKey
     @Column(DataType.INTEGER)
@@ -42,7 +44,7 @@ export class Comment extends Model {
 
     @AllowNull(false)
     @Column(DataType.INTEGER)
-    author_id: string;
+    author_id: number;
 
     @AllowNull(false)
     @CreatedAt

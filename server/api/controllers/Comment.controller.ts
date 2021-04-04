@@ -1,5 +1,8 @@
 import { Request, Response } from 'express';
-import { Comment } from '../models/Comment.model';
+
+import { Comment } from '../models';
+
+import { flatCommentsToTree } from '../utils';
 
 const createError = (err: any, defaultMessage = 'Something went wrong') => ({
     message: err.message || defaultMessage,
@@ -24,7 +27,7 @@ export default class CommentController {
 
         try {
             const comment = await Comment.create({
-                topic_id,
+                topic_id: Number(topic_id),
                 comment_message,
                 comment_author,
                 author_id,
@@ -117,8 +120,12 @@ export default class CommentController {
         const { topic_id } = req.params;
 
         try {
-            const comments = await Comment.findAll({ where: { topic_id } });
-            res.send(comments);
+            const comments = await Comment.findAll({
+                where: { topic_id },
+                raw: true,
+            });
+
+            res.send(flatCommentsToTree(comments));
         } catch (err) {
             res.status(500).send(createError(err));
         }

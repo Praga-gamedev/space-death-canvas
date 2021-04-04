@@ -1,7 +1,9 @@
 import { Request, Response, Router } from 'express';
 
 import { Theme, ThemeUser } from '../models';
+
 import { THEME } from 'src/theme';
+
 import { topicRouter } from './topicRouter';
 import { commentRouter } from './commentRouter';
 
