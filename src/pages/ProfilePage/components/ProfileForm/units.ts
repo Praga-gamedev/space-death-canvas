@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { colors } from 'src/colors';
+import { ThemeType } from 'src/theme';
 
 import { S as ProfileUnits } from '@pages/ProfilePage/units';
 
@@ -30,7 +30,7 @@ S.ProfileButtons = styled.div`
 S.ProfileBackButton = styled.button`
     width: 50px;
     height: 50px;
-    background-color: ${colors.secondary};
+    background-color: ${(props: ThemeType) => props.theme.blue};
     display: inline-flex;
     justify-content: center;
     align-items: center;

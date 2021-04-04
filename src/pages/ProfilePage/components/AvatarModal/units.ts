@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 import { Button } from '@components';
 
-import { colors } from 'src/colors';
+import { ThemeType } from 'src/theme';
 
 export const S: Record<string, any> = {};
 
@@ -32,7 +32,7 @@ S.InputFileLabel = styled.label`
     font-size: 18px;
     text-align: center;
     text-decoration-line: underline;
-    color: ${colors.secondary};
+    color: ${(props: ThemeType) => props.theme.blue};
     cursor: pointer;
 `;
 
@@ -45,6 +45,6 @@ S.InputFileName = styled.div`
 `;
 
 S.SaveButton = styled(Button)`
-    background-color: ${({ disabled }: { disabled: boolean }) =>
-        disabled ? colors.GrayScale_50 : colors.secondary};
+    background-color: ${(props: { disabled: boolean } & ThemeType) =>
+        props.disabled ? props.theme.GrayScale_50 : props.theme.blue};
 `;

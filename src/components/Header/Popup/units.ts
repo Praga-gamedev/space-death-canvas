@@ -1,34 +1,40 @@
 import styled from '@emotion/styled';
 
-import { colors } from 'src/colors';
+import { ThemeType } from 'src/theme';
 
 export const S: Record<string, any> = {};
 
 S.Popup = styled.div`
     display: ${({ isOpen }: { isOpen: boolean }) => (isOpen ? 'flex' : 'none')};
 
+    background-color: ${(props: ThemeType) => props.theme.primary};
+
+    border: 2px solid ${(props: ThemeType) => props.theme.secondary};
+
     flex-direction: column;
     position: absolute;
     top: 50px;
     right: -50px;
     width: 250px;
-    background-color: ${colors.GrayScale_50};
-    border: 2px solid ${colors.GrayScale_40};
     border-radius: 15px;
     user-select: none;
     z-index: 10;
 `;
 
 S.PopupItem = styled.div`
-    padding: 20px;
-    color: ${colors.GrayScale_0};
-    text-align: center;
-    border-bottom: 1px solid ${colors.GrayScale_40};
-    font-size: 18px;
-    transition: color linear 0.2s;
-    cursor: pointer;
+    color: ${(props: ThemeType) => props.theme.fontPrimary};
+
+    border-bottom: 1px solid ${(props: ThemeType) => props.theme.secondary};
+
+    cursor: ${({ onClick }: { onClick: Function }) =>
+        onClick ? 'pointer' : 'not-allowed'};
 
     &:hover {
-        color: ${colors.secondary};
+        color: ${(props: ThemeType) => props.theme.blue};
     }
+
+    padding: 20px;
+    text-align: center;
+    font-size: 18px;
+    transition: color linear 0.2s;
 `;

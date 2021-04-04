@@ -1,12 +1,13 @@
 import styled from '@emotion/styled';
 
-import { colors } from 'src/colors';
+import { ThemeType } from 'src/theme';
 
 export const MainBlock = styled.div`
-    background-color: ${({ isEven }: { isEven: boolean }) =>
-        isEven ? colors.GrayScale_20 : colors.secondaryAccent};
-    color: ${({ isEven }: { isEven: boolean }) =>
-        isEven ? colors.GrayScale_0 : colors.secondary};
+    background-color: ${(props: { isEven: boolean } & ThemeType) =>
+        props.isEven ? props.theme.GrayScale_20 : props.theme.lightBlue};
+
+    color: ${(props: { isEven: boolean } & ThemeType) =>
+        props.isEven ? props.theme.GrayScale_0 : props.theme.blue};
 
     height: 54px;
     display: flex;

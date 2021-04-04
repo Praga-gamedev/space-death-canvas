@@ -16,6 +16,8 @@ import { IRegistrationData } from '@api/registration/types';
 import { IPasswordUpdateData, IProfileUpdateData } from '@api/profile/types';
 
 import { TState, IUserProps, IInitOptions } from '../types';
+import { THEME, Theme } from 'src/theme';
+import { HOST, PORT } from 'src/env';
 
 export const logic = kea({
     path: () => ['scenes', 'authPage'],
@@ -36,9 +38,20 @@ export const logic = kea({
 
         setLoadingMain: (value: boolean) => value,
         setInit: (value: boolean) => value,
+        toggleTheme: true,
+        setTheme: (value: Theme) => value,
     }),
 
     reducers: ({ actions }) => ({
+        theme: [
+            null,
+            {
+                [actions.toggleTheme]: (state: Theme) => {
+                    return state === THEME.DARK ? THEME.LIGHT : THEME.DARK;
+                },
+                [actions.setTheme]: (state: Theme, value: Theme) => value,
+            },
+        ],
         isAuth: [
             false,
             {
@@ -129,8 +142,6 @@ export const logic = kea({
         logInOAuth: async () => {
             try {
                 const serviceCode: any = await getOAuthServiceCode();
-                const HOST = process.env.HOST;
-                const PORT = process.env.PORT;
                 location.replace(
                     `https://oauth.yandex.ru/authorize?response_type=code&client_id=${serviceCode.service_id}&redirect_uri=${HOST}:${PORT}`
                 );

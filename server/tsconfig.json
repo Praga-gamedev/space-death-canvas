@@ -1,0 +1,34 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es6",
+        "moduleResolution": "node",
+        "noImplicitAny": true,
+        "esModuleInterop": true,
+        "strictPropertyInitialization": false,
+        "allowJs": true,
+        "rootDir": "./",
+        "skipLibCheck": true,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "baseUrl": "../",
+        "paths": {
+            "src/*": ["./src/*"],
+            "@api/*": ["./src/api/*"],
+            "@icons/*": ["./src/assets/icons/*"],
+            "@images/*": ["./src/assets/images/*"],
+            "@sprites/*": ["./src/assets/sprites/*"],
+            "@components/*": ["./src/components/*"],
+            "@components": ["./src/components/index.ts"],
+            "@pages/*": ["./src/pages/*"],
+            "@pages": ["./src/pages/index.ts"],
+            "@types/*": ["./src/types/*"],
+            "@store/*": ["./src/store/*"],
+            "@store/": ["./src/store/index.ts"],
+            "@game/*": ["./src/game/*"],
+            "@game/": ["./src/game/index.ts"],
+            "@webpack/*": ["./webpack/*"]
+        }
+    },
+    "include": ["api"]
+}

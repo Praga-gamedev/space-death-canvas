@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 import styled from '@emotion/styled';
 
-import { colors } from 'src/colors';
+import { ThemeType } from 'src/theme';
 
 import { Paper } from '@components';
 import { IInputProps } from '@components/Input/types';
@@ -24,7 +24,7 @@ export const MessageBlock = styled.div`
     width: 100%;
     height: inherit;
     overflow-y: auto;
-    background-color: ${colors.GrayScale_50};
+    background-color: ${(props: ThemeType) => props.theme.GrayScale_50};
 
     ${scrollBarStyle}
 `;
@@ -43,14 +43,14 @@ export const Footer = styled.div`
     align-items: center;
     width: 100%;
     height: 100px;
-    background-color: ${colors.GrayScale_50};
+    background-color: ${(props: ThemeType) => props.theme.GrayScale_50};
 `;
 
 export const MessageInput: FC<IInputProps> = styled.input`
     height: 48px;
     width: 90%;
-    background-color: ${colors.GrayScale_0};
-    color: ${colors.GrayScale_100};
+    background-color: ${(props: ThemeType) => props.theme.GrayScale_0};
+    color: ${(props: ThemeType) => props.theme.GrayScale_100};
 
     padding: 0 20px;
     border: none;
@@ -59,6 +59,6 @@ export const MessageInput: FC<IInputProps> = styled.input`
 
     &:focus {
         outline-width: 0;
-        border: 2px solid ${colors.secondary};
+        border: 2px solid ${(props: ThemeType) => props.theme.blue};
     }
 `;

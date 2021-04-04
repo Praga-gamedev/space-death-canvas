@@ -1,32 +1,34 @@
 import styled from '@emotion/styled';
 
-import { colors } from 'src/colors';
-
-import { IButtonProps } from './types';
+import { ButtonProps } from './types';
+import { ThemeType } from 'src/theme';
 
 export const S: Record<string, any> = {};
 
+type ButtonThemeType = ButtonProps & ThemeType;
+
 S.Button = styled.button`
-    display: block;
-    width: 250px;
-    height: 50px;
+    background-color: ${(props: ButtonThemeType) =>
+        props.disabled ? props.theme.GrayScale_30 : 'transparent'};
 
-    background-color: ${(props: IButtonProps) =>
-        props.disabled ? colors.GrayScale_30 : 'transparent'};
-
-    cursor: ${(props: IButtonProps) =>
+    cursor: ${(props: ButtonThemeType) =>
         props.disabled ? 'not-allowed' : 'pointer'};
 
-    border: 2px solid ${colors.secondary};
-    border-radius: 15px;
-    color: ${colors.GrayScale_0};
-    transition: background-color 0.2s linear;
+    border: ${(props: ButtonThemeType) => `2px solid ${props.theme.blue}`};
+
+    color: ${(props: ButtonThemeType) => props.theme.GrayScale_0};
 
     &:hover:not(:disabled) {
-        background-color: ${colors.secondary};
+        background-color: ${(props: ButtonThemeType) => props.theme.blue};
     }
 
     &:active:not(:disabled) {
-        background-color: ${colors.secondaryAccent};
+        background-color: ${(props: ButtonThemeType) => props.theme.lightBlue};
     }
+
+    display: block;
+    width: 250px;
+    height: 50px;
+    border-radius: 15px;
+    transition: background-color 0.2s linear;
 `;

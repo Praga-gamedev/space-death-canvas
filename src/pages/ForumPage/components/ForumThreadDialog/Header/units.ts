@@ -1,18 +1,20 @@
 import { FC } from 'react';
 import styled from '@emotion/styled';
 
-import { colors } from 'src/colors';
+import { ThemeType } from 'src/theme';
 import right from '@icons/right.svg';
-import { IButtonProps } from '@components/Button/types';
+import { ButtonProps } from '@components/Button/types';
 
 export const MainBlock = styled.div`
+    background-color: ${(props: ThemeType) => props.theme.blue};
+
+    color: ${(props: ThemeType) => props.theme.lightBlue};
+
     display: flex;
     flex-direction: row;
     align-items: center;
     width: 100%;
     height: 64px;
-    background-color: ${colors.secondary};
-    color: ${colors.secondaryAccent};
 `;
 
 export const ButtonBlock = styled.div`
@@ -43,7 +45,7 @@ export const ThemeSpan = styled.span`
     padding: 5px;
 `;
 
-export const HeaderButton: FC<IButtonProps> = styled.button`
+export const HeaderButton: FC<ButtonProps> = styled.button`
     width: 25px;
     height: 25px;
     margin-left: 8px;

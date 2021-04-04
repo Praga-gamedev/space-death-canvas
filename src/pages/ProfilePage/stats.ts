@@ -1,4 +1,4 @@
-import { colors } from 'src/colors';
+import { colors } from 'src/theme';
 
 import starIcon from '@icons/star-icon.png';
 import rubyIcon from '@icons/ruby-icon.png';
@@ -7,7 +7,7 @@ import { IStat } from './types';
 
 export const defaultStats: IStat[] = [
     {
-        color: colors.secondaryAccent,
+        color: colors.lightBlue,
         icon: starIcon,
         label: 'Лучший результат',
         name: 'best_result',
