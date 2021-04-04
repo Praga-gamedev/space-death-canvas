@@ -9,7 +9,10 @@ import {
     CreatedAt,
 } from 'sequelize-typescript';
 
-@Table
+@Table({
+    tableName: 'topics',
+    updatedAt: false,
+})
 export class Topic extends Model {
     @AutoIncrement
     @PrimaryKey

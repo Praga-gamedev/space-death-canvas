@@ -1,8 +1,10 @@
-import express, { Request, Response } from 'express';
+import { Request, Response, Router } from 'express';
+
 import { Theme, ThemeUser } from '../models';
 import { THEME } from 'src/theme';
+import { topicRouter } from './topicRouter';
 
-export const apiRouter = express.Router();
+const apiRouter = Router();
 
 apiRouter.get('/theme', async (request: Request, response: Response) => {
     try {
@@ -70,3 +72,7 @@ apiRouter.put('/theme', async (request: Request, response: Response) => {
         response.status(500).json(err);
     }
 });
+
+topicRouter(apiRouter);
+
+export { apiRouter };
