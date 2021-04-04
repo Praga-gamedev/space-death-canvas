@@ -1,6 +1,8 @@
 import { Router } from 'express';
 
-import CommentController from '../controllers/Comment.controller';
+import { CommentController } from '../controllers';
+
+import { auth } from '../middlewares';
 
 export const commentRouter = (router: Router) => {
     const commentRouter = Router();
@@ -12,5 +14,5 @@ export const commentRouter = (router: Router) => {
         .delete('/:topic_id', CommentController.delete)
         .put('/:topic_id', CommentController.update);
 
-    router.use('/comment', commentRouter);
+    router.use('/comment', [auth], commentRouter);
 };

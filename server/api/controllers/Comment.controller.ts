@@ -11,12 +11,7 @@ const createError = (err: any, defaultMessage = 'Something went wrong') => ({
 export default class CommentController {
     public static async create(req: Request, res: Response) {
         const { topic_id } = req.params;
-        const {
-            comment_message,
-            comment_author,
-            author_id,
-            parent_comment_id,
-        } = req.body;
+        const { comment_message, parent_comment_id } = req.body;
 
         if (!comment_message) {
             res.status(400).send({
@@ -29,8 +24,8 @@ export default class CommentController {
             const comment = await Comment.create({
                 topic_id: Number(topic_id),
                 comment_message,
-                comment_author,
-                author_id,
+                comment_author: req.user.login,
+                author_id: req.user.id,
                 parent_comment_id,
             });
 
@@ -56,7 +51,7 @@ export default class CommentController {
                 {
                     comment_message,
                 },
-                { where: { comment_id, topic_id } }
+                { where: { comment_id, topic_id, author_id: req.user.id } }
             );
 
             if (num === 1) {
@@ -79,7 +74,7 @@ export default class CommentController {
 
         try {
             const num = await Comment.destroy({
-                where: { comment_id, topic_id },
+                where: { comment_id, topic_id, author_id: req.user.id },
             });
 
             if (num === 1) {

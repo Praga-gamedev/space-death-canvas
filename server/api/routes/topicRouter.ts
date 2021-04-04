@@ -1,6 +1,8 @@
 import { Router } from 'express';
 
-import TopicController from '../controllers/Topic.controller';
+import { TopicController } from '../controllers';
+
+import { auth } from '../middlewares';
 
 export const topicRouter = (router: Router) => {
     const topicRouter = Router();
@@ -12,5 +14,5 @@ export const topicRouter = (router: Router) => {
         .delete('/', TopicController.delete)
         .put('/', TopicController.update);
 
-    router.use('/topic', topicRouter);
+    router.use('/topic', [auth], topicRouter);
 };

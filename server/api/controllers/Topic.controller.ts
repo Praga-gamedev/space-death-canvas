@@ -8,7 +8,7 @@ const createError = (err: any, defaultMessage = 'Something went wrong') => ({
 
 export default class TopicController {
     public static async create(req: Request, res: Response) {
-        const { topic_name, topic_author, author_id } = req.body;
+        const { topic_name } = req.body;
 
         if (!topic_name) {
             res.status(400).send({
@@ -20,8 +20,8 @@ export default class TopicController {
         try {
             const topic = await Topic.create({
                 topic_name,
-                topic_author,
-                author_id,
+                topic_author: req.user.login,
+                author_id: req.user.id,
             });
 
             res.send(topic);
@@ -45,7 +45,12 @@ export default class TopicController {
                 {
                     topic_name,
                 },
-                { where: { topic_id } }
+                {
+                    where: {
+                        topic_id,
+                        author_id: req.user.id,
+                    },
+                }
             );
 
             if (num === 1) {
@@ -66,7 +71,9 @@ export default class TopicController {
         const { topic_id } = req.body;
 
         try {
-            const num = await Topic.destroy({ where: { topic_id } });
+            const num = await Topic.destroy({
+                where: { topic_id, author_id: req.user.id },
+            });
 
             if (num === 1) {
                 res.send({
