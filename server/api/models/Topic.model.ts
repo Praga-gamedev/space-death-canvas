@@ -7,7 +7,10 @@ import {
     PrimaryKey,
     AllowNull,
     CreatedAt,
+    HasMany,
 } from 'sequelize-typescript';
+
+import { Comment } from './Comment.model';
 
 @Table({
     tableName: 'topics',
@@ -34,4 +37,7 @@ export class Topic extends Model {
     @CreatedAt
     @Column(DataType.DATE)
     topic_date: Date;
+
+    @HasMany(() => Comment)
+    comments: Comment[];
 }

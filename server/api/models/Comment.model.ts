@@ -8,11 +8,16 @@ import {
     AllowNull,
     ForeignKey,
     CreatedAt,
+    BelongsTo,
+    HasMany,
 } from 'sequelize-typescript';
 
-import {Topic} from './index';
+import { Topic } from './Topic.model';
 
-@Table
+@Table({
+    tableName: 'comments',
+    updatedAt: false,
+})
 export class Comment extends Model {
     @AutoIncrement
     @PrimaryKey
@@ -28,10 +33,11 @@ export class Comment extends Model {
     @Column(DataType.TEXT)
     comment_message: string;
 
-    @Column(DataType.TEXT)
+    @ForeignKey(() => Comment)
+    @Column(DataType.INTEGER)
     parent_comment_id: number;
 
-    @Column(DataType.STRING(20))
+    @Column(DataType.STRING(50))
     comment_author: string;
 
     @AllowNull(false)
@@ -43,6 +49,9 @@ export class Comment extends Model {
     @Column(DataType.DATE)
     comment_date: Date;
 
-    @Column(DataType.INTEGER)
-    like: number;
+    @BelongsTo(() => Topic)
+    topic: Topic;
+
+    @HasMany(() => Comment)
+    children: Comment[];
 }

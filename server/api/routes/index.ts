@@ -3,6 +3,7 @@ import { Request, Response, Router } from 'express';
 import { Theme, ThemeUser } from '../models';
 import { THEME } from 'src/theme';
 import { topicRouter } from './topicRouter';
+import { commentRouter } from './commentRouter';
 
 const apiRouter = Router();
 
@@ -74,5 +75,6 @@ apiRouter.put('/theme', async (request: Request, response: Response) => {
 });
 
 topicRouter(apiRouter);
+commentRouter(apiRouter);
 
 export { apiRouter };
