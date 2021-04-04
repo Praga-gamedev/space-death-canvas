@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 
-import { history } from '@store/initStore';
+import { useHistory } from 'react-router';
 
 import { Button } from '@components/Button';
 
@@ -9,6 +9,8 @@ import gif500 from '@images/500.gif';
 import { S } from '../units';
 
 export const ServerErrorPage = memo(() => {
+    const history = useHistory();
+
     return (
         <S.WrapperErrorPage>
             <img

@@ -1,11 +1,13 @@
 import React, { FC } from 'react';
 
-import { history } from '@store/initStore';
+import { useHistory } from 'react-router';
 
 import { S } from './units';
 import { ILinkProps } from './types';
 
 export const Link: FC<ILinkProps> = ({ path, children, ...props }) => {
+    const history = useHistory();
+
     const onClick = (e: Event) => {
         e.preventDefault();
 

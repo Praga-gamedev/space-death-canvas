@@ -78,14 +78,14 @@ export class Sprite {
         ctx.drawImage(
             // всегда можем обратиться к уже загруженным ресурсам
             resources.get(this.url),
-            x,
-            y,
-            width,
-            height,
-            isRotated ? -width / 2 : 0,
-            isRotated ? -height / 2 : 0,
-            width,
-            height
+            Math.floor(x),
+            Math.floor(y),
+            Math.floor(width),
+            Math.floor(height),
+            Math.floor(isRotated ? -width / 2 : 0),
+            Math.floor(isRotated ? -height / 2 : 0),
+            Math.floor(width),
+            Math.floor(height)
         );
     }
 }

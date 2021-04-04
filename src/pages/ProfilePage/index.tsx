@@ -10,7 +10,7 @@ import {
 } from './components/ProfileForm';
 import { AvatarModal } from './components/AvatarModal';
 
-import { HOST } from 'src/utils/Api';
+import { HOST } from 'src/utils/api/YandexApi';
 
 import { S } from './units';
 import { defaultStats } from './stats';

@@ -1,7 +1,8 @@
 import React, { FC, memo, useCallback, useEffect, useRef } from 'react';
+
+import { useHistory } from 'react-router';
 import { useActions } from 'kea';
 
-import { history } from '@store/initStore';
 import { logic } from '@store/AuthPage';
 
 import { S } from './units';
@@ -11,6 +12,8 @@ export const Popup: FC<IPopupProps> = memo(({ buttonRef, isOpen, setOpen }) => {
     const { logOut } = useActions(logic);
 
     const popupRef = useRef();
+
+    const history = useHistory();
 
     const handleBodyClick = (target: EventTarget | null): void => {
         const condition =

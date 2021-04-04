@@ -1,13 +1,21 @@
 import { kea } from 'kea';
-import { store } from 'react-notifications-component';
 
-import { login as auth, logout, getUser } from '@api/auth';
+import { Notification } from 'src/utils/notification';
+
+import {
+    login as auth,
+    logout,
+    getUser,
+    getOAuthServiceCode,
+    OAuth,
+} from '@api/auth';
 import { registration } from '@api/registration';
 import { updateProfile, updatePassword, updateAvatar } from '@api/profile';
 
-import { TState, IUserProps, IInitOptions } from '../types';
 import { IRegistrationData } from '@api/registration/types';
 import { IPasswordUpdateData, IProfileUpdateData } from '@api/profile/types';
+
+import { TState, IUserProps, IInitOptions } from '../types';
 
 export const logic = kea({
     path: () => ['scenes', 'authPage'],
@@ -109,27 +117,34 @@ export const logic = kea({
                 }
 
                 actions.setLoadingAuth(false);
-            } catch (e) {
+            } catch (error) {
                 actions.setError();
 
-                store.addNotification({
-                    title: 'Ошибка!',
-                    message: e.response.data.reason,
-                    type: 'danger',
-                    insert: 'top',
-                    container: 'bottom-right',
-                    animationIn: ['animate__animated', 'animate__fadeIn'],
-                    animationOut: ['animate__animated', 'animate__fadeOut'],
-                    dismiss: {
-                        duration: 5000,
-                        onScreen: true,
-                    },
+                Notification({
+                    message: error.response.data.reason,
+                });
+            }
+        },
+
+        logInOAuth: async () => {
+            try {
+                const serviceCode: any = await getOAuthServiceCode();
+                const HOST = process.env.HOST;
+                const PORT = process.env.PORT;
+                location.replace(
+                    `https://oauth.yandex.ru/authorize?response_type=code&client_id=${serviceCode.service_id}&redirect_uri=${HOST}:${PORT}`
+                );
+            } catch (error) {
+                Notification({
+                    message: error.response.data.reason,
                 });
             }
         },
 
         registration: async (payload: IRegistrationData) => {
+            // TODO: Не нужно вытаскивать редьюсер. Достаточно блочить кнопку при запросе, как на стр Auth
             const { isLoadingRegistration } = getState().scenes.authPage;
+
             if (isLoadingRegistration) return;
 
             actions.setLoadingRegistration(true);
@@ -137,6 +152,16 @@ export const logic = kea({
             try {
                 await registration(payload);
                 await actions.init({ silent: true });
+
+                Notification({
+                    type: 'success',
+                    title: 'Регистрация',
+                    message: 'Добро пожаловать!',
+                });
+            } catch (error) {
+                Notification({
+                    message: error.response.data.reason,
+                });
             } finally {
                 actions.setLoadingRegistration(false);
             }
@@ -145,6 +170,8 @@ export const logic = kea({
         init: async (opts: IInitOptions = {}) => {
             const { isAuth, isLoadingMain } = getState().scenes.authPage;
             const { silent = false } = opts;
+
+            const codeOAuth = getState().router.location.query?.code;
 
             if (isAuth || isLoadingMain) return;
 
@@ -158,6 +185,10 @@ export const logic = kea({
             !silent && actions.setLoadingMain(true);
 
             try {
+                if (codeOAuth) {
+                    await OAuth(codeOAuth);
+                }
+
                 const user = await getUser();
 
                 actions.setUser(user);
@@ -175,25 +206,73 @@ export const logic = kea({
 
             actions.setUser(null);
             actions.setAuth(false);
+
+            Notification({
+                type: 'info',
+                title: 'Выход',
+                message: 'Вы вышли из системы',
+            });
         },
 
         updateProfile: async (profileData: IProfileUpdateData) => {
             const { user } = getState().scenes.authPage;
-            const newUser = await updateProfile({ ...user, ...profileData });
 
-            actions.setUser(newUser);
+            try {
+                // TODO: стоит именовать санки и запросы по разному
+                const newUser = await updateProfile({
+                    ...user,
+                    ...profileData,
+                });
+
+                actions.setUser(newUser);
+
+                Notification({
+                    type: 'success',
+                    title: 'Профиль',
+                    message: 'Данные успешно изменены',
+                });
+            } catch (error) {
+                Notification({
+                    message: error.response.data.reason,
+                });
+            }
         },
 
-        updatePassword: (passwordData: IPasswordUpdateData) => {
-            return updatePassword(passwordData);
+        updatePassword: async (passwordData: IPasswordUpdateData) => {
+            try {
+                await updatePassword(passwordData);
+
+                Notification({
+                    type: 'success',
+                    title: 'Профиль',
+                    message: 'Пароль изменен',
+                });
+            } catch (error) {
+                Notification({
+                    message: error.response.data.reason,
+                });
+            }
         },
 
         updateAvatar: async (file: File) => {
             const formData = new FormData();
             formData.append('avatar', file);
 
-            const newUser = await updateAvatar(formData);
-            actions.setUser(newUser);
+            try {
+                const newUser = await updateAvatar(formData);
+
+                actions.setUser(newUser);
+
+                Notification({
+                    type: 'success',
+                    title: 'Профиль',
+                    message: 'Аватар обновлен',
+                });
+            } catch (error) {
+                Notification({
+                    message: error.response.data.reason,
+                });
+            }
         },
     }),
 });

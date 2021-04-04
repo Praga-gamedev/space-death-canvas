@@ -1,1 +1,1 @@
-export { default, IGameState } from './Game';
+export { default } from './Game';

@@ -1,8 +1,8 @@
 import React, { ComponentType, FC, useCallback } from 'react';
+import { useValues } from 'kea';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
 
 import { logic } from '@store/AuthPage';
-import { useValues } from 'kea';
 
 interface ProtectedRouteProps extends RouteProps {
     title?: string;
@@ -22,6 +22,7 @@ export const AuthorizedRoute: FC<ProtectedRouteProps> = ({
     ...restProps
 }) => {
     const { isAuth } = useValues(logic);
+
     const ProtectedRoute = useCallback(withProtect(Route, isAuth, redirectTo), [
         isAuth,
     ]);
@@ -34,6 +35,7 @@ export const NotAuthorizedRoute: FC<ProtectedRouteProps> = ({
     ...restProps
 }) => {
     const { isAuth, isOffline } = useValues(logic);
+
     const ProtectedRoute = useCallback(
         withProtect(Route, !isAuth && !isOffline, redirectTo),
         [isAuth, isOffline]

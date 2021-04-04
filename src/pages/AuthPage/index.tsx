@@ -8,7 +8,7 @@ import { S } from '../units';
 import { logic } from '@store/AuthPage';
 
 export const AuthPage = memo(() => {
-    const { logIn } = useActions(logic);
+    const { logIn, logInOAuth } = useActions(logic);
     const { isLoadingAuth } = useValues(logic);
 
     const [login, setLogin] = useState('');
@@ -32,18 +32,21 @@ export const AuthPage = memo(() => {
                 as={'form'}
             >
                 <S.PaperColumn>
-                    {/* Заменим на логотип нашей игры, когда сделаем*/}
+                    {/* TODO: Заменим на логотип нашей игры, когда сделаем*/}
                     <label style={{ fontSize: '72px', marginBottom: '60px' }}>
                         LOGO
                     </label>
 
                     <Input
+                        type={'text'}
+                        name={'login'}
                         label={'Логин'}
                         onChange={({ target: { value } }) => setLogin(value)}
                     />
 
                     <Input
                         type={'password'}
+                        name={'password'}
                         label={'Пароль'}
                         onChange={({ target: { value } }) => setPassword(value)}
                     />
@@ -52,6 +55,14 @@ export const AuthPage = memo(() => {
                         style={{ margin: '30px auto 0 auto' }}
                         children={'Войти'}
                         disabled={isLoadingAuth}
+                        type="submit"
+                    />
+
+                    <S.YandexButton
+                        children={'Войти с помощью'}
+                        disabled={isLoadingAuth}
+                        type="button"
+                        onClick={logInOAuth}
                     />
 
                     <Link

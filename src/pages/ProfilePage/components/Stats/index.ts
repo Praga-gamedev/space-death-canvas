@@ -1,1 +1,1 @@
-export { Stats, IStatsProps } from './Stats';
+export { Stats } from './Stats';
