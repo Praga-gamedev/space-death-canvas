@@ -18,7 +18,9 @@ export const AvatarModal: FC<IAvatarModalProps> = memo(
         };
 
         const handleSave = () => {
-            if (!file) return;
+            if (!file) {
+                return;
+            }
 
             onSave(file);
             handleClose();

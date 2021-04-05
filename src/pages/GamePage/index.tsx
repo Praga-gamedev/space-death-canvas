@@ -75,7 +75,9 @@ export const GamePage: FC = () => {
     };
 
     useEffect(() => {
-        if (!canvas.current) return;
+        if (!canvas.current) {
+            return;
+        }
 
         resizeGame(canvas.current);
         const onResize = () => resizeGame(canvas.current as HTMLCanvasElement);
@@ -103,7 +105,9 @@ export const GamePage: FC = () => {
     useEventListener('keyup', pauseOnPressEscape, windowObj);
 
     useEffect(() => {
-        if (!canvas.current) return;
+        if (!canvas.current) {
+            return;
+        }
 
         const needLock =
             !gameState.isPaused && !gameState.isGameOver && isGameActive;

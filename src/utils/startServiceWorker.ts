@@ -1,5 +1,7 @@
 export const startServiceWorker = () => {
-    if (!('serviceWorker' in navigator)) return;
+    if (!('serviceWorker' in navigator)) {
+        return;
+    }
 
     window.addEventListener('load', () => {
         navigator.serviceWorker
