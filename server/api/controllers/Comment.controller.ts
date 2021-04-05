@@ -11,9 +11,9 @@ const createError = (err: any, defaultMessage = 'Something went wrong') => ({
 export default class CommentController {
     public static async create(req: Request, res: Response) {
         const { topic_id } = req.params;
-        const { comment_message, parent_comment_id } = req.body;
+        const { message, parent_id } = req.body;
 
-        if (!comment_message) {
+        if (!message) {
             res.status(400).send({
                 message: 'Comment message can not be empty',
             });
@@ -23,10 +23,10 @@ export default class CommentController {
         try {
             const comment = await Comment.create({
                 topic_id: Number(topic_id),
-                comment_message,
-                comment_author: req.user.login,
+                message,
+                author_name: req.user.login,
                 author_id: req.user.id,
-                parent_comment_id,
+                parent_id,
             });
 
             res.send(comment);
@@ -37,9 +37,9 @@ export default class CommentController {
 
     public static async update(req: Request, res: Response) {
         const { topic_id } = req.params;
-        const { comment_message, comment_id } = req.body;
+        const { message, id } = req.body;
 
-        if (!comment_message) {
+        if (!message) {
             res.status(400).send({
                 message: 'Comment message can not be empty',
             });
@@ -49,9 +49,9 @@ export default class CommentController {
         try {
             const [num] = await Comment.update(
                 {
-                    comment_message,
+                    message,
                 },
-                { where: { comment_id, topic_id, author_id: req.user.id } }
+                { where: { id, topic_id, author_id: req.user.id } }
             );
 
             if (num === 1) {
@@ -60,7 +60,7 @@ export default class CommentController {
                 });
             } else {
                 res.status(400).send({
-                    message: `Cannot update Comment with id ${comment_id}`,
+                    message: `Cannot update Comment with id ${id}`,
                 });
             }
         } catch (err) {
@@ -70,11 +70,11 @@ export default class CommentController {
 
     public static async delete(req: Request, res: Response) {
         const { topic_id } = req.params;
-        const { comment_id } = req.body;
+        const { id } = req.body;
 
         try {
             const num = await Comment.destroy({
-                where: { comment_id, topic_id, author_id: req.user.id },
+                where: { id, topic_id, author_id: req.user.id },
             });
 
             if (num === 1) {
@@ -83,7 +83,7 @@ export default class CommentController {
                 });
             } else {
                 res.status(400).send({
-                    message: `Cannot delete Comment with id ${comment_id}`,
+                    message: `Cannot delete Comment with id ${id}`,
                 });
             }
         } catch (err) {
@@ -92,18 +92,18 @@ export default class CommentController {
     }
 
     public static async getById(req: Request, res: Response) {
-        const { topic_id, comment_id } = req.params;
+        const { topic_id, id } = req.params;
 
         try {
             const comment = await Comment.findOne({
-                where: { comment_id, topic_id },
+                where: { id, topic_id },
             });
 
             if (comment) {
                 res.send(comment);
             } else {
                 res.status(400).send({
-                    message: `Comment with id ${comment_id} is not exist`,
+                    message: `Comment with id ${id} is not exist`,
                 });
             }
         } catch (err) {

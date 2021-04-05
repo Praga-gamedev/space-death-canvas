@@ -8,9 +8,9 @@ const createError = (err: any, defaultMessage = 'Something went wrong') => ({
 
 export default class TopicController {
     public static async create(req: Request, res: Response) {
-        const { topic_name } = req.body;
+        const { name } = req.body;
 
-        if (!topic_name) {
+        if (!name) {
             res.status(400).send({
                 message: 'Topic name can not be empty',
             });
@@ -19,8 +19,8 @@ export default class TopicController {
 
         try {
             const topic = await Topic.create({
-                topic_name,
-                topic_author: req.user.login,
+                name,
+                author_name: req.user.login,
                 author_id: req.user.id,
             });
 
@@ -31,9 +31,9 @@ export default class TopicController {
     }
 
     public static async update(req: Request, res: Response) {
-        const { topic_id, topic_name } = req.body;
+        const { id, name } = req.body;
 
-        if (!topic_name) {
+        if (!name) {
             res.status(400).send({
                 message: 'Topic name can not be empty',
             });
@@ -43,11 +43,11 @@ export default class TopicController {
         try {
             const [num] = await Topic.update(
                 {
-                    topic_name,
+                    name,
                 },
                 {
                     where: {
-                        topic_id,
+                        id,
                         author_id: req.user.id,
                     },
                 }
@@ -59,7 +59,7 @@ export default class TopicController {
                 });
             } else {
                 res.status(400).send({
-                    message: `Cannot update Topic with id ${topic_id}`,
+                    message: `Cannot update Topic with id ${id}`,
                 });
             }
         } catch (err) {
@@ -68,11 +68,11 @@ export default class TopicController {
     }
 
     public static async delete(req: Request, res: Response) {
-        const { topic_id } = req.body;
+        const { id } = req.body;
 
         try {
             const num = await Topic.destroy({
-                where: { topic_id, author_id: req.user.id },
+                where: { id, author_id: req.user.id },
             });
 
             if (num === 1) {
@@ -81,7 +81,7 @@ export default class TopicController {
                 });
             } else {
                 res.status(400).send({
-                    message: `Cannot delete Topic with id ${topic_id}`,
+                    message: `Cannot delete Topic with id ${id}`,
                 });
             }
         } catch (err) {
@@ -90,15 +90,15 @@ export default class TopicController {
     }
 
     public static async getById(req: Request, res: Response) {
-        const { topic_id } = req.params;
+        const { id } = req.params;
 
         try {
-            const topic = await Topic.findByPk(topic_id);
+            const topic = await Topic.findByPk(id);
             if (topic) {
                 res.send(topic);
             } else {
                 res.status(400).send({
-                    message: `Topic with id ${topic_id} not exist`,
+                    message: `Topic with id ${id} not exist`,
                 });
             }
         } catch (err) {

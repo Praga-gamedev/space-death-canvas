@@ -22,14 +22,14 @@ export class Topic extends Model<ITopic> {
     @AutoIncrement
     @PrimaryKey
     @Column(DataType.INTEGER)
-    topic_id!: number;
+    id!: number;
 
     @AllowNull(false)
     @Column(DataType.STRING(60))
-    topic_name: string;
+    name: string;
 
     @Column(DataType.STRING(20))
-    topic_author: string;
+    author_name: string;
 
     @AllowNull(false)
     @Column(DataType.INTEGER)
@@ -38,7 +38,7 @@ export class Topic extends Model<ITopic> {
     @AllowNull(false)
     @CreatedAt
     @Column(DataType.DATE)
-    topic_date: Date;
+    date: Date;
 
     @HasMany(() => Comment)
     comments: Comment[];

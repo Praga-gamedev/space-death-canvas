@@ -7,7 +7,7 @@ type TCommentWithChildren = IComment & { children: IComment[] };
 export const flatCommentsToTree = (flatCommentsList: IComment[]) => {
     const groupedByParent = flatCommentsList.reduce(
         (acc: TGroupedCommets, comment) => {
-            const key = comment.parent_comment_id || 'roots';
+            const key = comment.parent_id || 'roots';
             if (!acc[key]) {
                 acc[key] = [];
             }
@@ -20,7 +20,7 @@ export const flatCommentsToTree = (flatCommentsList: IComment[]) => {
     );
 
     const withChildren = (comment: IComment): TCommentWithChildren => {
-        const children = groupedByParent[comment.comment_id] || [];
+        const children = groupedByParent[comment.id] || [];
 
         return { ...comment, children: children.map(withChildren) };
     };

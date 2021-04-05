@@ -24,7 +24,7 @@ export class Comment extends Model<IComment> {
     @AutoIncrement
     @PrimaryKey
     @Column(DataType.INTEGER)
-    comment_id: number;
+    id: number;
 
     @ForeignKey(() => Topic)
     @AllowNull(false)
@@ -33,14 +33,14 @@ export class Comment extends Model<IComment> {
 
     @AllowNull(false)
     @Column(DataType.TEXT)
-    comment_message: string;
+    message: string;
 
     @ForeignKey(() => Comment)
     @Column(DataType.INTEGER)
-    parent_comment_id: number;
+    parent_id: number;
 
     @Column(DataType.STRING(50))
-    comment_author: string;
+    author_name: string;
 
     @AllowNull(false)
     @Column(DataType.INTEGER)
@@ -49,7 +49,7 @@ export class Comment extends Model<IComment> {
     @AllowNull(false)
     @CreatedAt
     @Column(DataType.DATE)
-    comment_date: Date;
+    date: Date;
 
     @BelongsTo(() => Topic)
     topic: Topic;

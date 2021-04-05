@@ -1,9 +1,9 @@
 export interface IComment {
-    comment_id?: number;
+    id?: number;
     topic_id: number;
-    comment_message: string;
-    parent_comment_id?: number;
-    comment_author?: string;
+    message: string;
+    parent_id?: number;
+    author_name?: string;
     author_id: number;
-    comment_date?: Date;
+    date?: Date;
 }
