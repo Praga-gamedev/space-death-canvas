@@ -9,6 +9,8 @@ export const S: Record<string, any> = {};
 S.FormBlock = styled(ProfileUnits.AlignCenterColumn)`
     margin-top: -8px;
     width: 430px;
+    margin-right: 20px;
+    margin-left: 20px;
 `;
 
 S.ProfileField = styled.div`

@@ -156,7 +156,9 @@ export const logic = kea({
             // TODO: Не нужно вытаскивать редьюсер. Достаточно блочить кнопку при запросе, как на стр Auth
             const { isLoadingRegistration } = getState().scenes.authPage;
 
-            if (isLoadingRegistration) return;
+            if (isLoadingRegistration) {
+                return;
+            }
 
             actions.setLoadingRegistration(true);
 
@@ -184,7 +186,9 @@ export const logic = kea({
 
             const codeOAuth = getState().router.location.query?.code;
 
-            if (isAuth || isLoadingMain) return;
+            if (isAuth || isLoadingMain) {
+                return;
+            }
 
             if (!navigator.onLine) {
                 actions.setOffline(true);
