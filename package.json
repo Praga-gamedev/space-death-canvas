@@ -4,11 +4,11 @@
     "description": "Space simulator",
     "scripts": {
         "webpack-api": "webpack --config webpack/api.config.ts --mode=development --watch",
-        "webpack-ssr": "webpack --config webpack/client-ssr.config.ts --mode=development",
+        "webpack-ssr": "webpack --config webpack/client-ssr.config.ts --mode=development --watch",
         "server-api": "nodemon dist/api_server.js --watch dist/api_server.js",
         "server-ssr": "nodemon dist/server.js --watch dist/server.js",
         "start:api": "npm-run-all --print-label --parallel webpack-api server-api",
-        "start:ssr": "npm-run-all --print-label webpack-ssr server-ssr",
+        "start:ssr": "npm-run-all --print-label --parallel webpack-ssr server-ssr",
         "start": "cross-env NODE_ENV=development npm-run-all --print-label --parallel start:*",
         "build": "cross-env NODE_ENV=production NODE_PATH=. rimraf dist && webpack --config webpack/api.config.ts webpack/client-ssr.config.ts --mode=production",
         "lint:eslint": "eslint src/ --ext .ts,.tsx",

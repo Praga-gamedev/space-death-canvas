@@ -7,9 +7,6 @@ import cookieParser from 'cookie-parser';
 
 import { authMiddleware } from './middlewares/auth';
 import { renderMiddleware } from './middlewares/render';
-import hmrMiddlewares from './middlewares/hmr';
-
-import { IS_DEV } from '@webpack/env';
 import { initHttpsServer } from '../common/utils';
 import { HOST, PORT } from 'src/env';
 
@@ -20,13 +17,8 @@ const app = express();
 app.use(compression())
     .use(express.json())
     .use(cookieParser())
-    .use(express.static(path.resolve(__dirname, '../static')));
-
-if (!IS_DEV) {
-    app.use(express.static(path.resolve(__dirname, '../dist')));
-} else {
-    app.use(...hmrMiddlewares);
-}
+    .use(express.static(path.resolve(__dirname, '../static')))
+    .use(express.static(path.resolve(__dirname, '../dist')));
 
 app.use(authMiddleware);
 app.get('/*', renderMiddleware);
