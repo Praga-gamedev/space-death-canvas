@@ -21,6 +21,7 @@ S.Header = styled.header`
     justify-content: center;
     align-items: center;
     position: fixed;
+    z-index: 100;
 `;
 
 S.Tab = styled.div`

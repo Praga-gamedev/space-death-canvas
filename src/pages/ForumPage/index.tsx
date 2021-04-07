@@ -1,104 +1,59 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, FormEvent } from 'react';
 
-import { Paper } from '@components';
+import { Paper, Input, Button } from '@components';
 
-import { Theme, ForumButton } from '@pages/ForumPage/components';
+import { createTopic, getTopicList } from '@api/forum';
 
 import { S } from '@pages/units';
-
-import {
-    ButtonBlock,
-    ContentBlock,
-    ContentWrapper,
-    ThreadsWindow,
-} from '@pages/ForumPage/units';
-import { ButtonData, ThemeType } from '@pages/ForumPage/types';
-
-// заглушки с данными пока нет нашего апи
-const buttonsData: ButtonData[] = [
-    {
-        id: 1,
-        title: 'Монстры',
-    },
-    {
-        id: 2,
-        title: 'Корабли',
-    },
-    {
-        id: 3,
-        title: 'Оружие',
-    },
-    {
-        id: 4,
-        title: 'Новости',
-    },
-];
-
-const themesData: ThemeType[] = [
-    {
-        id: '1',
-        userName: 'spark888',
-        content: 'Как убить летающего короля-бобра?',
-    },
-    {
-        id: '2',
-        userName: 'vasua4545',
-        content: 'Что делать с кораблем уровня XXFHJFJF?',
-    },
-];
+import { S as SForum } from './units';
 
 export const ForumPage = () => {
-    const [currentForumId, setForumId] = useState(1);
+    const [theme, setTheme] = useState('');
 
-    const themes = useMemo(() => {
-        let result: any = [];
-        let globalIndex = 0;
+    const createTheme = async (e: FormEvent<HTMLDivElement>) => {
+        e.preventDefault();
 
-        for (let i = 0; i < 15; i++) {
-            const themes = themesData.map((data, index) => (
-                <Theme
-                    id={data.id}
-                    content={data.content}
-                    userName={data.userName}
-                    key={globalIndex++}
-                    isEven={index % 2 === 0}
-                />
-            ));
+        console.log(theme);
 
-            result = [...result, themes];
-        }
-        return result;
-    }, [themesData]);
+        await getTopicList();
+
+        await createTopic(theme);
+
+        setTheme('');
+    };
 
     return (
         <S.WrapperPage background={true}>
-            <Paper w={'70%'} maxw={'1000px'} minw={'700px'}>
+            <Paper
+                style={{ padding: '0px 24px' }}
+                w={'80%'}
+                maxw={'80%'}
+                minw={'800px'}
+            >
                 <S.TitlePage
                     style={{
-                        marginTop: '90px',
+                        margin: '90px 0px 40px',
                         textAlign: 'center',
                     }}
                 >
                     Форум
                 </S.TitlePage>
 
-                <ContentWrapper>
-                    <ButtonBlock>
-                        {buttonsData.map((buttonData, index) => (
-                            <ForumButton
-                                key={index}
-                                isClicked={buttonData.id === currentForumId}
-                                onClick={() => setForumId(buttonData.id)}
-                            >
-                                {buttonData.title}
-                            </ForumButton>
-                        ))}
-                    </ButtonBlock>
+                <SForum.NewThemeFlex onSubmit={(e: any) => createTheme(e)}>
+                    <Input
+                        type={'text'}
+                        name={'login'}
+                        label={'Введите название темы'}
+                        onChange={({ target: { value } }) => setTheme(value)}
+                        value={theme}
+                    />
 
-                    <ContentBlock>
-                        <ThreadsWindow>{themes}</ThreadsWindow>
-                    </ContentBlock>
-                </ContentWrapper>
+                    <Button
+                        style={{ margin: '36px 0px 0px 10px' }}
+                        children={'Создать тему'}
+                        type="submit"
+                    />
+                </SForum.NewThemeFlex>
             </Paper>
         </S.WrapperPage>
     );

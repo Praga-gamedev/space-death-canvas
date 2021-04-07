@@ -1,28 +1,12 @@
 import styled from '@emotion/styled';
 import { scrollBarStyle } from '@pages/units';
 
-export const ContentWrapper = styled.div`
-    display: flex;
-    flex-direction: row;
-    height: auto;
-    max-width: 1000px;
-    max-height: 90%;
-    margin: 1% auto 0;
-`;
+export const S: Record<string, any> = {};
 
-export const ButtonBlock = styled.div`
+S.NewThemeFlex = styled.form`
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 24px;
-    width: 30%;
-    height: 100%;
-`;
-
-export const ContentBlock = styled.div`
-    width: 70%;
-    height: inherit;
-`;
+    justify-content: space-between;
+`
 
 export const ThreadsWindow = styled.div`
     width: 90%;
