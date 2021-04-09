@@ -1,23 +1,28 @@
-import React, { useState, FormEvent } from 'react';
+import React, { FC, useState, FormEvent } from 'react';
+import { useActions, useValues } from 'kea';
 
 import { Paper, Input, Button } from '@components';
 
-import { createTopic, getTopicList } from '@api/forum';
+import { logic } from '@store/ForumPage';
+
+import { useMountEffect } from 'src/utils/hooks';
+
+import { Topics } from './components/Topics';
 
 import { S } from '@pages/units';
 import { S as SForum } from './units';
 
-export const ForumPage = () => {
+export const ForumPage: FC = () => {
+    const { getTopics, postCreateTopic } = useActions(logic);
+
     const [theme, setTheme] = useState('');
 
-    const createTheme = async (e: FormEvent<HTMLDivElement>) => {
+    useMountEffect(getTopics);
+
+    const handleCreateTheme = async (e: FormEvent<HTMLDivElement>) => {
         e.preventDefault();
 
-        console.log(theme);
-
-        await getTopicList();
-
-        await createTopic(theme);
+        await postCreateTopic(theme);
 
         setTheme('');
     };
@@ -25,7 +30,7 @@ export const ForumPage = () => {
     return (
         <S.WrapperPage background={true}>
             <Paper
-                style={{ padding: '0px 24px' }}
+                style={{ padding: '10px 24px 24px' }}
                 w={'80%'}
                 maxw={'80%'}
                 minw={'800px'}
@@ -39,7 +44,9 @@ export const ForumPage = () => {
                     Форум
                 </S.TitlePage>
 
-                <SForum.NewThemeFlex onSubmit={(e: any) => createTheme(e)}>
+                <SForum.NewThemeFlex
+                    onSubmit={(e: any) => handleCreateTheme(e)}
+                >
                     <Input
                         type={'text'}
                         name={'login'}
@@ -54,6 +61,8 @@ export const ForumPage = () => {
                         type="submit"
                     />
                 </SForum.NewThemeFlex>
+
+                <Topics />
             </Paper>
         </S.WrapperPage>
     );

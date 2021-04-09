@@ -1,6 +1,6 @@
 import { kea } from 'kea';
 
-import { leaderboardData, leaderboardAddNewLeader } from '@api/leaderboard';
+import { createTopic, getTopicList, deleteTopic } from '@api/forum';
 import { ILeaderboardLeaderData } from '@api/leaderboard/types';
 
 import { TState } from '../types';
@@ -27,47 +27,51 @@ export const logic = kea({
         topics: [
             [],
             {
-                [actions.setLeaders]: (
-                    _: TState,
-                    payload: Array<ILeaderboardLeaderData>
-                ) => payload,
+                /* Поставить тип */
+                [actions.setTopics]: (_: TState, payload: any) => payload,
             },
         ],
     }),
 
-    thunks: ({
-        actions,
-        getState,
-    }: {
-        actions: any;
-        getState: () => TState;
-    }) => ({
-        // getLeaders: async (page: number) => {
-        //     try {
-        //         actions.startLoading();
+    thunks: ({ actions }: any) => ({
+        getTopics: async () => {
+            try {
+                actions.startLoading();
 
-        //         const res = await leaderboardData({ cursor: page });
+                const res = await getTopicList();
 
-        //         actions.setLeaders(res);
-        //     } catch (error) {
-        //         console.error('get leaderboards', error);
-        //     } finally {
-        //         actions.setLoading(false);
-        //     }
-        // },
-        // postLeaderScore: async (score: number) => {
-        //     const { id, login, avatar } = getState().scenes.authPage.user;
+                actions.setTopics(res.data);
+            } catch (error) {
+                console.error('get forum', error);
+            } finally {
+                actions.setLoading(false);
+            }
+        },
+        postCreateTopic: async (name: string) => {
+            try {
+                actions.startLoading();
 
-        //     try {
-        //         await leaderboardAddNewLeader({
-        //             sdcScore: score,
-        //             name: login,
-        //             avatar,
-        //             id,
-        //         });
-        //     } catch (error) {
-        //         console.error('post leaderboards', error);
-        //     }
-        // },
+                await createTopic(name);
+
+                actions.getTopics();
+            } catch (error) {
+                console.error('post forum topic', error);
+            } finally {
+                actions.setLoading(false);
+            }
+        },
+        postDeleteTopic: async (id: number) => {
+            try {
+                actions.startLoading();
+
+                await deleteTopic(id);
+
+                actions.getTopics();
+            } catch (error) {
+                console.error('delete forum topic', error);
+            } finally {
+                actions.setLoading(false);
+            }
+        },
     }),
 });

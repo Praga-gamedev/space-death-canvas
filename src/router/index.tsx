@@ -15,7 +15,6 @@ import {
     RegistrationPage,
     GamePage,
     ForumPage,
-    ForumThreadDialog,
     ProfilePage,
     NotFoundPage,
     ServerErrorPage,
@@ -62,12 +61,12 @@ const NavigationRouter = memo(() => {
                     component={ForumPage}
                 />
 
-                <AuthorizedRoute
+                {/* <AuthorizedRoute
                     path="/forum/:id"
                     redirectTo="/auth"
                     title="Форум"
                     component={ForumThreadDialog}
-                />
+                /> */}
 
                 <AuthorizedRoute
                     path="/profile"

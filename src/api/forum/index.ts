@@ -1,9 +1,16 @@
 import LocalApi from 'src/utils/api/LocalApi';
 
-export const createTopic = (data: string) => {
+export const createTopic = (name: string) => {
     return LocalApi.post({
         url: '/topic',
-        data,
+        data: { name },
+    });
+};
+
+export const deleteTopic = (id: number) => {
+    return LocalApi.delete({
+        url: '/topic',
+        data: { id },
     });
 };
 
