@@ -1,31 +1,20 @@
-import React, { FC, useState, FormEvent } from 'react';
-import { useActions, useValues } from 'kea';
+import React, { FC } from 'react';
+import { useActions } from 'kea';
 
-import { Paper, Input, Button } from '@components';
+import { Paper } from '@components';
 
 import { logic } from '@store/ForumPage';
 
 import { useMountEffect } from 'src/utils/hooks';
 
-import { Topics } from './components/Topics';
-
 import { S } from '@pages/units';
-import { S as SForum } from './units';
+
+import { Topics, InputTheme } from './components';
 
 export const ForumPage: FC = () => {
-    const { getTopics, postCreateTopic } = useActions(logic);
-
-    const [theme, setTheme] = useState('');
+    const { getTopics } = useActions(logic);
 
     useMountEffect(getTopics);
-
-    const handleCreateTheme = async (e: FormEvent<HTMLDivElement>) => {
-        e.preventDefault();
-
-        await postCreateTopic(theme);
-
-        setTheme('');
-    };
 
     return (
         <S.WrapperPage background={true}>
@@ -44,23 +33,7 @@ export const ForumPage: FC = () => {
                     Форум
                 </S.TitlePage>
 
-                <SForum.NewThemeFlex
-                    onSubmit={(e: any) => handleCreateTheme(e)}
-                >
-                    <Input
-                        type={'text'}
-                        name={'login'}
-                        label={'Введите название темы'}
-                        onChange={({ target: { value } }) => setTheme(value)}
-                        value={theme}
-                    />
-
-                    <Button
-                        style={{ margin: '36px 0px 0px 10px' }}
-                        children={'Создать тему'}
-                        type="submit"
-                    />
-                </SForum.NewThemeFlex>
+                <InputTheme />
 
                 <Topics />
             </Paper>

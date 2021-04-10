@@ -3,4 +3,5 @@ export interface IRow {
     name: string;
     title: string;
     date: string;
+    onClick?: () => void;
 }

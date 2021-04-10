@@ -11,7 +11,9 @@ export const DeleteTopic = ({ id, showDelete, name }: IDeleteButton) => {
     const { postDeleteTopic } = useActions(logic);
     const { user } = useValues(logicAuth);
 
-    const handleDeleteTopic = async () => {
+    const handleDeleteTopic = async (e: Event) => {
+        e.stopPropagation();
+
         await postDeleteTopic(id);
     };
 

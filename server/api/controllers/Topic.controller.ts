@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 
 import { Topic } from '../models/Topic.model';
 
+// TODO: зачем эта ф-ия, если ты всегда передаешь err в параметры
 const createError = (err: any, defaultMessage = 'Something went wrong') => ({
     message: err.message || defaultMessage,
 });
@@ -89,11 +90,15 @@ export default class TopicController {
         }
     }
 
+    // TODO: Не работает (call: src/api/forum/index.ts:9)
     public static async getById(req: Request, res: Response) {
         const { id } = req.params;
 
+        console.log('id', id) // undefined
+
         try {
             const topic = await Topic.findByPk(id);
+
             if (topic) {
                 res.send(topic);
             } else {
@@ -109,6 +114,7 @@ export default class TopicController {
     public static async getList(_: any, res: Response) {
         try {
             const topics = await Topic.findAll();
+
             res.send(topics);
         } catch (err) {
             res.status(500).send(createError(err));

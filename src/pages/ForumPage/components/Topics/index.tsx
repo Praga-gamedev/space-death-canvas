@@ -26,7 +26,7 @@ export const Topics: FC = memo(() => {
             {isLoading ? (
                 <Loader />
             ) : (
-                topics?.map(
+                topics.map(
                     (
                         { id, author_name, name, date }: ITopics,
                         idKey: number
@@ -37,7 +37,7 @@ export const Topics: FC = memo(() => {
                             name={author_name}
                             title={name}
                             date={date}
-                        ></Row>
+                        />
                     )
                 )
             )}

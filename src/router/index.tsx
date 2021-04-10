@@ -20,6 +20,7 @@ import {
     ServerErrorPage,
 } from '@pages';
 import { LeaderboardPage } from '@pages/LeaderboardPage';
+import { Comment } from '@pages/ForumPage/components/Comments';
 
 import { S } from './units';
 import { tabs } from './tabs';
@@ -61,12 +62,12 @@ const NavigationRouter = memo(() => {
                     component={ForumPage}
                 />
 
-                {/* <AuthorizedRoute
+                <AuthorizedRoute
                     path="/forum/:id"
                     redirectTo="/auth"
                     title="Форум"
-                    component={ForumThreadDialog}
-                /> */}
+                    component={Comment}
+                />
 
                 <AuthorizedRoute
                     path="/profile"

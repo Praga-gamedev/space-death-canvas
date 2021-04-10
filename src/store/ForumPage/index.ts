@@ -1,7 +1,16 @@
 import { kea } from 'kea';
 
-import { createTopic, getTopicList, deleteTopic } from '@api/forum';
-import { ILeaderboardLeaderData } from '@api/leaderboard/types';
+import { Notification } from 'src/utils/notification';
+
+import {
+    getTopicList,
+    getTopicById,
+    createTopic,
+    deleteTopic,
+    getCommentList,
+    createComment,
+    deleteComment,
+} from '@api/forum';
 
 import { TState } from '../types';
 
@@ -13,7 +22,10 @@ export const logic = kea({
         setLoading: (loading: boolean) => loading,
 
         setTopics: (payload: any) => payload,
-        setActualComments: (payload: any) => payload,
+        setComments: (payload: any) => payload,
+
+        setActualTopic: (payload: any) => payload,
+        setActualComment: (payload: any) => payload,
     }),
 
     reducers: ({ actions }) => ({
@@ -27,13 +39,39 @@ export const logic = kea({
         topics: [
             [],
             {
-                /* Поставить тип */
+                /* TODO:Поставить тип */
                 [actions.setTopics]: (_: TState, payload: any) => payload,
+            },
+        ],
+        comments: [
+            [],
+            {
+                /* TODO:Поставить тип */
+                [actions.setComments]: (_: TState, payload: any) => payload,
+            },
+        ],
+        actualTopic: [
+            {},
+            {
+                [actions.setActualTopic]: (_: TState, payload: any) => payload,
+            },
+        ],
+        actualComment: [
+            {},
+            {
+                [actions.setActualComment]: (_: TState, payload: any) =>
+                    payload,
             },
         ],
     }),
 
-    thunks: ({ actions }: any) => ({
+    thunks: ({
+        actions,
+        getState,
+    }: {
+        actions: any;
+        getState: () => TState;
+    }) => ({
         getTopics: async () => {
             try {
                 actions.startLoading();
@@ -54,6 +92,12 @@ export const logic = kea({
                 await createTopic(name);
 
                 actions.getTopics();
+
+                Notification({
+                    type: 'success',
+                    title: 'Форум',
+                    message: `Тема ${name} успешно создана`,
+                });
             } catch (error) {
                 console.error('post forum topic', error);
             } finally {
@@ -67,8 +111,67 @@ export const logic = kea({
                 await deleteTopic(id);
 
                 actions.getTopics();
+
+                Notification({
+                    title: 'Форум',
+                    message: `Ваша тема удалена`,
+                });
             } catch (error) {
                 console.error('delete forum topic', error);
+            } finally {
+                actions.setLoading(false);
+            }
+        },
+        getComments: async (topicId: number) => {
+            try {
+                actions.startLoading();
+
+                // TODO: пока не работает
+                // const topic = await getTopicById(topicId);
+
+                /* Поэтому: */
+
+                const topics = await getTopicList();
+
+                const actualTopic = topics.data.find(
+                    (item: any) => item.id === topicId
+                );
+
+                /**/
+
+                actions.setActualTopic(actualTopic);
+
+                const res = await getCommentList(topicId);
+
+                actions.setComments(res.data);
+            } catch (error) {
+                console.error('get comment', error);
+            } finally {
+                actions.setLoading(false);
+            }
+        },
+        postCreateComment: async (name: string, topicId: number) => {
+            try {
+                actions.startLoading();
+
+                await createComment(name, topicId);
+
+                actions.getComments(topicId);
+            } catch (error) {
+                console.error('post forum comment', error);
+            } finally {
+                actions.setLoading(false);
+            }
+        },
+        postDeleteComment: async (topicId: number) => {
+            try {
+                actions.startLoading();
+
+                await deleteComment(topicId);
+
+                actions.getComments(topicId);
+            } catch (error) {
+                console.error('delete forum comment', error);
             } finally {
                 actions.setLoading(false);
             }
