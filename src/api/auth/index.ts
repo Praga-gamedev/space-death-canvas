@@ -1,6 +1,7 @@
-import YandexApi from 'src/utils/api/YandexApi';
+import YandexApi, { YANDEX_HOST } from 'src/utils/api/YandexApi';
 
 import { ILoginData } from './types';
+import axios from 'axios';
 
 export const login = (data: ILoginData) => {
     return YandexApi.post({
@@ -29,9 +30,6 @@ export const getOAuthServiceCode = () => {
     });
 };
 
-export const OAuth = (code: number) => {
-    return YandexApi.post({
-        url: '/oauth/yandex',
-        data: { code },
-    });
+export const OAuth = (code: number | string) => {
+    return axios.post(`${YANDEX_HOST}/api/v2/oauth/yandex`, { code });
 };

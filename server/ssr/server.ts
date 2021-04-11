@@ -20,6 +20,13 @@ app.use(compression())
     .use(express.static(path.resolve(__dirname, '../static')))
     .use(express.static(path.resolve(__dirname, '../dist')));
 
+// HMR
+// if (IS_DEV){
+//     app.use(...hmrMiddlewares)
+// }else{
+//     app.use(express.static(path.resolve(__dirname, '../dist')));
+// }
+
 app.use(authMiddleware);
 app.get('/*', renderMiddleware);
 
