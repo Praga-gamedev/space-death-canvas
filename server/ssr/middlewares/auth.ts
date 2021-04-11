@@ -49,6 +49,7 @@ export const authMiddleware = async (
             secure: true,
         });
         response.cookie('authCookie', requestCookies.authCookie, {
+            domain: '.ya-praktikum.tech',
             httpOnly: true,
             secure: true,
         });
