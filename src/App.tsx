@@ -8,15 +8,12 @@ import { ThemeProvider } from '@emotion/react';
 import { RebootCss } from './global-styles';
 import ErrorBoundary from './components/ErrorBoundary';
 import NavigationRouter from 'src/router';
-
-import { hot } from 'react-hot-loader/root';
-import { IS_DEV } from '@webpack/env';
 import { useValues } from 'kea';
 
 import { logic } from '@store/AuthPage';
 import { darkTheme, lightTheme, THEME } from 'src/theme';
 
-let App = () => {
+const App = () => {
     const { theme } = useValues(logic);
 
     const themeColors = theme === THEME.DARK ? darkTheme : lightTheme;
@@ -32,6 +29,7 @@ let App = () => {
     );
 };
 
-App = IS_DEV ? hot(App) : App;
+// HMR
+// App = IS_DEV ? hot(App) : App;
 
 export default App;

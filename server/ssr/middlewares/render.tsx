@@ -24,7 +24,8 @@ const setTheme = (theme: Theme) => {
     logic.actions.setTheme(theme);
 };
 
-const setStoreVariables = async (userData: IUserProps) => {
+const setStoreVariables = async (response: Response) => {
+    const userData = response.locals.user;
     if (userData) {
         setUser(userData);
     }
@@ -67,12 +68,15 @@ function getHtml(reactHtml: string, reduxState = {}) {
     `;
 }
 
-export const renderMiddleware = async (req: Request, res: Response) => {
-    const location = req.url;
+export const renderMiddleware = async (
+    request: Request,
+    response: Response
+) => {
+    const location = request.url;
     const context: StaticRouterContext = {};
     const { store } = configureStore(getInitialState(location), location);
 
-    await setStoreVariables(res.locals.user);
+    await setStoreVariables(response);
 
     const jsx = (
         <ReduxProvider store={store}>
@@ -85,11 +89,11 @@ export const renderMiddleware = async (req: Request, res: Response) => {
     const keaState = store.getState();
 
     if (context.url) {
-        res.redirect(context.url);
+        response.redirect(context.url);
         return;
     }
 
     const html = getHtml(reactHtml, keaState);
 
-    res.status(context.statusCode || 200).send(html);
+    response.status(context.statusCode || 200).send(html);
 };

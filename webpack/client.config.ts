@@ -18,9 +18,10 @@ import jsLoader from './loaders/js';
 
 const entries = IS_DEV
     ? [
-          'react-hot-loader/patch',
-          'webpack-hot-middleware/client',
-          'css-hot-loader/hotModuleReplacement',
+          // HMR
+          // 'react-hot-loader/patch',
+          // 'webpack-hot-middleware/client',
+          // 'css-hot-loader/hotModuleReplacement',
       ]
     : [];
 

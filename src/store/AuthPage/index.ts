@@ -2,20 +2,14 @@ import { kea } from 'kea';
 
 import { Notification } from 'src/utils/notification';
 
-import {
-    login as auth,
-    logout,
-    getUser,
-    getOAuthServiceCode,
-    OAuth,
-} from '@api/auth';
+import { getOAuthServiceCode, getUser, login as auth, logout } from '@api/auth';
 import { registration } from '@api/registration';
-import { updateProfile, updatePassword, updateAvatar } from '@api/profile';
+import { updateAvatar, updatePassword, updateProfile } from '@api/profile';
 
 import { IRegistrationData } from '@api/registration/types';
 import { IPasswordUpdateData, IProfileUpdateData } from '@api/profile/types';
 
-import { TState, IUserProps, IInitOptions } from '../types';
+import { IInitOptions, IUserProps, TState } from '../types';
 import { THEME, Theme } from 'src/theme';
 import { HOST, PORT } from 'src/env';
 
@@ -184,8 +178,6 @@ export const logic = kea({
             const { isAuth, isLoadingMain } = getState().scenes.authPage;
             const { silent = false } = opts;
 
-            const codeOAuth = getState().router.location.query?.code;
-
             if (isAuth || isLoadingMain) {
                 return;
             }
@@ -200,12 +192,7 @@ export const logic = kea({
             !silent && actions.setLoadingMain(true);
 
             try {
-                if (codeOAuth) {
-                    await OAuth(codeOAuth);
-                }
-
                 const user = await getUser();
-
                 actions.setUser(user);
                 actions.setAuth(true);
             } catch (error) {
