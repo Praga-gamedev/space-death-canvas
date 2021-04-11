@@ -1,5 +1,5 @@
 import React from 'react';
 
-import loaderGif from '@images/loader.gif';
+import loader from '@images/loaderSVG.svg';
 
-export const Loader = () => <img src={loaderGif} style={{ margin: 'auto' }} />;
+export const Loader = () => <img src={loader} style={{ margin: 'auto' }} />;

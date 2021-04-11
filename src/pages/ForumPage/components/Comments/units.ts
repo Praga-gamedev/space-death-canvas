@@ -21,14 +21,14 @@ S.Comments = styled.div`
     background-color: ${(props: ThemeType) => props.theme.GrayScale_20};
 
     width: 100%;
-    height: auto;
-    max-height: calc(100% - 316px);
+    height: calc(100% - 316px);
+    min-height: 400px;
     font-family: 'Comfortaa', sans-serif;
     overflow-y: auto;
     padding: 10px;
-    padding-bottom: 0px;
     border-radius: 12px;
-    margin-bottom: 100px;
+    margin-bottom: 20px;
+    text-align: center;
 
     ${scrollBarStyle}
 `;

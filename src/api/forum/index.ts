@@ -26,7 +26,6 @@ export const deleteTopic = (id: number) => {
     });
 };
 
-
 export const getCommentList = (topicId: number) => {
     return LocalApi.get({
         url: `/comment/${topicId}`,
@@ -40,10 +39,9 @@ export const createComment = (message: string, topicId: number) => {
     });
 };
 
-export const deleteComment = (topicId: number) => {
+export const deleteComment = (topicId: number, commentId: number) => {
     return LocalApi.delete({
         url: `/comment/${topicId}`,
-        data: { topicId },
+        data: { id: commentId },
     });
 };
-

@@ -36,7 +36,7 @@ export const Row = memo(({ id, name, title, date }: IRow) => {
                 <div>{time}</div>
             </S.CellAuthorDate>
 
-            <S.CellTitle>{title}</S.CellTitle>
+            <S.CellTitle>{title.toUpperCase()}</S.CellTitle>
 
             <DeleteTopic id={id} showDelete={showDelete} name={name} />
         </S.Row>

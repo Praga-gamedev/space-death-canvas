@@ -17,13 +17,19 @@ import { IRouteParams } from './types';
 // TODO: Доделать
 
 export const Comment: FC = () => {
-    const { getComments, postCreateComment } = useActions(logic);
+    const {
+        getComments,
+        postCreateComment,
+        postDeleteComment,
+        chooseActualDialog,
+    } = useActions(logic);
     const { actualTopic, comments } = useValues(logic);
 
     const [comment, setComment] = useState('');
 
     const { id }: IRouteParams = useParams();
 
+    useMountEffect(() => chooseActualDialog(Number(id)));
     useMountEffect(() => getComments(Number(id)));
 
     const handleCreateComment = async (e: FormEvent<HTMLDivElement>) => {
@@ -36,6 +42,15 @@ export const Comment: FC = () => {
         setComment('');
     };
 
+    const handleDeleteComment = async (
+        e: FormEvent<HTMLDivElement>,
+        commentId: number
+    ) => {
+        // e.stopPropagation();
+
+        postDeleteComment(id, commentId);
+    };
+
     return (
         <S.WrapperPage background={true}>
             <Paper
@@ -46,15 +61,25 @@ export const Comment: FC = () => {
             >
                 <SLocal.CommentTitle>
                     <div>Автор: {actualTopic?.author_name}</div>
-                    <div>Тема: {actualTopic?.name}</div>
+                    <div>Тема: {actualTopic?.name?.toUpperCase()}</div>
                 </SLocal.CommentTitle>
 
                 <SLocal.Comments>
                     {comments.length === 0 ? (
                         <div>Нет комментариев к посту</div>
                     ) : (
-                        comments.map((item: any, id: number) => (
-                            <div key={id}>{item.message}</div>
+                        comments.map((item: any, commentId: number) => (
+                            <div
+                                key={commentId}
+                                onClick={(e) =>
+                                    handleDeleteComment(e, commentId)
+                                }
+                                style={{ cursor: 'pointer' }}
+                            >
+                                {item.author_name}
+                                {' : '}
+                                {item.message}
+                            </div>
                         ))
                     )}
                 </SLocal.Comments>

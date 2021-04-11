@@ -96,7 +96,7 @@ export const logic = kea({
                 Notification({
                     type: 'success',
                     title: 'Форум',
-                    message: `Тема ${name} успешно создана`,
+                    message: `Тема "${name}" успешно создана`,
                 });
             } catch (error) {
                 console.error('post forum topic', error);
@@ -126,21 +126,6 @@ export const logic = kea({
             try {
                 actions.startLoading();
 
-                // TODO: пока не работает
-                // const topic = await getTopicById(topicId);
-
-                /* Поэтому: */
-
-                const topics = await getTopicList();
-
-                const actualTopic = topics.data.find(
-                    (item: any) => item.id === topicId
-                );
-
-                /**/
-
-                actions.setActualTopic(actualTopic);
-
                 const res = await getCommentList(topicId);
 
                 actions.setComments(res.data);
@@ -163,11 +148,11 @@ export const logic = kea({
                 actions.setLoading(false);
             }
         },
-        postDeleteComment: async (topicId: number) => {
+        postDeleteComment: async (topicId: number, commentId: number) => {
             try {
                 actions.startLoading();
 
-                await deleteComment(topicId);
+                await deleteComment(topicId, commentId);
 
                 actions.getComments(topicId);
             } catch (error) {
@@ -175,6 +160,22 @@ export const logic = kea({
             } finally {
                 actions.setLoading(false);
             }
+        },
+        chooseActualDialog: async (topicId: number) => {
+            // TODO: пока не работает
+            // const topic = await getTopicById(topicId);
+
+            /* Поэтому: */
+
+            const topics = await getTopicList();
+
+            const actualTopic = topics.data.find(
+                (item: any) => item.id === topicId
+            );
+
+            /**/
+
+            actions.setActualTopic(actualTopic);
         },
     }),
 });
