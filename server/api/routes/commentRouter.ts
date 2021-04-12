@@ -9,10 +9,10 @@ export const commentRouter = (router: Router) => {
 
     commentRouter
         .get('/:topic_id', CommentController.getList)
-        .get('/:topic_id/:comment_id', CommentController.getById)
-        .post('/:topic_id', CommentController.create)
-        .delete('/:topic_id', CommentController.delete)
-        .put('/:topic_id', CommentController.update);
+        .get('/:topic_id/:id', CommentController.getById)
+        .post('/', CommentController.create)
+        .delete('/', CommentController.delete)
+        .put('/', CommentController.update);
 
     router.use('/comment', [auth], commentRouter);
 };

@@ -8,7 +8,7 @@ export const topicRouter = (router: Router) => {
     const topicRouter = Router();
 
     topicRouter
-        .get('/:topic_id', TopicController.getById)
+        .get('/:id', TopicController.getById)
         .get('/', TopicController.getList)
         .post('/', TopicController.create)
         .delete('/', TopicController.delete)
