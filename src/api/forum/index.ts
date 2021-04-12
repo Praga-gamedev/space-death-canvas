@@ -32,10 +32,25 @@ export const getCommentList = (topicId: number) => {
     });
 };
 
-export const createComment = (message: string, topicId: number) => {
+export const createComment = (
+    message: string,
+    topicId: number,
+    commentId: number | null = null
+) => {
     return LocalApi.post({
         url: `/comment/${topicId}`,
-        data: { message },
+        data: { message, parent_id: commentId },
+    });
+};
+
+export const createComment_new = (
+    message: string,
+    topicId: number,
+    commentId: number
+) => {
+    return LocalApi.post({
+        url: `/comment/`,
+        data: { message, parent_id: commentId, topic_id: topicId },
     });
 };
 

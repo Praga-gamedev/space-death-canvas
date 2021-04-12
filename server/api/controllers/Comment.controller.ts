@@ -74,7 +74,11 @@ export default class CommentController {
 
         try {
             const num = await Comment.destroy({
-                where: { id, topic_id, author_id: req.user.id },
+                where: {
+                    id,
+                    topic_id: Number(topic_id),
+                    author_id: req.user.id,
+                },
             });
 
             if (num === 1) {

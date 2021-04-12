@@ -162,20 +162,9 @@ export const logic = kea({
             }
         },
         chooseActualDialog: async (topicId: number) => {
-            // TODO: пока не работает
-            // const topic = await getTopicById(topicId);
+            const topic = await getTopicById(topicId);
 
-            /* Поэтому: */
-
-            const topics = await getTopicList();
-
-            const actualTopic = topics.data.find(
-                (item: any) => item.id === topicId
-            );
-
-            /**/
-
-            actions.setActualTopic(actualTopic);
+            actions.setActualTopic(topic.data);
         },
     }),
 });
