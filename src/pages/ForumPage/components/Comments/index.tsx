@@ -1,4 +1,4 @@
-import React, { FC, useState, FormEvent } from 'react';
+import React, { FC, useState, FormEvent, memo } from 'react';
 import { useActions, useValues } from 'kea';
 
 import { useParams } from 'react-router';
@@ -12,31 +12,35 @@ import { useMountEffect } from 'src/utils/hooks';
 import { S } from '@pages/units';
 import { S as SLocal } from './units';
 
+import { Header } from './components';
 import { IRouteParams } from './types';
 
 // TODO: Доделать
 
-export const Comment: FC = () => {
+export const Comment: FC = memo(() => {
     const {
         getComments,
         postCreateComment,
         postDeleteComment,
         chooseActualDialog,
     } = useActions(logic);
-    const { actualTopic, comments } = useValues(logic);
+    const { comments } = useValues(logic);
 
     const [comment, setComment] = useState('');
 
-    const { id }: IRouteParams = useParams();
+    const { topicId }: IRouteParams = useParams();
 
-    useMountEffect(() => chooseActualDialog(Number(id)));
-    useMountEffect(() => getComments(Number(id)));
+    console.log(topicId);
+    // const topicId = Number(id);
+
+    useMountEffect(() => chooseActualDialog(Number(topicId)));
+    useMountEffect(() => getComments(Number(topicId)));
 
     const handleCreateComment = async (e: FormEvent<HTMLDivElement>) => {
         e.preventDefault();
 
         if (comment) {
-            await postCreateComment(comment, id);
+            await postCreateComment(comment, Number(topicId));
         }
 
         setComment('');
@@ -48,7 +52,7 @@ export const Comment: FC = () => {
     ) => {
         // e.stopPropagation();
 
-        postDeleteComment(id, commentId);
+        postDeleteComment(Number(topicId), commentId);
     };
 
     return (
@@ -59,10 +63,7 @@ export const Comment: FC = () => {
                 maxw={'80%'}
                 minw={'800px'}
             >
-                <SLocal.CommentTitle>
-                    <div>Автор: {actualTopic?.author_name}</div>
-                    <div>Тема: {actualTopic?.name?.toUpperCase()}</div>
-                </SLocal.CommentTitle>
+                <Header />
 
                 <SLocal.Comments>
                     {comments.length === 0 ? (
@@ -102,4 +103,4 @@ export const Comment: FC = () => {
             </Paper>
         </S.WrapperPage>
     );
-};
+});

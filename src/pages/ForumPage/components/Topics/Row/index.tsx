@@ -20,7 +20,7 @@ export const Row = memo(({ id, name, title, date }: IRow) => {
     const openComment = (e: Event) => {
         e.preventDefault();
 
-        history.push(`/forum/${id}`);
+        history.push(`/forum/${id}/null`);
     };
 
     return (

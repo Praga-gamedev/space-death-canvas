@@ -63,7 +63,7 @@ const NavigationRouter = memo(() => {
                 />
 
                 <AuthorizedRoute
-                    path="/forum/:id"
+                    path="/forum/:topicId/:commentId"
                     redirectTo="/auth"
                     title="Форум"
                     component={Comment}

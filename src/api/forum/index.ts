@@ -32,31 +32,31 @@ export const getCommentList = (topicId: number) => {
     });
 };
 
+// export const createComment = (
+//     message: string,
+//     topicId: number,
+//     commentId: number | null = null
+// ) => {
+//     return LocalApi.post({
+//         url: `/comment/${topicId}`,
+//         data: { message, parent_id: commentId },
+//     });
+// };
+
 export const createComment = (
     message: string,
     topicId: number,
     commentId: number | null = null
 ) => {
     return LocalApi.post({
-        url: `/comment/${topicId}`,
-        data: { message, parent_id: commentId },
-    });
-};
-
-export const createComment_new = (
-    message: string,
-    topicId: number,
-    commentId: number
-) => {
-    return LocalApi.post({
         url: `/comment/`,
-        data: { message, parent_id: commentId, topic_id: topicId },
+        data: { message, topic_id: topicId, parent_id: commentId },
     });
 };
 
 export const deleteComment = (topicId: number, commentId: number) => {
     return LocalApi.delete({
-        url: `/comment/${topicId}`,
-        data: { id: commentId },
+        url: `/comment/`,
+        data: { topic_id: topicId, id: commentId },
     });
 };

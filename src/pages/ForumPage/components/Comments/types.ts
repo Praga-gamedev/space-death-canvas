@@ -1,3 +1,3 @@
 export interface IRouteParams {
-    id?: string;
+    topicId?: string;
 }
