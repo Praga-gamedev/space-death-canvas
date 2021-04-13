@@ -31,7 +31,8 @@ export const getCommentList = (
     commentId: number | null = null
 ) => {
     return LocalApi.get({
-        url: `/comment/${topicId}?id=${commentId}`,
+        url: `/comment/${topicId}`,
+        params: { id: commentId },
     });
 };
 

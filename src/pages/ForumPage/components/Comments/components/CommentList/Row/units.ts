@@ -30,12 +30,12 @@ S.Row = styled.div`
         color: ${(props: ThemeType) => props.theme.GrayScale_0};
     }
 
-    &:first-child {
+    &:first-of-type {
         border-top-right-radius: 12px;
         border-top-left-radius: 12px;
     }
 
-    &:last-child {
+    &:last-of-type {
         border-bottom-right-radius: 12px;
         border-bottom-left-radius: 12px;
     }
