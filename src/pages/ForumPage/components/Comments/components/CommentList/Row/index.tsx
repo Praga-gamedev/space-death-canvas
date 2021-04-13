@@ -14,7 +14,6 @@ export const Row = ({
     parent_id,
     message,
     topicId,
-    idKey,
     id,
     children,
 }: IRow) => {
@@ -30,7 +29,6 @@ export const Row = ({
 
     return (
         <S.Row
-            key={idKey}
             onMouseEnter={() => setShowDelete(true)}
             onMouseLeave={() => setShowDelete(false)}
             onClick={() => openComment(id)}

@@ -19,17 +19,24 @@ export const CommentList = ({
             ) : (
                 comments.map(
                     (
-                        { author_name, message, id, date, children, parent_id },
+                        {
+                            author_name,
+                            message,
+                            id,
+                            date,
+                            children,
+                            parent_id,
+                        }: ICommentData,
                         idKey: number
                     ) => (
                         <Row
+                            key={idKey}
                             {...{
                                 author_name,
                                 parent_id,
                                 message,
                                 id,
                                 date,
-                                idKey,
                                 topicId,
                                 children,
                             }}
