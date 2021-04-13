@@ -10,9 +10,10 @@ import {
     getCommentList,
     createComment,
     deleteComment,
+    getCommentById,
 } from '@api/forum';
 
-import { TState } from '../types';
+import { TState, ICommentData, ITopicData } from '../types';
 
 export const logic = kea({
     path: () => ['scenes', 'forumPage'],
@@ -21,11 +22,10 @@ export const logic = kea({
         startLoading: () => undefined,
         setLoading: (loading: boolean) => loading,
 
-        setTopics: (payload: any) => payload,
-        setComments: (payload: any) => payload,
+        setTopics: (payload: ITopicData[]) => payload,
+        setComments: (payload: ICommentData[]) => payload,
 
-        setActualTopic: (payload: any) => payload,
-        setActualComment: (payload: any) => payload,
+        setActualTopic: (payload: ICommentData | ITopicData) => payload,
     }),
 
     reducers: ({ actions }) => ({
@@ -39,39 +39,29 @@ export const logic = kea({
         topics: [
             [],
             {
-                /* TODO:Поставить тип */
-                [actions.setTopics]: (_: TState, payload: any) => payload,
+                [actions.setTopics]: (_: TState, payload: ITopicData[]) =>
+                    payload,
             },
         ],
         comments: [
             [],
             {
-                /* TODO:Поставить тип */
-                [actions.setComments]: (_: TState, payload: any) => payload,
+                [actions.setComments]: (_: TState, payload: ICommentData[]) =>
+                    payload,
             },
         ],
         actualTopic: [
             {},
             {
-                [actions.setActualTopic]: (_: TState, payload: any) => payload,
-            },
-        ],
-        actualComment: [
-            {},
-            {
-                [actions.setActualComment]: (_: TState, payload: any) =>
-                    payload,
+                [actions.setActualTopic]: (
+                    _: TState,
+                    payload: ICommentData | ITopicData
+                ) => payload,
             },
         ],
     }),
 
-    thunks: ({
-        actions,
-        getState,
-    }: {
-        actions: any;
-        getState: () => TState;
-    }) => ({
+    thunks: ({ actions }: Record<string, any>) => ({
         getTopics: async () => {
             try {
                 actions.startLoading();
@@ -122,11 +112,14 @@ export const logic = kea({
                 actions.setLoading(false);
             }
         },
-        getComments: async (topicId: number) => {
+        getComments: async (
+            topicId: number,
+            commentId: number | null = null
+        ) => {
             try {
                 actions.startLoading();
 
-                const res = await getCommentList(topicId);
+                const res = await getCommentList(topicId, commentId);
 
                 actions.setComments(res.data);
             } catch (error) {
@@ -135,13 +128,17 @@ export const logic = kea({
                 actions.setLoading(false);
             }
         },
-        postCreateComment: async (name: string, topicId: number) => {
+        postCreateComment: async (
+            name: string,
+            topicId: number,
+            commentId: number | null = null
+        ) => {
             try {
                 actions.startLoading();
 
-                await createComment(name, topicId);
+                await createComment(name, topicId, commentId);
 
-                actions.getComments(topicId);
+                actions.getComments(topicId, commentId);
             } catch (error) {
                 console.error('post forum comment', error);
             } finally {
@@ -161,8 +158,17 @@ export const logic = kea({
                 actions.setLoading(false);
             }
         },
-        chooseActualDialog: async (topicId: number) => {
-            const topic = await getTopicById(topicId);
+        chooseActualDialog: async (
+            topicId: number,
+            commentId: number | null = null
+        ) => {
+            let topic;
+
+            if (commentId) {
+                topic = await getCommentById(topicId, commentId);
+            } else {
+                topic = await getTopicById(topicId);
+            }
 
             actions.setActualTopic(topic.data);
         },

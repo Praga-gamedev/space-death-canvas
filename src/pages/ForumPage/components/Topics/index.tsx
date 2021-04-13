@@ -25,6 +25,8 @@ export const Topics: FC = memo(() => {
         <S.Topics>
             {isLoading ? (
                 <Loader />
+            ) : topics.length === 0 ? (
+                <div style={{ margin: '16px' }}>Создайте первый пост!</div>
             ) : (
                 topics.map(
                     (

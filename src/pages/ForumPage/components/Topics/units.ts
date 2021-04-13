@@ -17,6 +17,7 @@ S.Topics = styled.div`
     padding: 10px;
     padding-bottom: 0px;
     border-radius: 12px;
+    text-align: center;
 
     ${scrollBarStyle}
 `;

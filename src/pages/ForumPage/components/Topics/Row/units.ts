@@ -47,6 +47,7 @@ S.CellTitle = styled.div`
     white-space: nowrap;
     overflow: hidden;
     padding: 0px 12px 0px 30px;
+    text-align: left;
 `;
 
 S.Author = styled.div`

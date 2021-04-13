@@ -2,7 +2,7 @@ import React, { memo, useState } from 'react';
 
 import { useHistory } from 'react-router';
 
-import { format } from 'date-fns';
+import { useFormatDateISO } from 'src/utils/hooks';
 
 import { DeleteTopic } from './DeleteTopic';
 
@@ -14,8 +14,7 @@ export const Row = memo(({ id, name, title, date }: IRow) => {
 
     const history = useHistory();
 
-    const dateNumber = format(new Date(date), 'dd/MM/yyyy');
-    const time = format(new Date(date), 'HH:mm:ss');
+    const [dateNumber, time] = useFormatDateISO(date);
 
     const openComment = (e: Event) => {
         e.preventDefault();

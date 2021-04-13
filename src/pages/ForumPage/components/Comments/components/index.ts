@@ -1,3 +1,3 @@
 export { Header } from './Header';
-// export { Row } from './Row';
-// export { InputComment } from './InputComment';
+export { CommentList } from './CommentList';
+export { InputComment } from './InputComment';

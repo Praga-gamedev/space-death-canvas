@@ -17,10 +17,12 @@ S.CommentTitle = styled.div`
     );
     width: 100%;
     min-height: 150px;
+    height: auto;
     margin-bottom: 20px;
-    padding: 20px;
+    padding: 20px 20px 40px;
     border-bottom-left-radius: 12px;
     border-bottom-right-radius: 12px;
+    word-wrap: break-word;
 `;
 
 S.CellAuthor = styled.div`
@@ -31,6 +33,8 @@ S.CellTheme = styled.div`
     font-size: 24px;
     text-align: center;
     margin-top: 10px;
+    letter-spacing: 1px;
+    font-weight: 500;
 `;
 
 S.BackBtn = styled.div`

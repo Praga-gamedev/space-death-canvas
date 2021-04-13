@@ -19,7 +19,10 @@ export const Header: FC = () => {
     return (
         <S.CommentTitle>
             <S.CellAuthor>Автор: {actualTopic?.author_name}</S.CellAuthor>
-            <S.CellTheme>{actualTopic?.name?.toUpperCase()}</S.CellTheme>
+            <S.CellTheme>
+                {actualTopic?.name?.toUpperCase() ||
+                    actualTopic?.message?.toUpperCase()}
+            </S.CellTheme>
 
             <S.BackBtn onClick={onReturn} />
         </S.CommentTitle>
