@@ -4,7 +4,10 @@ type TGroupedCommets = Record<string, IComment[]>;
 
 type TCommentWithChildren = IComment & { children: IComment[] };
 
-export const flatCommentsToTree = (flatCommentsList: IComment[]) => {
+export const flatCommentsToTree = (
+    flatCommentsList: IComment[],
+    commentId?: number
+) => {
     const groupedByParent = flatCommentsList.reduce(
         (acc: TGroupedCommets, comment) => {
             const key = comment.parent_id || 'roots';
@@ -25,5 +28,9 @@ export const flatCommentsToTree = (flatCommentsList: IComment[]) => {
         return { ...comment, children: children.map(withChildren) };
     };
 
-    return groupedByParent.roots?.map(withChildren) || [];
+    const roots = commentId
+        ? groupedByParent[commentId]
+        : groupedByParent.roots;
+
+    return roots?.map(withChildren) || [];
 };

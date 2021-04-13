@@ -114,6 +114,7 @@ export default class CommentController {
 
     public static async getList(req: Request, res: Response) {
         const { topic_id } = req.params;
+        const { id } = req.query;
 
         try {
             const comments = await Comment.findAll({
@@ -121,7 +122,7 @@ export default class CommentController {
                 raw: true,
             });
 
-            res.send(flatCommentsToTree(comments));
+            res.send(flatCommentsToTree(comments, Number(id)));
         } catch (err) {
             res.status(500).send(createError(err));
         }
