@@ -145,13 +145,17 @@ export const logic = kea({
                 actions.setLoading(false);
             }
         },
-        postDeleteComment: async (topicId: number, commentId: number) => {
+        postDeleteComment: async (
+            topicId: number,
+            parentId: number | null,
+            commentId: number
+        ) => {
             try {
                 actions.startLoading();
 
                 await deleteComment(topicId, commentId);
 
-                actions.getComments(topicId);
+                actions.getComments(topicId, parentId);
             } catch (error) {
                 console.error('delete forum comment', error);
             } finally {

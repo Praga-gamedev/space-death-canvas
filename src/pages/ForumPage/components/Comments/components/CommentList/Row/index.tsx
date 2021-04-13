@@ -11,10 +11,12 @@ import { S } from './units';
 export const Row = ({
     date,
     author_name,
+    parent_id,
     message,
     topicId,
     idKey,
     id,
+    children,
 }: IRow) => {
     const [showDelete, setShowDelete] = useState(false);
 
@@ -40,10 +42,14 @@ export const Row = ({
                 <div>{time}</div>
             </S.CellAuthorDate>
 
-            <S.CellTitle>{message}</S.CellTitle>
+            <S.CellTitle>
+                {message}
+                {children?.length > 0 && ` [...]`}
+            </S.CellTitle>
 
             <DeleteComment
                 topicId={topicId}
+                parentId={parent_id}
                 commentId={id}
                 showDelete={showDelete}
                 name={author_name}

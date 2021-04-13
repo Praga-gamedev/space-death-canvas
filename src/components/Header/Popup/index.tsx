@@ -23,9 +23,9 @@ export const Popup: FC<IPopupProps> = memo(({ buttonRef, isOpen, setOpen }) => {
 
     const handleBodyClick = (target: EventTarget | null): void => {
         const condition =
-            target !== popupRef.current && target !== buttonRef.current;
-        // &&
-        // target !== switchRef.current;
+            target !== popupRef.current &&
+            target !== buttonRef.current &&
+            target !== switchRef.current;
 
         if (condition) {
             setOpen(false);

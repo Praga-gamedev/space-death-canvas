@@ -10,6 +10,7 @@ import { S } from './units';
 export const DeleteComment = ({
     topicId,
     commentId,
+    parentId,
     showDelete,
     name,
 }: IDeleteButton) => {
@@ -19,7 +20,7 @@ export const DeleteComment = ({
     const handleDeleteComment = async (e: FormEvent<HTMLDivElement>) => {
         e.stopPropagation();
 
-        postDeleteComment(topicId, commentId);
+        postDeleteComment(topicId, parentId, commentId);
     };
 
     return user.login === name && showDelete ? (

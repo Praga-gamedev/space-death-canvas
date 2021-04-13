@@ -17,18 +17,25 @@ export const CommentList = ({
             {comments.length === 0 ? (
                 <div>Нет комментариев к посту</div>
             ) : (
-                comments.map(({ author_name, message, id, date }, idKey) => (
-                    <Row
-                        {...{
-                            author_name,
-                            message,
-                            id,
-                            date,
-                            idKey,
-                            topicId,
-                        }}
-                    />
-                ))
+                comments.map(
+                    (
+                        { author_name, message, id, date, children, parent_id },
+                        idKey: number
+                    ) => (
+                        <Row
+                            {...{
+                                author_name,
+                                parent_id,
+                                message,
+                                id,
+                                date,
+                                idKey,
+                                topicId,
+                                children,
+                            }}
+                        />
+                    )
+                )
             )}
         </S.Comments>
     );

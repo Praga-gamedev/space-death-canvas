@@ -32,6 +32,6 @@ export interface ICommentData {
     author_name: string;
     author_id: number;
     date: string;
-    children: ICommentData[];
+    children?: ICommentData[];
     avatar?: string;
 }
