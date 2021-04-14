@@ -14,6 +14,7 @@ S.Delete = styled.div`
     background-position: center;
     filter: invert(73%) sepia(63%) saturate(4395%) hue-rotate(206deg)
         brightness(101%) contrast(86%);
+    transition: filter 0.2s linear;
 
     &:hover {
         filter: invert(82%) sepia(19%) saturate(7452%) hue-rotate(301deg)

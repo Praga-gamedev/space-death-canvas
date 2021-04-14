@@ -47,6 +47,7 @@ S.BackBtn = styled.div`
     background-image: url(${backArrow});
     filter: invert(14%) sepia(26%) saturate(472%) hue-rotate(200deg)
         brightness(94%) contrast(89%);
+    transition: filter 0.2s linear;
 
     &:hover {
         filter: invert(27%) sepia(42%) saturate(4165%) hue-rotate(232deg)

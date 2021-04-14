@@ -7,7 +7,7 @@ import { ThemeType } from 'src/theme';
 export const S: Record<string, any> = {};
 
 S.Comments = styled.div`
-    background-color: ${(props: ThemeType) => props.theme.GrayScale_20};
+    background-color: ${(props: ThemeType) => props.theme.GrayScale_40};
 
     width: 100%;
     height: calc(100% - 316px);
