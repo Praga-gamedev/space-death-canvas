@@ -40,10 +40,9 @@ export const Row = ({
                 <div>{time}</div>
             </S.CellAuthorDate>
 
-            <S.CellTitle>
-                {message}
-                {children?.length > 0 && ` [...]`}
-            </S.CellTitle>
+            {children?.length > 0 && <S.CloudDots />}
+
+            <S.CellTitle>{message}</S.CellTitle>
 
             <DeleteComment
                 topicId={topicId}

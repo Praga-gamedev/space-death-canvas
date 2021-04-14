@@ -8,7 +8,7 @@ S.Delete = styled.div`
     position: absolute;
     width: 16px;
     height: 16px;
-    right: 10px;
+    right: 15px;
     background-image: url(${cross});
     background-repeat: no-repeat;
     background-position: center;

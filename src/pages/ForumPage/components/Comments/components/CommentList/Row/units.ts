@@ -2,6 +2,8 @@ import styled from '@emotion/styled';
 
 import { ThemeType } from 'src/theme';
 
+import cloud from '@icons/cloud-dots.svg';
+
 export const S: Record<string, any> = {};
 
 S.Row = styled.div`
@@ -58,7 +60,7 @@ S.CellAuthorDate = styled.div`
 S.CellTitle = styled.div`
     width: calc(100% - 150px);
     word-wrap: break-word;
-    padding: 0px 30px;
+    padding: 0px 50px;
 `;
 
 S.Author = styled.div`
@@ -73,4 +75,16 @@ S.Hr = styled.div`
     width: 100%;
     height: 1px;
     margin-bottom: 5px;
+`;
+
+S.CloudDots = styled.div`
+    position: absolute;
+    left: 145px;
+    top: 50%;
+    width: 55px;
+    height: 45px;
+    transform: translate(0, -50%) scale(0.5);
+    background-image: url(${cloud});
+    background-position: center;
+    background-repeat: no-repeat;
 `;
