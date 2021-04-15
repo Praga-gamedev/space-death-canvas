@@ -29,7 +29,7 @@ export const Comment: FC = memo(() => {
         chooseActualDialog(topicIdNum, commentIdNum);
 
         getComments(topicIdNum, commentIdNum);
-    }, [commentId]);
+    }, [commentIdNum]);
 
     return (
         <S.WrapperPage background={true}>

@@ -4,7 +4,6 @@ export interface IRow {
     parent_id?: number;
     message: string;
     topicId: number;
-    idKey: number;
     id: number;
-    children?: Record<string, any> | undefined;
+    children?: Record<string, any>;
 }
