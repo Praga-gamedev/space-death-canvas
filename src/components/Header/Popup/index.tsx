@@ -26,6 +26,7 @@ export const Popup: FC<IPopupProps> = memo(({ buttonRef, isOpen, setOpen }) => {
             target !== popupRef.current &&
             target !== buttonRef.current &&
             target !== switchRef.current;
+
         if (condition) {
             setOpen(false);
         }
@@ -55,15 +56,15 @@ export const Popup: FC<IPopupProps> = memo(({ buttonRef, isOpen, setOpen }) => {
 
     const handleChangeTheme = useCallback(async () => {
         toggleTheme();
+
         const newTheme = theme === THEME.DARK ? THEME.LIGHT : THEME.DARK;
+
         await setUserTheme(user.login, newTheme);
     }, [theme, user]);
 
     return (
         <S.Popup ref={popupRef} isOpen={isOpen}>
             <S.PopupItem onClick={redirectToProfile}>Профиль</S.PopupItem>
-
-            <S.PopupItem onClick={handleLogoutClick}>Выйти</S.PopupItem>
 
             <S.PopupItem style={{ marginLeft: '10%' }}>
                 Темная тема
@@ -75,6 +76,8 @@ export const Popup: FC<IPopupProps> = memo(({ buttonRef, isOpen, setOpen }) => {
                     inputProps={{ 'aria-label': 'primary checkbox' }}
                 />
             </S.PopupItem>
+
+            <S.PopupItem onClick={handleLogoutClick}>Выйти</S.PopupItem>
         </S.Popup>
     );
 });

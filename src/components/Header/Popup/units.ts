@@ -26,8 +26,7 @@ S.PopupItem = styled.div`
 
     border-bottom: 1px solid ${(props: ThemeType) => props.theme.secondary};
 
-    cursor: ${({ onClick }: { onClick: Function }) =>
-        onClick ? 'pointer' : 'not-allowed'};
+    cursor: pointer;
 
     &:hover {
         color: ${(props: ThemeType) => props.theme.blue};

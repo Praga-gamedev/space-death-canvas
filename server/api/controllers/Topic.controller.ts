@@ -94,6 +94,7 @@ export default class TopicController {
 
         try {
             const topic = await Topic.findByPk(id);
+
             if (topic) {
                 res.send(topic);
             } else {
@@ -109,6 +110,7 @@ export default class TopicController {
     public static async getList(_: any, res: Response) {
         try {
             const topics = await Topic.findAll();
+
             res.send(topics);
         } catch (err) {
             res.status(500).send(createError(err));

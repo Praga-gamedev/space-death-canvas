@@ -16,7 +16,7 @@ connectToDb();
 const app = express();
 
 app.use(express.json())
-    .use(cors({ origin: `${HOST}:${PORT}` }))
+    .use(cors({ origin: `${HOST}:${PORT}`, credentials: true }))
     .use(cookieParser())
     .use('/api', apiRouter);
 

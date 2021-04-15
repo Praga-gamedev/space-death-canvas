@@ -1,2 +1,2 @@
-export { Theme } from './Theme';
-export { ForumButton } from './ForumButton';
+export { Topics } from './Topics';
+export { InputTheme } from './InputTheme';

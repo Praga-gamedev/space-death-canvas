@@ -32,6 +32,7 @@ export const logic = kea({
 
         setLoadingMain: (value: boolean) => value,
         setInit: (value: boolean) => value,
+        
         toggleTheme: true,
         setTheme: (value: Theme) => value,
     }),
@@ -43,7 +44,7 @@ export const logic = kea({
                 [actions.toggleTheme]: (state: Theme) => {
                     return state === THEME.DARK ? THEME.LIGHT : THEME.DARK;
                 },
-                [actions.setTheme]: (state: Theme, value: Theme) => value,
+                [actions.setTheme]: (_: TState, value: Theme) => value,
             },
         ],
         isAuth: [

@@ -15,12 +15,12 @@ import {
     RegistrationPage,
     GamePage,
     ForumPage,
-    ForumThreadDialog,
     ProfilePage,
     NotFoundPage,
     ServerErrorPage,
 } from '@pages';
 import { LeaderboardPage } from '@pages/LeaderboardPage';
+import { Comment } from '@pages/ForumPage/components/Comments';
 
 import { S } from './units';
 import { tabs } from './tabs';
@@ -63,10 +63,10 @@ const NavigationRouter = memo(() => {
                 />
 
                 <AuthorizedRoute
-                    path="/forum/:id"
+                    path="/forum/:topicId/:commentId"
                     redirectTo="/auth"
                     title="Форум"
-                    component={ForumThreadDialog}
+                    component={Comment}
                 />
 
                 <AuthorizedRoute

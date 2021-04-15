@@ -21,6 +21,7 @@ S.WrapperPage = styled.div`
     width: 100%;
     height: 100%;
     overflow-y: auto;
+    transition: all 0.3s linear;
 `;
 
 S.WrapperErrorPage = styled(S.WrapperPage)`

@@ -22,6 +22,8 @@ export const colors = {
     GrayScale_0: '#FFFFFF',
     blue: '#4447E2',
     lightBlue: '#9091EE',
+    warning: '#EE2244',
+    warningAccent: '#FA879A',
 };
 
 export const darkTheme = {
