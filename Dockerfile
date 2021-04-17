@@ -1,9 +1,9 @@
-FROM node:13
+FROM node:15-alpine
 
 COPY . /
 
 RUN npm install && npm run build
 
-EXPOSE $PORT
+EXPOSE ${PORT}
 
-CMD node server.js
+CMD npm run production

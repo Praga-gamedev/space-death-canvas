@@ -1,7 +1,25 @@
-postgres:
-  ports:
-    - '5436:5432'
-  restart: always
-  image: postgres:9.6.5-alpine
-  volumes:
-    - ./postgres-initdb.sh:/docker-entrypoint-initdb.d/init.sh
+version: "3"
+
+services:
+    app:
+        build:
+            context: .
+        ports:
+            - "4000:${PORT}"
+        depends_on:
+          - postgres
+        networks:
+          - my_network
+    postgres:
+        ports:
+            - ${DB_PORT}
+        restart: always
+        image: postgres:9.6.5-alpine
+        volumes:
+          - ./postgres-initdb.sh:/docker-entrypoint-initdb.d/init.sh
+        networks:
+            - my_network
+
+networks:
+    my_network:
+        driver: bridge

@@ -11,6 +11,7 @@
         "start:ssr": "npm-run-all --print-label --parallel webpack-ssr server-ssr",
         "start": "cross-env NODE_ENV=development npm-run-all --print-label --parallel start:*",
         "build": "cross-env NODE_ENV=production NODE_PATH=. rimraf dist && webpack --config webpack/api.config.ts webpack/client-ssr.config.ts --mode=production",
+        "production": "node dist/api_server.js && node dist/server.js",
         "lint:eslint": "eslint src/ --ext .ts,.tsx",
         "prettier": "prettier --write src/",
         "test": "jest"
