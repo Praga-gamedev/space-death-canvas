@@ -15,6 +15,6 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: build
-      run: echo "DB_PORT" && docker-compose up -d
+      run: echo "DB_PORT $DB_PORT" 
       env:
         DB_PORT: 5432
