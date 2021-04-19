@@ -15,6 +15,13 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: build
-      run: echo "DB_PORT $DB_PORT" 
+      run: docker-compose up -d
       env:
-        DB_PORT: 5432
+        DB_HOST: ${{ secrets.DB_HOST }}
+        DB_PORT: ${{ secrets.DB_PORT }}
+        DB_USER: ${{ secrets.DB_USER }}
+        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        DB_NAME: ${{ secrets.DB_NAME }}
+        HOST: ${{ secrets.HOST }}
+        PORT: ${{ secrets.PORT }}
+        API_PORT: ${{ secrets.API_PORT }}
