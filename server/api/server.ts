@@ -7,7 +7,7 @@ import cookieParser from 'cookie-parser';
 import { connectToDb } from './db';
 import { apiRouter } from './routes';
 import { initHttpsServer } from '../common/utils';
-import { API_PORT, HOST, PORT } from 'src/env';
+import { API_PORT, HOST } from 'src/env';
 
 dotenv.config();
 
@@ -16,7 +16,7 @@ connectToDb();
 const app = express();
 
 app.use(express.json())
-    .use(cors({ origin: `${HOST}:${PORT}`, credentials: true }))
+    .use(cors({ origin: /.ya-praktikum.tech/, credentials: true }))
     .use(cookieParser())
     .use('/api', apiRouter);
 
