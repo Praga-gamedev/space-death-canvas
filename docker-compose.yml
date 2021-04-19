@@ -2,6 +2,8 @@ version: "3"
 
 services:
   postgres:
+    environment:
+      - DB_PORT
     ports:
       - '${DB_PORT}'
     restart: always
@@ -10,8 +12,6 @@ services:
       - ./postgres-initdb.sh:/docker-entrypoint-initdb.d/init.sh
     networks:
       - awesome
-    environment:
-      - DB_PORT
 
   server-app:
     build:
