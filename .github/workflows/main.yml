@@ -11,10 +11,10 @@ jobs:
   build:
 
     runs-on: self-hosted
+    env:
+      DB_PORT: 5432
 
     steps:
     - uses: actions/checkout@v1
     - name: build
       run: docker-compose up -d
-      env:
-        DB_PORT: 5432
