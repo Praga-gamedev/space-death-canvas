@@ -1,0 +1,18 @@
+name: CI
+
+on:
+  push:
+    branches: [ features/docker ]
+  pull_request:
+    branches: [ features/docker ]
+
+jobs:
+
+  build:
+
+    runs-on: self-hosted
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: build
+      run: docker-compose up -d
