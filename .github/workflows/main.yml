@@ -13,11 +13,11 @@ jobs:
     runs-on: self-hosted
 
     steps:
-    - uses: actions/checkout@v1
     - name: build
-    - run: git pull
-    - run: docker-compose build
-    - run: docker-compose up -d
+      uses: actions/checkout@v1
+      run: git pull
+      run: docker-compose build
+      run: docker-compose up -d
       env:
         DB_HOST: ${{ secrets.DB_HOST }}
         DB_PORT: ${{ secrets.DB_PORT }}
