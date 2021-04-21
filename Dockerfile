@@ -6,4 +6,4 @@ RUN apt-get update && apt-get install -y supervisor && npm install && npm run bu
 
 EXPOSE $PORT
 
-CMD ["supervisord","-c","/supervisor/service_script.conf"]
+CMD ["supervisord","-c","/config/supervisor/service_script.conf"]

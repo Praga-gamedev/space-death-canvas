@@ -2,7 +2,7 @@ import { Sequelize, SequelizeOptions } from 'sequelize-typescript';
 import dotenv from 'dotenv';
 
 import { Topic, Comment, Theme, ThemeUser } from '../models';
-import { IS_DEV } from '@webpack/env';
+import { IS_DEV } from '../../../webpack/env';
 
 dotenv.config();
 
