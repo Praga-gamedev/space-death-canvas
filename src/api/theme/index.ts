@@ -6,7 +6,8 @@ export const getUserTheme = (
     userLogin: string
 ): AxiosPromise<{ id: number; name: Theme }> => {
     return LocalApi.get({
-        url: `/theme?user_login=${userLogin}`,
+        url: `/theme`,
+        params: { user_login: userLogin },
     });
 };
 
