@@ -1,4 +1,4 @@
-import { IS_DEV } from '../webpack/env';
+import { IS_DEV } from '@webpack/env';
 
 export const HOST = IS_DEV
     ? 'https://local.ya-praktikum.tech'
