@@ -1,6 +1,13 @@
-import express from 'express';
+import { Router } from 'express';
 
-export const apiRouter = express.Router();
+import { topicRouter } from './topicRouter';
+import { commentRouter } from './commentRouter';
+import { themeRouter } from './themeRouter';
 
-// здесь можно прописывать роуты, по которым будут происходить обращения в базу:
-// apiRouter.get( '/api/users/:id', () => {})
+const apiRouter = Router();
+
+themeRouter(apiRouter);
+topicRouter(apiRouter);
+commentRouter(apiRouter);
+
+export { apiRouter };

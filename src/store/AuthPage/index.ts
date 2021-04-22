@@ -2,20 +2,16 @@ import { kea } from 'kea';
 
 import { Notification } from 'src/utils/notification';
 
-import {
-    login as auth,
-    logout,
-    getUser,
-    getOAuthServiceCode,
-    OAuth,
-} from '@api/auth';
+import { getOAuthServiceCode, getUser, login as auth, logout } from '@api/auth';
 import { registration } from '@api/registration';
-import { updateProfile, updatePassword, updateAvatar } from '@api/profile';
+import { updateAvatar, updatePassword, updateProfile } from '@api/profile';
 
 import { IRegistrationData } from '@api/registration/types';
 import { IPasswordUpdateData, IProfileUpdateData } from '@api/profile/types';
 
-import { TState, IUserProps, IInitOptions } from '../types';
+import { IInitOptions, IUserProps, TState } from '../types';
+import { THEME, Theme } from 'src/theme';
+import { HOST, PORT } from 'src/env';
 
 export const logic = kea({
     path: () => ['scenes', 'authPage'],
@@ -36,9 +32,21 @@ export const logic = kea({
 
         setLoadingMain: (value: boolean) => value,
         setInit: (value: boolean) => value,
+        
+        toggleTheme: true,
+        setTheme: (value: Theme) => value,
     }),
 
     reducers: ({ actions }) => ({
+        theme: [
+            null,
+            {
+                [actions.toggleTheme]: (state: Theme) => {
+                    return state === THEME.DARK ? THEME.LIGHT : THEME.DARK;
+                },
+                [actions.setTheme]: (_: TState, value: Theme) => value,
+            },
+        ],
         isAuth: [
             false,
             {
@@ -129,8 +137,6 @@ export const logic = kea({
         logInOAuth: async () => {
             try {
                 const serviceCode: any = await getOAuthServiceCode();
-                const HOST = process.env.HOST;
-                const PORT = process.env.PORT;
                 location.replace(
                     `https://oauth.yandex.ru/authorize?response_type=code&client_id=${serviceCode.service_id}&redirect_uri=${HOST}:${PORT}`
                 );
@@ -145,7 +151,9 @@ export const logic = kea({
             // TODO: Не нужно вытаскивать редьюсер. Достаточно блочить кнопку при запросе, как на стр Auth
             const { isLoadingRegistration } = getState().scenes.authPage;
 
-            if (isLoadingRegistration) return;
+            if (isLoadingRegistration) {
+                return;
+            }
 
             actions.setLoadingRegistration(true);
 
@@ -171,9 +179,9 @@ export const logic = kea({
             const { isAuth, isLoadingMain } = getState().scenes.authPage;
             const { silent = false } = opts;
 
-            const codeOAuth = getState().router.location.query?.code;
-
-            if (isAuth || isLoadingMain) return;
+            if (isAuth || isLoadingMain) {
+                return;
+            }
 
             if (!navigator.onLine) {
                 actions.setOffline(true);
@@ -185,12 +193,7 @@ export const logic = kea({
             !silent && actions.setLoadingMain(true);
 
             try {
-                if (codeOAuth) {
-                    await OAuth(codeOAuth);
-                }
-
                 const user = await getUser();
-
                 actions.setUser(user);
                 actions.setAuth(true);
             } catch (error) {

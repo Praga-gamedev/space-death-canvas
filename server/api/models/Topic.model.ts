@@ -7,28 +7,39 @@ import {
     PrimaryKey,
     AllowNull,
     CreatedAt,
+    HasMany,
 } from 'sequelize-typescript';
 
-@Table
-export class Topic extends Model {
+import { ITopic } from '../interfaces';
+
+import { Comment } from './Comment.model';
+
+@Table({
+    tableName: 'topics',
+    updatedAt: false,
+})
+export class Topic extends Model<ITopic> {
     @AutoIncrement
     @PrimaryKey
     @Column(DataType.INTEGER)
-    topic_id!: number;
+    id!: number;
 
     @AllowNull(false)
     @Column(DataType.STRING(60))
-    topic_name: string;
+    name: string;
 
     @Column(DataType.STRING(20))
-    topic_author: string;
+    author_name: string;
 
     @AllowNull(false)
     @Column(DataType.INTEGER)
-    author_id: string;
+    author_id: number;
 
     @AllowNull(false)
     @CreatedAt
     @Column(DataType.DATE)
-    topic_date: Date;
+    date: Date;
+
+    @HasMany(() => Comment)
+    comments: Comment[];
 }

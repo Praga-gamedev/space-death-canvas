@@ -2,14 +2,14 @@ import styled from '@emotion/styled';
 
 import { Button } from '@components';
 
-import { colors } from 'src/colors';
+import { ThemeType } from 'src/theme';
 
 export const S: Record<string, any> = {};
 
 S.ProfileContainer = styled.div`
     padding: 170px 0 80px;
     height: 100vh;
-    background-color: ${colors.GrayScale_50};
+    background-color: ${(props: ThemeType) => props.theme.primary};
     overflow-y: auto;
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
@@ -22,7 +22,7 @@ S.ProfileContainer = styled.div`
 S.Title = styled.h1`
     font-size: 48px;
     line-height: 120%;
-    color: ${colors.GrayScale_20};
+    color: ${(props: ThemeType) => props.theme.fontSecondary};
     text-align: center;
     margin: 0;
 `;
@@ -43,7 +43,7 @@ S.ProfileContent = styled.div`
 
 S.ProfilePaper = styled.div`
     padding: 20px;
-    background-color: ${colors.GrayScale_40};
+    background-color: ${(props: ThemeType) => props.theme.secondary};
     border-radius: 15px;
 `;
 
@@ -54,7 +54,7 @@ S.AvatarBlock = styled(S.AlignCenterColumn)`
 S.Avatar = styled.div`
     width: 250px;
     height: 250px;
-    background-color: ${colors.GrayScale_0};
+    background-color: ${(props: ThemeType) => props.theme.GrayScale_0};
     border-radius: 15px;
     position: relative;
     overflow: hidden;
@@ -68,5 +68,5 @@ S.Avatar = styled.div`
 
 S.UploadPhotoButton = styled(Button)`
     margin-top: 20px;
-    border-color: ${colors.GrayScale_40};
+    border-color: ${(props: ThemeType) => props.theme.secondary};
 `;

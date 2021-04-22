@@ -10,7 +10,7 @@ import {
 } from './components/ProfileForm';
 import { AvatarModal } from './components/AvatarModal';
 
-import { HOST } from 'src/utils/api/YandexApi';
+import { YANDEX_HOST } from 'src/utils/api/YandexApi';
 
 import { S } from './units';
 import { defaultStats } from './stats';
@@ -28,7 +28,7 @@ export const ProfilePage: FC = memo(() => {
     const [passwordMode, setPasswordMode] = useState(false);
     const [showAvatarModal, setShowAvatarModal] = useState(false);
 
-    const avatar = user?.avatar ? `${HOST}${user.avatar}` : '';
+    const avatar = user?.avatar ? `${YANDEX_HOST}${user.avatar}` : '';
 
     useEffect(() => {
         setFields({ ...fields, ...getFieldsFromUser(user) });

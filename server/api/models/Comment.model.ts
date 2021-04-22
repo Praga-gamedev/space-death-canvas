@@ -8,16 +8,23 @@ import {
     AllowNull,
     ForeignKey,
     CreatedAt,
+    BelongsTo,
+    HasMany,
 } from 'sequelize-typescript';
 
-import {Topic} from './index';
+import { IComment } from '../interfaces';
 
-@Table
-export class Comment extends Model {
+import { Topic } from './Topic.model';
+
+@Table({
+    tableName: 'comments',
+    updatedAt: false,
+})
+export class Comment extends Model<IComment> {
     @AutoIncrement
     @PrimaryKey
     @Column(DataType.INTEGER)
-    comment_id: number;
+    id: number;
 
     @ForeignKey(() => Topic)
     @AllowNull(false)
@@ -26,23 +33,27 @@ export class Comment extends Model {
 
     @AllowNull(false)
     @Column(DataType.TEXT)
-    comment_message: string;
+    message: string;
 
-    @Column(DataType.TEXT)
-    parent_comment_id: number;
+    @ForeignKey(() => Comment)
+    @Column(DataType.INTEGER)
+    parent_id: number;
 
-    @Column(DataType.STRING(20))
-    comment_author: string;
+    @Column(DataType.STRING(50))
+    author_name: string;
 
     @AllowNull(false)
     @Column(DataType.INTEGER)
-    author_id: string;
+    author_id: number;
 
     @AllowNull(false)
     @CreatedAt
     @Column(DataType.DATE)
-    comment_date: Date;
+    date: Date;
 
-    @Column(DataType.INTEGER)
-    like: number;
+    @BelongsTo(() => Topic)
+    topic: Topic;
+
+    @HasMany(() => Comment)
+    children: Comment[];
 }

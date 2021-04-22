@@ -1,25 +1,29 @@
 import styled from '@emotion/styled';
 
-import { colors } from 'src/colors';
+import { ThemeType } from '../../theme';
 
 export const S: Record<string, any> = {};
 
 S.Link = styled.label`
-    color: ${colors.secondaryAccent};
-    background: linear-gradient(${colors.secondary}, ${colors.secondary}) center
-        bottom;
+    color: ${(props: ThemeType) => props.theme.lightBlue};
+
+    background: linear-gradient(
+            ${(props: ThemeType) => props.theme.blue},
+            ${(props: ThemeType) => props.theme.blue}
+        )
+        no-repeat center bottom;
+
     background-size: 0% 2px;
-    background-repeat: no-repeat;
     user-select: none;
     cursor: pointer;
     transition: all 0.2s;
 
     &:hover {
-        color: ${colors.secondary};
+        color: ${(props: ThemeType) => props.theme.blue};
         background-size: 100% 2px;
     }
 
     &:active {
-        color: ${colors.secondaryAccent};
+        color: ${(props: ThemeType) => props.theme.lightBlue};
     }
 `;
