@@ -3,8 +3,6 @@ import { useActions, useValues } from 'kea';
 
 import { Paper, Input, Button, Link } from '@components';
 
-import logo from '@images/logo.png';
-
 import { logic } from '@store/AuthPage';
 
 import { S } from '../units';
