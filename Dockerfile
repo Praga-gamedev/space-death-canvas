@@ -2,8 +2,8 @@ FROM node:13
 
 COPY . /
 
-RUN npm install && npm run build
+RUN apt-get update && apt-get install -y supervisor && npm install && npm run build
 
 EXPOSE $PORT
 
-CMD node server.js
+CMD ["supervisord","-c","/config/supervisor/service_script.conf"]
