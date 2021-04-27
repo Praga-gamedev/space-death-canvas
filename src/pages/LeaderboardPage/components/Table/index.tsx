@@ -6,7 +6,7 @@ import { useMountEffect } from 'src/utils/hooks';
 import { logic } from 'src/store/LeaderboardPage';
 
 import { Row } from './Row';
-import { ILeaders } from './types';
+import { ILeaders } from '../../types';
 import { S } from './units';
 
 export const Table = memo(() => {

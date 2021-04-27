@@ -3,6 +3,7 @@ import { css } from '@emotion/react';
 
 import { Button } from '@components';
 
+import logo from '@images/logo.png';
 import yaLogo from '@icons/yandex.svg';
 
 import { ThemeType } from 'src/theme';
@@ -77,11 +78,21 @@ S.YandexButton = styled(Button)`
         top: 8px;
 
         content: '';
-        background: url(${yaLogo});
+        background-image: url(${yaLogo});
         background-size: cover;
         display: block;
         width: 30px;
         height: 30px;
         filter: invert(1);
     }
+`;
+
+S.Logo = styled.div`
+    background-image: url(${logo});
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 250px;
+    width: 370px;
+    margin-bottom: 40px;
 `;
