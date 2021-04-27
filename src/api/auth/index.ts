@@ -31,6 +31,9 @@ export const getOAuthServiceCode = (redirectUri: string) => {
     });
 };
 
-export const OAuth = (code: number | string) => {
-    return axios.post(`${YANDEX_HOST}/api/v2/oauth/yandex`, { code });
+export const OAuth = (code: number | string, redirect_uri: string) => {
+    return axios.post(`${YANDEX_HOST}/api/v2/oauth/yandex`, {
+        code,
+        redirect_uri,
+    });
 };
