@@ -3,9 +3,9 @@ import { useActions, useValues } from 'kea';
 
 import { Paper, Input, Button, Link } from '@components';
 
-import { S } from '../units';
-
 import { logic } from '@store/AuthPage';
+
+import { S } from '../units';
 
 export const AuthPage = memo(() => {
     const { logIn, logInOAuth } = useActions(logic);
@@ -32,10 +32,7 @@ export const AuthPage = memo(() => {
                 as={'form'}
             >
                 <S.PaperColumn>
-                    {/* TODO: Заменим на логотип нашей игры, когда сделаем*/}
-                    <label style={{ fontSize: '72px', marginBottom: '60px' }}>
-                        LOGO
-                    </label>
+                    <S.Logo />
 
                     <Input
                         type={'text'}

@@ -1,6 +1,13 @@
 import React, { FC, memo, useState, useMemo, useEffect } from 'react';
+import { useActions, useValues } from 'kea';
+
+import { YANDEX_HOST } from 'src/utils/api/YandexApi';
 
 import { Button } from '@components';
+
+import { logic } from '@store/AuthPage';
+
+import defaultImage from '@images/no-image.png';
 
 import { Stats } from './components/Stats';
 import {
@@ -10,13 +17,7 @@ import {
 } from './components/ProfileForm';
 import { AvatarModal } from './components/AvatarModal';
 
-import { YANDEX_HOST } from 'src/utils/api/YandexApi';
-
 import { S } from './units';
-import { defaultStats } from './stats';
-
-import { logic } from '@store/AuthPage';
-import { useActions, useValues } from 'kea';
 
 export const ProfilePage: FC = memo(() => {
     const { updateProfile, updatePassword, updateAvatar } = useActions(logic);
@@ -28,7 +29,9 @@ export const ProfilePage: FC = memo(() => {
     const [passwordMode, setPasswordMode] = useState(false);
     const [showAvatarModal, setShowAvatarModal] = useState(false);
 
-    const avatar = user?.avatar ? `${YANDEX_HOST}${user.avatar}` : '';
+    const avatar = user?.avatar
+        ? `${YANDEX_HOST}/api/v2/resources${user.avatar}`
+        : defaultImage;
 
     useEffect(() => {
         setFields({ ...fields, ...getFieldsFromUser(user) });
@@ -98,7 +101,7 @@ export const ProfilePage: FC = memo(() => {
                     onSubmit={onSubmit}
                 />
 
-                <Stats stats={defaultStats} />
+                <Stats />
             </S.ProfileContent>
 
             <AvatarModal
