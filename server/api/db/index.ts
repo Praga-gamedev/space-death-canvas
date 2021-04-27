@@ -8,16 +8,8 @@ dotenv.config();
 
 const DB_HOST = IS_DEV ? 'localhost' : 'postgres';
 
-console.log(
-    'DB_HOST',
-    DB_HOST,
-    'process.env.DB_HOST',
-    process.env.DB_HOST,
-    'IS_DEV',
-    IS_DEV,
-    'process.env.NODE_ENV',
-    process.env.NODE_ENV
-);
+console.log('DB_HOST', DB_HOST, 'process.env.DB_HOST', process.env.DB_HOST);
+console.log('process.env.DB_USER', process.env.DB_USER);
 
 const sequelizeOptions: SequelizeOptions = {
     host: DB_HOST,
