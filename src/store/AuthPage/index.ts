@@ -137,10 +137,10 @@ export const logic = kea({
 
         logInOAuth: async () => {
             try {
-                const serviceCode: any = await getOAuthServiceCode();
-                const baseUri = IS_DEV ? `${HOST}:${PORT}` : HOST;
+                const redirectUri = IS_DEV ? `${HOST}:${PORT}` : HOST;
+                const serviceCode: any = await getOAuthServiceCode(redirectUri);
                 location.replace(
-                    `https://oauth.yandex.ru/authorize?response_type=code&client_id=${serviceCode.service_id}&redirect_uri=${baseUri}`
+                    `https://oauth.yandex.ru/authorize?response_type=code&client_id=${serviceCode.service_id}&redirect_uri=${redirectUri}`
                 );
             } catch (error) {
                 Notification({

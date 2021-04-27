@@ -24,9 +24,10 @@ export const getUser = (headers?: any) => {
     });
 };
 
-export const getOAuthServiceCode = () => {
+export const getOAuthServiceCode = (redirectUri: string) => {
     return YandexApi.get({
         baseURL: 'https://ya-praktikum.tech/api/v2/oauth/yandex/service-id',
+        params: { redirect_uri: redirectUri },
     });
 };
 
