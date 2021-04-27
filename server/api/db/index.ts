@@ -6,7 +6,7 @@ import { IS_DEV } from '@webpack/env';
 
 dotenv.config();
 
-const DB_HOST = IS_DEV ? 'localhost' : process.env.DB_HOST;
+const DB_HOST = IS_DEV ? 'localhost' : 'postgres';
 
 console.log(
     'DB_HOST',
