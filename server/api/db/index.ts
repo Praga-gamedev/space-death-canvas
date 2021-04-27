@@ -8,6 +8,17 @@ dotenv.config();
 
 const DB_HOST = IS_DEV ? 'localhost' : process.env.DB_HOST;
 
+console.log(
+    'DB_HOST',
+    DB_HOST,
+    'process.env.DB_HOST',
+    process.env.DB_HOST,
+    'IS_DEV',
+    IS_DEV,
+    'process.env.NODE_ENV',
+    process.env.NODE_ENV
+);
+
 const sequelizeOptions: SequelizeOptions = {
     host: DB_HOST,
     port: Number.parseInt(process.env.DB_PORT!),
