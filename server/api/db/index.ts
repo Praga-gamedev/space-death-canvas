@@ -25,7 +25,7 @@ export const connectToDb = () => {
     try {
         sequelize.authenticate().then(async () => {
             console.log('Connection to db has been established successfully.');
-            sequelize.sync({ alter: true });
+            await sequelize.sync({ alter: true });
             const themes = await Theme.findAll();
             if (themes.length === 0) {
                 await Theme.bulkCreate([
