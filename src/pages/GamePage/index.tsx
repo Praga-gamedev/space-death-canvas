@@ -4,7 +4,6 @@ import { useActions } from 'kea';
 import Game from 'src/game';
 import { IGameState } from 'src/game/Game';
 
-import { S as SGlobal } from '@pages/units';
 import { S } from '@pages/GamePage/units';
 import { Notification } from 'src/utils/notification';
 
@@ -21,6 +20,7 @@ export const GamePage: FC = () => {
     const { postLeaderScore } = useActions(logic);
 
     const canvas = useRef<HTMLCanvasElement>(null);
+    const gameView = useRef<HTMLDivElement>(null);
 
     const [game, setGame] = useState<Game | null>(null);
     const [gameState, setGameState] = useState<IGameState>({
@@ -32,17 +32,32 @@ export const GamePage: FC = () => {
     const [isGameActive, setGameActive] = useState(false);
     const [, toggleFullscrean] = useFullscreen('#game-view');
 
-    const resizeGame = (canvas: HTMLCanvasElement) => {
-        const resW = 1024;
-        const resH = 768;
+    const resizeGame = useCallback(
+        (() => {
+            let firstExecute = true;
 
-        const devW = windowObj.innerWidth;
-        const devH = windowObj.innerHeight;
+            return (canvas: HTMLCanvasElement, gameView: HTMLDivElement) => {
+                const resW = 1024;
+                const resH = 600;
 
-        const scaleToCover = Math.max(devW / resW, devH / resH);
-        canvas.width = Math.floor(devW / scaleToCover);
-        canvas.height = Math.floor(devH / scaleToCover);
-    };
+                const devW = windowObj.innerWidth;
+                const devH = windowObj.innerHeight - 120;
+
+                const scaleFitNative = Math.min(devW / resW, devH / resH);
+                gameView.style.width = Math.floor(resW * scaleFitNative) + 'px';
+                gameView.style.height =
+                    Math.floor(resH * scaleFitNative) + 'px';
+                canvas.width = resW;
+                canvas.height = resH;
+
+                if (firstExecute) {
+                    gameView.style.display = 'block';
+                    firstExecute = false;
+                }
+            };
+        })(),
+        []
+    );
 
     const startGame = () => {
         if (!game) {
@@ -75,12 +90,16 @@ export const GamePage: FC = () => {
     };
 
     useEffect(() => {
-        if (!canvas.current) {
+        if (!canvas.current || !gameView.current) {
             return;
         }
 
-        resizeGame(canvas.current);
-        const onResize = () => resizeGame(canvas.current as HTMLCanvasElement);
+        resizeGame(canvas.current, gameView.current);
+        const onResize = () =>
+            resizeGame(
+                canvas.current as HTMLCanvasElement,
+                gameView.current as HTMLDivElement
+            );
         windowObj.addEventListener('resize', onResize, false);
 
         const game = new Game(canvas.current, setGameState);
@@ -132,8 +151,8 @@ export const GamePage: FC = () => {
     const showScore = isGameActive && !gameState.isGameOver;
 
     return (
-        <SGlobal.WrapperPage background={true}>
-            <S.GameView id="game-view">
+        <S.Wrapper background={true}>
+            <S.GameView id="game-view" ref={gameView}>
                 <S.GameCanvas ref={canvas} />
 
                 {showScore && <S.Score>Очки: {gameState.score}</S.Score>}
@@ -180,6 +199,6 @@ export const GamePage: FC = () => {
                     </>
                 )}
             </S.GameView>
-        </SGlobal.WrapperPage>
+        </S.Wrapper>
     );
 };
