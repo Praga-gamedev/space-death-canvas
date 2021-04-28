@@ -41,7 +41,7 @@ export const GamePage: FC = () => {
                 const resH = 600;
 
                 const devW = windowObj.innerWidth;
-                const devH = windowObj.innerHeight - 120;
+                const devH = windowObj.innerHeight - 80;
 
                 const scaleFitNative = Math.min(devW / resW, devH / resH);
                 gameView.style.width = Math.floor(resW * scaleFitNative) + 'px';
