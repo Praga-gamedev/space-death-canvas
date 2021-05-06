@@ -7,11 +7,3 @@ export interface IProfileFields {
     oldPassword: string;
     newPassword: string;
 }
-
-export interface IStat {
-    name: string;
-    label: string;
-    value: number | string;
-    icon: string;
-    color: string;
-}

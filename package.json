@@ -5,8 +5,8 @@
     "scripts": {
         "webpack-api": "webpack --config webpack/api.config.ts --mode=development --watch",
         "webpack-ssr": "webpack --config webpack/client-ssr.config.ts --mode=development --watch",
-        "server-api": "nodemon dist/api_server.js --watch dist/api_server.js --config nodemon-api.json",
-        "server-ssr": "nodemon dist/server.js --watch dist/server.js --config nodemon-ssr.json",
+        "server-api": "nodemon dist/api_server.js --watch dist/api_server.js --config config/nodemon/api.json",
+        "server-ssr": "nodemon dist/server.js --watch dist/server.js --config config/nodemon/ssr.json",
         "start:api": "npm-run-all --print-label --parallel webpack-api server-api",
         "start:ssr": "npm-run-all --print-label --parallel webpack-ssr server-ssr",
         "start": "cross-env NODE_ENV=development npm-run-all --print-label --parallel start:*",

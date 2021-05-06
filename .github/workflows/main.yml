@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [ develop ]
+
+jobs:
+
+  build:
+
+    runs-on: self-hosted
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: set up env file
+      run: |
+       touch .env
+       echo DB_HOST=${{ secrets.DB_HOST }} >> .env
+       echo DB_PORT=${{ secrets.DB_PORT }} >> .env
+       echo DB_USER=${{ secrets.DB_USER }} >> .env
+       echo DB_PASSWORD=${{ secrets.DB_PASSWORD }} >> .env
+       echo DB_NAME=${{ secrets.DB_NAME }} >> .env
+       echo HOST=${{ secrets.HOST }} >> .env
+       echo PORT=${{ secrets.PORT }} >> .env
+       echo API_PORT=${{ secrets.API_PORT }} >> .env
+       echo NODE_ENV=${{ secrets.NODE_ENV }} >> .env
+    - name: build
+      run: |
+       docker-compose down
+       docker-compose build
+       docker-compose up -d
+      env:
+        DB_HOST: ${{ secrets.DB_HOST }}
+        DB_PORT: ${{ secrets.DB_PORT }}
+        DB_USER: ${{ secrets.DB_USER }}
+        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        DB_NAME: ${{ secrets.DB_NAME }}
+        HOST: ${{ secrets.HOST }}
+        PORT: ${{ secrets.PORT }}
+        API_PORT: ${{ secrets.API_PORT }}
+        NODE_ENV: ${{ secrets.NODE_ENV }}

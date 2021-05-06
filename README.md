@@ -1,6 +1,6 @@
 # Space Death Canvas
 
-### Макеты в [figma](https://www.figma.com/file/ajQp4tRV6sZM05Q5vDNrLz/Spaceship?node-id=0%3A1), хостинг на [heroku](https://space-death-canvas.herokuapp.com/).
+### Макеты в [figma](https://www.figma.com/file/ajQp4tRV6sZM05Q5vDNrLz/Spaceship?node-id=0%3A1), хостинг на [Яндекс.Облаке](https://03-praga-space-death-canvas.ya-praktikum.tech).
 
 ### Инструкция по запуску:
 
@@ -50,10 +50,6 @@ API_PORT=5001
 ### Утечки памяти:
 
 В игре была обнаружена утечка памяти. При переключении страницы, игровой цикл продолжал выполняться, таким образом при нескольких переключениях в памяти оставалось несколько инстансов игры, которые еще и выполняли вычисления. Решили проблему добавлением флага `destroyed`, который прерывал игровой цикл.
-
-В приложении утечек памяти не обнаружено
-[скрин1](https://i.ibb.co/Vp9d0Qd/image-2021-03-23-15-42-01.png)
-[скрин2](https://i.ibb.co/SJQVtD0/image-2021-03-23-15-48-15.png)
 
 ### Схема БД (Форум):
 

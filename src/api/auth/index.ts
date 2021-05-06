@@ -24,12 +24,16 @@ export const getUser = (headers?: any) => {
     });
 };
 
-export const getOAuthServiceCode = () => {
+export const getOAuthServiceCode = (redirectUri: string) => {
     return YandexApi.get({
         baseURL: 'https://ya-praktikum.tech/api/v2/oauth/yandex/service-id',
+        params: { redirect_uri: redirectUri },
     });
 };
 
-export const OAuth = (code: number | string) => {
-    return axios.post(`${YANDEX_HOST}/api/v2/oauth/yandex`, { code });
+export const OAuth = (code: number | string, redirect_uri: string) => {
+    return axios.post(`${YANDEX_HOST}/api/v2/oauth/yandex`, {
+        code,
+        redirect_uri,
+    });
 };

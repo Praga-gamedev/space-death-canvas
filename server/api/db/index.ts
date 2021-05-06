@@ -2,11 +2,14 @@ import { Sequelize, SequelizeOptions } from 'sequelize-typescript';
 import dotenv from 'dotenv';
 
 import { Topic, Comment, Theme, ThemeUser } from '../models';
+import { IS_DEV } from '@webpack/env';
 
 dotenv.config();
 
+const DB_HOST = IS_DEV ? 'localhost' : 'postgres';
+
 const sequelizeOptions: SequelizeOptions = {
-    host: process.env.DB_HOST,
+    host: DB_HOST,
     port: Number.parseInt(process.env.DB_PORT!),
     username: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
@@ -22,7 +25,7 @@ export const connectToDb = () => {
     try {
         sequelize.authenticate().then(async () => {
             console.log('Connection to db has been established successfully.');
-            sequelize.sync({ alter: true });
+            await sequelize.sync({ alter: true });
             const themes = await Theme.findAll();
             if (themes.length === 0) {
                 await Theme.bulkCreate([

@@ -12,6 +12,7 @@ import { IPasswordUpdateData, IProfileUpdateData } from '@api/profile/types';
 import { IInitOptions, IUserProps, TState } from '../types';
 import { THEME, Theme } from 'src/theme';
 import { HOST, PORT } from 'src/env';
+import { IS_DEV } from '@webpack/env';
 
 export const logic = kea({
     path: () => ['scenes', 'authPage'],
@@ -32,7 +33,7 @@ export const logic = kea({
 
         setLoadingMain: (value: boolean) => value,
         setInit: (value: boolean) => value,
-        
+
         toggleTheme: true,
         setTheme: (value: Theme) => value,
     }),
@@ -136,9 +137,10 @@ export const logic = kea({
 
         logInOAuth: async () => {
             try {
-                const serviceCode: any = await getOAuthServiceCode();
+                const redirectUri = IS_DEV ? `${HOST}:${PORT}` : HOST;
+                const serviceCode: any = await getOAuthServiceCode(redirectUri);
                 location.replace(
-                    `https://oauth.yandex.ru/authorize?response_type=code&client_id=${serviceCode.service_id}&redirect_uri=${HOST}:${PORT}`
+                    `https://oauth.yandex.ru/authorize?response_type=code&client_id=${serviceCode.service_id}&redirect_uri=${redirectUri}`
                 );
             } catch (error) {
                 Notification({

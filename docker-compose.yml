@@ -1,7 +1,36 @@
-postgres:
-  ports:
-    - '5436:5432'
-  restart: always
-  image: postgres:9.6.5-alpine
-  volumes:
-    - ./postgres-initdb.sh:/docker-entrypoint-initdb.d/init.sh
+version: "3"
+
+services:
+  postgres:
+    environment:
+      - DB_PORT
+    ports:
+      - '${DB_PORT}'
+    restart: always
+    image: postgres:9.6.5-alpine
+    volumes:
+      - ./postgres-initdb.sh:/docker-entrypoint-initdb.d/init.sh
+    networks:
+      - awesome
+
+  server-app:
+    build:
+      context: .
+    environment:
+      - PORT
+      - API_PORT
+      - DB_PORT
+    ports:
+      - "${PORT}:${PORT}"
+      - "${API_PORT}:${API_PORT}"
+    depends_on:
+      - postgres
+    networks:
+      - awesome
+    extra_hosts:
+      - "local.ya-praktikum.tech:127.0.0.1"
+    command: ./wait-for.sh "postgres:${DB_PORT}" -- supervisord -c /config/supervisor/service_script.conf
+
+networks:
+  awesome:
+    driver: bridge

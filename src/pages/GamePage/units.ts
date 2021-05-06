@@ -1,17 +1,22 @@
 import styled from '@emotion/styled';
 
+import { S as SGlobal } from '@pages/units';
+
 import { ThemeType } from 'src/theme';
 
 import { Button } from 'src/components';
 
 export const S: Record<string, any> = {};
 
+S.Wrapper = styled(SGlobal.WrapperPage)`
+    align-items: center;
+`;
+
 S.GameView = styled.div`
+    display: none;
     font-family: 'Comfortaa', sans-serif;
     color: ${(props: ThemeType) => props.theme.GrayScale_0};
     margin-top: 80px;
-    width: 100%;
-    height: calc(100% - 80px);
     position: relative;
 `;
 

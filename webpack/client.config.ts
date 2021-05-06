@@ -4,7 +4,6 @@ import {
     // @ts-ignore
     Plugin,
     Entry,
-    HotModuleReplacementPlugin,
     ProvidePlugin,
 } from 'webpack';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
@@ -39,14 +38,14 @@ const config: Configuration = {
     },
     resolve: {
         modules: ['src', 'node_modules'],
-        alias: { 'react-dom': '@hot-loader/react-dom' },
+        // alias: { 'react-dom': '@hot-loader/react-dom' },
         extensions: ['*', '.js', '.jsx', '.json', '.ts', '.tsx'],
         plugins: [new TsconfigPathsPlugin({ configFile: './tsconfig.json' })],
     },
     plugins: [
         new MiniCssExtractPlugin({ filename: '[name].css' }),
         !IS_DEV && new CompressionPlugin(),
-        IS_DEV && new HotModuleReplacementPlugin(),
+        // IS_DEV && new HotModuleReplacementPlugin(),
         new ProvidePlugin({
             process: 'process/browser',
         }),
